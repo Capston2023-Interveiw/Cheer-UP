@@ -1,64 +1,49 @@
 import requests
 import json
+from speed import get_duration, scripts_length, speaking_speed
 from time_conversion import time_conversion
 from interjection import check_sentence
-from dotenv import load_dotenv
-import os 
-import time
+from sttAPI import getScripts, getSttToken
 
-load_dotenv()
-
-# 토큰 불러오기
-token = requests.post(
-    'https://openapi.vito.ai/v1/authenticate',
-    data={'client_id': os.environ.get('stt_id'),
-          'client_secret': os.environ.get('stt_secret')}
-)
-token.raise_for_status()
-token_json = token.json()
-
-
-# 음성 파일 분석 요청
-config = {
-  "diarization": {
-    "use_verification": False
-  },
-  "use_multi_channel": False
-}
-
-response = requests.post(
-    'https://openapi.vito.ai/v1/transcribe',
-    headers={'Authorization': 'bearer '+ token_json['access_token']},
-    data={'config': json.dumps(config)},
-    files={'file': open('./analysis/model/language/sample.wav', 'rb')}
-)
-response.raise_for_status()
-response_json = response.json()
-stt_id = response_json['id']
-
-# 분석 완료 내용 불러오기
-while True:
-  resp = requests.get(
-    'https://openapi.vito.ai/v1/transcribe/' + stt_id,
-    headers={'Authorization': 'bearer ' + token_json['access_token']},
-  )
-  resp.raise_for_status()
-  resp_json = resp.json()
-  if(resp_json['status'] == 'completed'):
-    result = resp_json['results']['utterances']
-    break
-  time.sleep(0.5)
-
+token = getSttToken()
+result = getScripts(token)
 scripts = ""
-interjection = []
-timestamp = []
 for content in result:
   scripts += (content['msg'] + " ")
-  # if (len(content['msg']) == 1):
-  #   interjection.append(content['msg'])
-  #   timestamp.append(time_conversion(content['start_at']))
-print(scripts)
-print("-----------감탄사--------------")
-interjection = check_sentence(scripts)
-print("-----------time--------------")
-print(timestamp)
+
+def getInterjectionResult():
+  interjections = []
+  timestamp = []
+  interjections = check_sentence(scripts)
+
+  count = 0
+  # 타임스탬프 추출
+  for interjection in interjections:
+    for content in range(len(result)):
+      if result[content]['msg'] == interjection and content > count:
+        timestamp.append(time_conversion(result[content]['start_at']))
+        count = content
+        break
+  count = 0
+
+  content = {
+    "field": "interjection",
+    "minus_point": interjections,
+    "time_stamp": timestamp
+  }
+  return json.dumps(content, ensure_ascii = False)
+
+def getSpeedResult():
+  audio_path = "./analysis/model/language/sample.wav"
+  time = get_duration(audio_path)
+  length = scripts_length(scripts)
+  speed = speaking_speed(time, length)
+  content = {
+    "field": "interjection",
+    "minus_point": speed,
+    "time_stamp": []
+  }
+  return json.dumps(content, ensure_ascii = False)
+
+print(getInterjectionResult())
+print(getSpeedResult())
