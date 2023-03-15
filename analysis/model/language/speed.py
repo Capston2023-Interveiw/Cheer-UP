@@ -12,10 +12,14 @@ def scripts_length(scripts):
     return len(scripts.replace(" ",""))
 
 def speaking_speed(time, script_length):
-    speed = script_length / time
-    if speed > 5.5:
-        return "빠른 속도"
-    elif speed < 4.5:
-        return "느린 속도"
-    return "적당한 속도"
-
+    speed = script_length / time * 60
+    if speed > 376:
+        return "매우 빠른 속도", 10
+    elif 356 < speed < 375:
+        return "조금 빠른 속도", 15
+    elif 336 < speed < 355:
+        return "적당한 속도", 20
+    elif 316 < speed <335:
+        return "조금 느린 속도", 15
+    else:
+        return "매우 느린 속도", 10

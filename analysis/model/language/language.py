@@ -8,8 +8,17 @@ from sttAPI import getScripts, getSttToken
 token = getSttToken()
 result = getScripts(token)
 scripts = ""
+
 for content in result:
   scripts += (content['msg'] + " ")
+
+scripts = scripts.replace('.', ' ')
+
+def interjectionScore(interjections):
+  score = 20
+  if len(interjections) > 2:
+    score = 20 - (len(interjections) - 2)
+  return score
 
 def getInterjectionResult():
   interjections = []
@@ -28,6 +37,7 @@ def getInterjectionResult():
 
   content = {
     "field": "interjection",
+    "score": interjectionScore(interjections),
     "minus_point": interjections,
     "time_stamp": timestamp
   }
@@ -37,9 +47,10 @@ def getSpeedResult():
   audio_path = "./analysis/model/language/sample.wav"
   time = get_duration(audio_path)
   length = scripts_length(scripts)
-  speed = speaking_speed(time, length)
+  speed, score = speaking_speed(time, length)
   content = {
-    "field": "interjection",
+    "field": "speed",
+    "score": score,
     "minus_point": speed,
     "time_stamp": []
   }

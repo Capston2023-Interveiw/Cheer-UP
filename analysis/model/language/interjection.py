@@ -5,7 +5,6 @@ import os
 
 load_dotenv()
 
-
 def check_sentence(scripts):
     openApiURL = "http://aiopen.etri.re.kr:8000/WiseNLU_spoken"
 
