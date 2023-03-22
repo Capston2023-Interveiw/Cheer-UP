@@ -14,25 +14,30 @@ services:
       - ./frontend:/frontend
       - /frontend/node_modules
 
-  # backend:
-  #   image: backend
-  #   container_name: backend
-  #   restart: always
-  #   build:
-  #     context: ./backend
-  #     dockerfile: Dockerfile
-  #   ports:
-  #     - 8080:8080
-  #   volumes:
-  #     - ./backend:/backend
-  #   depends_on:
+  backend:
+    image: backend
+    container_name: backend
+    restart: always
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - 8080:8080
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/cheer?useSSL=false&allowPublicKeyRetrieval=true&useUnicode=true&serverTimezone=Asia/Seoul
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: 1234
+    volumes:
+      - ./backend:/backend
+    depends_on:
+      - mysql
 
   mysql:
     image: mysql:8.0
     container_name: mysql
     restart: always
     ports:
-      - 3306:3306 # HOST:CONTAINER
+      - 3306:3306 
     environment:
       MYSQL_ROOT_PASSWORD: 1234
       MYSQL_DATABASE: ce
