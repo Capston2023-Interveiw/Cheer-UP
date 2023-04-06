@@ -1,6 +1,6 @@
 form {
   width: 65%;
-  height: 95vh;
+  height: 93vh;
   margin: 0 auto;
   padding: 20px;
   background-color: #E8F9FD;
@@ -19,7 +19,8 @@ h1 {
 input[type='text'],
 input[type='password'] {
 
-  width: 420px;
+  width: 300px;
+  height: 20px;
   padding: 10px;
   margin-bottom: 30px;
   border: 1px solid #ccc;
@@ -38,15 +39,41 @@ button[type='submit'] {
   border-radius: 10px;
   font-size: 16px;
   cursor: pointer;
+  font: bold;
 }
 
-i{  
+buttonmi[type='submit'] {
+ 
+  width: 100px;
+  padding: 10px;
+  background-color: #0084FE;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  text-align: center;
+  font: bold;
+}
+
+lci {  
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   height: 50vh;
 }
+
+
+sci{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: vh;
+}
+
+
 
 p {
   text-align: center;
