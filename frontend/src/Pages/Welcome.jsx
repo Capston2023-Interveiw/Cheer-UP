@@ -1,15 +1,8 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
-import Header from '../Components/Header';
-
+import React from "react";
+// import styled from "styled-components";
 
 function Welcome() {
-
-  return (
-    <div>
-      hi
-    </div>
-  );
+    return <div>hi</div>;
 }
 
 export default Welcome;
