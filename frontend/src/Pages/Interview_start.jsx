@@ -45,7 +45,7 @@ const WrapStartButton = styled.div`
 function Interview() {
     const iframePart = () => {
         return {
-            __html: '<iframe src="../Camera.html" width="300px" height="300px"></iframe>',
+            __html: '<iframe src="http://localhost:8888" width="640" height="360px"></iframe>',
         };
     };
     return (
