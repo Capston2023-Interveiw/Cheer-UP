@@ -9,6 +9,7 @@ from queue import Queue
 from model.gaze.gaze_tracking.gaze_tracking import GazeTracking
 from model.gaze.gaze import run_gaze
 from model.posture.PoseProject import run_posture
+from model.face.real_time_video import run_face
 
 import mediapipe as mp
 
@@ -19,23 +20,26 @@ class DectectionModel:
         self.gaze = GazeTracking()
         self.gazeFeedback = []
         self.postureFeedback = []
+        self.expressionFeedback = []
         self.current_time = time.time()
         self.preview_time = time.time()
         self.gazeCount = 0
         self.shoulderCount = 0
         self.postureCount = 0
-    
+        self.expressionCount = 0
+
     def detection(self, frame):
         self.current_time = time.time()
         fps = 1 / (self.current_time - self.preview_time)
         self.preview_time = self.current_time
         fps += 1
-        gaze = run_gaze(frame, self.gaze)
         posture = run_posture(frame, self.holistic)
-        print(gaze)
+        frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+        face = run_face(frame)
+        gaze = run_gaze(frame, self.gaze)
         if gaze != None:
             self.gazeCount += 1
-            if self.gazeCount >= 1 * fps:
+            if self.gazeCount >= 3 * fps:
                 self.gazeFeedback.append(gaze)
                 self.gazeCount = 0
         if posture != None:
@@ -49,18 +53,27 @@ class DectectionModel:
                 if self.shoulderCount >= 5 * fps:
                     self.postureFeedback.append("어깨 비대칭")
                     self.shoulderCount = 0
+        if face != None:
+            if face != "happy" and face != "neutral":
+                self.expressionCount += 1
+                if self.expressionCount >= 5 * fps:
+                    self.expressionFeedback.append(f"{face}한 표정")
+                    self.expressionCount = 0
 
 
 class Camera:
     
-    def __init__(self ):
+    def __init__(self):
         
         if cv2.ocl.haveOpenCL() :
             cv2.ocl.setUseOpenCL(True)
         self.capture = None
-        self.thread = None
         self.width = 640
         self.height = 360
+        self.fourcc = cv2.VideoWriter_fourcc(*'XVID')
+        self.record = False
+        self.video = cv2.VideoWriter("test.avi", self.fourcc, cv2.CAP_PROP_FPS, (self.width, self.height))
+        self.thread = None
         self.stat = False
         self.current_time = time.time()
         self.preview_time = time.time()
@@ -72,6 +85,7 @@ class Camera:
     def result(self):
         gazeScore = 20
         postureScore = 20
+        expressionScore = 20
         if len(self.model.gazeFeedback) > 2:
             gazeScore -= (len(self.model.gazeFeedback) - 2)
         
@@ -84,6 +98,11 @@ class Camera:
         if postureScore < 0:
             postureScore = 0
         
+        if len(self.model.expressionFeedback) > 2:
+            expressionScore -= (len(self.model.expressionFeedback) - 2)
+
+        if expressionScore < 0:
+            expressionScore = 0
 
         content = {
             "gaze": {
@@ -95,18 +114,24 @@ class Camera:
                 "field": "posture",
                 "score": postureScore,
                 "feed_back": self.model.postureFeedback
+            },
+            "face": {
+                "field": "face expression",
+                "score": expressionScore,
+                "feed_back": self.model.expressionFeedback
             }
         }
         return content
+    
     def run(self, src = 0 ) :
         
         self.stop()
     
         if platform.system() == 'Windows' :        
-            self.capture = cv2.VideoCapture( src , cv2.CAP_DSHOW )
+            self.capture = cv2.VideoCapture(src , cv2.CAP_DSHOW)
         
         else :
-            self.capture = cv2.VideoCapture( src )
+            self.capture = cv2.VideoCapture(src)
             
         self.capture.set(cv2.CAP_PROP_FRAME_WIDTH, self.width)
         self.capture.set(cv2.CAP_PROP_FRAME_HEIGHT, self.height)
@@ -121,21 +146,22 @@ class Camera:
     def stop(self):
         
         self.started = False
-        
-        if self.capture is not None :
-            
+        self.record = False
+        if self.capture is not None:
             self.capture.release()
+            self.video.release()
             self.clear()
             
     def update(self):
                     
         while True:
 
-            if self.started :
+            if self.started:
                 (grabbed, frame) = self.capture.read()
-                self.model.detection(frame)
-                if grabbed : 
+                if grabbed:
                     self.Q.put(frame)
+                    self.video.write(frame)
+                    self.model.detection(frame)   
                           
     def clear(self):
         
