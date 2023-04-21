@@ -7,7 +7,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -17,8 +16,6 @@ public class InterviewProgressService {
     private final InterviewProgressMapper progressMapper;
 
     public List<QuestionResponse> getQuestionList(Long id) {
-        return questionRepository.findAll()
-                .stream().map(progressMapper::mapToDto)
-                .collect(Collectors.toList());
+        return progressMapper.getRandomQuestion(id);
     }
 }

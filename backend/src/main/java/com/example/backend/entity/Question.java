@@ -21,6 +21,7 @@ public class Question {
     private String status;
     @CreatedDate
     @Column(updatable = false)
+    @Getter
     @NotNull
     private LocalDateTime createdAt;
 

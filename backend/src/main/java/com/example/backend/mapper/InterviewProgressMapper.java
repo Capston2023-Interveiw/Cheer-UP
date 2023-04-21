@@ -1,15 +1,14 @@
 package com.example.backend.mapper;
 
 import com.example.backend.dto.response.QuestionResponse;
-import com.example.backend.entity.Question;
-import org.springframework.stereotype.Component;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
 
-@Component
-public class InterviewProgressMapper {
+import java.util.List;
 
-    public QuestionResponse mapToDto(Question question) {
-        return QuestionResponse.builder()
-                .content(question.getContent())
-                .build();
-    }
+@Mapper
+public interface InterviewProgressMapper {
+
+    @Select("SELECT content FROM question ORDER BY #{id} desc, RAND() LIMIT 6;")
+    List<QuestionResponse> getRandomQuestion(Long id);
 }
