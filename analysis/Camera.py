@@ -2,6 +2,7 @@ import time
 import cv2
 import imutils
 import platform
+import wave
 import numpy as np
 from threading import Thread
 from queue import Queue
@@ -10,8 +11,9 @@ from model.gaze.gaze_tracking.gaze_tracking import GazeTracking
 from model.gaze.gaze import run_gaze
 from model.posture.PoseProject import run_posture
 from model.face.real_time_video import run_face
-
+from model.language.language import SttService
 import mediapipe as mp
+import pyaudio
 
 class DectectionModel:
     def __init__(self):
@@ -60,6 +62,49 @@ class DectectionModel:
                     self.expressionFeedback.append(f"{face}한 표정")
                     self.expressionCount = 0
 
+class RecordThread():
+    def __init__(self, audiofile='./model/language/record.wav'):
+        self.thread = None
+        self.audio = pyaudio.PyAudio()
+        self.bRecord = True
+        self.audiofile = audiofile
+        self.chunk = 1024
+        self.format = pyaudio.paInt16
+        self.channels = 1
+        self.rate = 16000
+        self.wavstream = None
+        self.wavfile = None
+
+    def run(self):
+        self.wavstream = self.audio.open(format=self.format,
+                        channels=self.channels,
+                        rate=self.rate,
+                        input=True,
+                        frames_per_buffer=self.chunk)
+        self.wavfile = wave.open(self.audiofile, 'wb')
+        self.wavfile.setnchannels(self.channels)
+        self.wavfile.setsampwidth(self.audio.get_sample_size(self.format))
+        self.wavfile.setframerate(self.rate)
+        if self.thread is None:
+            self.thread = Thread(target=self.record, args=())
+            self.thread.daemon = False
+            self.thread.start()
+        self.bRecord = True
+
+
+    def record(self):
+        while True:
+            if self.bRecord:
+                self.wavfile.writeframes(self.wavstream.read(self.chunk))
+
+    def stoprecord(self):
+        self.bRecord = False
+        time.sleep(1)
+        self.wavstream.stop_stream()
+        self.wavstream.close()
+        self.audio.terminate()
+        self.wavfile.close()
+
 
 class Camera:
     
@@ -71,7 +116,6 @@ class Camera:
         self.width = 640
         self.height = 360
         self.fourcc = cv2.VideoWriter_fourcc(*'XVID')
-        self.record = False
         self.video = cv2.VideoWriter("test.avi", self.fourcc, cv2.CAP_PROP_FPS, (self.width, self.height))
         self.thread = None
         self.stat = False
@@ -81,6 +125,7 @@ class Camera:
         self.Q = Queue(maxsize=128)
         self.started = False
         self.model = DectectionModel()
+        self.soundRecord = RecordThread()
 
     def result(self):
         gazeScore = 20
@@ -104,6 +149,10 @@ class Camera:
         if expressionScore < 0:
             expressionScore = 0
 
+        stt = SttService("./model/language/record.wav")
+        stt.getScripts()
+        interjectionResult = stt.getInterjectionResult()
+        speedResult = stt.getSpeedResult()
         content = {
             "gaze": {
                 "field": "gaze",
@@ -119,7 +168,9 @@ class Camera:
                 "field": "face expression",
                 "score": expressionScore,
                 "feed_back": self.model.expressionFeedback
-            }
+            },
+            "interjection" : interjectionResult,
+            "speed" : speedResult
         }
         return content
     
@@ -135,41 +186,38 @@ class Camera:
             
         self.capture.set(cv2.CAP_PROP_FRAME_WIDTH, self.width)
         self.capture.set(cv2.CAP_PROP_FRAME_HEIGHT, self.height)
-        
-        if self.thread is None :
+
+        self.soundRecord.run()
+        if self.thread is None:
             self.thread = Thread(target=self.update, args=())
             self.thread.daemon = False
             self.thread.start()
-        
         self.started = True
     
     def stop(self):
         
         self.started = False
-        self.record = False
         if self.capture is not None:
             self.capture.release()
             self.video.release()
             self.clear()
             
     def update(self):
-                    
         while True:
-
             if self.started:
                 (grabbed, frame) = self.capture.read()
                 if grabbed:
                     self.Q.put(frame)
                     self.video.write(frame)
-                    self.model.detection(frame)   
+                    self.model.detection(frame)
                           
     def clear(self):
-        
+        self.soundRecord.bRecord = False
+        self.soundRecord.stoprecord()
         with self.Q.mutex:
             self.Q.queue.clear()
-            
-    def read(self):
 
+    def read(self):
         return self.Q.get()
 
     def blank(self):
