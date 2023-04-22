@@ -44,14 +44,14 @@ services:
     volumes:
       - "mysqldata:/var/lib/mysql"
 
-  analysis:
-    build:
-      context: ./analysis
-    command: python3 app.py
-    environment:
-      FLASK_DEBUG: 1
-    ports:
-      - 8888:8888
+#  analysis:
+#    build:
+#      context: ./analysis
+#    command: python3 app.py
+#    environment:
+#      FLASK_DEBUG: 1
+#    ports:
+#      - 8888:8888
 
 volumes:
   mysqldata:
