@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom'
 import {HiOutlineUserCircle} from 'react-icons/hi'
 import {MdLogout} from 'react-icons/md'
 
@@ -28,7 +29,7 @@ const Nav = styled.ul`
   margin-left: auto;
 `;
 
-const NavItem = styled.li`
+const NavItem = styled.button`
   width: 5rem;
   height: 4rem;
   align-items: center;
@@ -38,6 +39,9 @@ const NavItem = styled.li`
   font-weight: normal;
   font-size: 15pt;
   list-style: none;
+  background-color: #0000;
+  border: none;
+  cursor: pointer;
   /*&:hover {
     cursor: pointer;
     background-color: black;
@@ -47,14 +51,22 @@ const NavItem = styled.li`
   }*/
 `;
 
-export default function Header() {
+export default function Header_Aft() {
   return (
     <HeaderWrapper>
       <Title>Cheer Up</Title>
       <Nav>
-        <NavItem><HiOutlineUserCircle size='35'/></NavItem>
-        <NavItem><MdLogout size='30'/></NavItem>
-      </Nav>
+        <Link to ='#'>
+            <NavItem>
+                <HiOutlineUserCircle size='35'/>
+            </NavItem>
+        </Link>
+        <Link to ='/'>
+            <NavItem>
+                <MdLogout size='30'/>
+            </NavItem>
+        </Link>
+    </Nav>
     </HeaderWrapper>
   );
 }
