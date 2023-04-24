@@ -1,12 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const Sci = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-`;
 
 const Lci = styled.div`
   display: flex;
@@ -14,6 +8,7 @@ const Lci = styled.div`
   justify-content: center;
   align-items: center;
   height: 20vh;
+  margin-top: 90px;
 `;
 
 const Form = styled.div`
@@ -43,7 +38,7 @@ const Text = styled.input.attrs(props=>({
   width: 300px;
   height: 20px;
   padding: 10px;
-  margin-bottom: 30px;
+  margin-bottom: 50px;
   border: 1px solid #ccc;
   border-radius: 10px;
   font-size: 14px;
