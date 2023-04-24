@@ -16,7 +16,7 @@ font-size: 50px;
 font: bold;
 text-align: center;
 margin: 0 auto;
-margin-bottom: 20px;
+margin-bottom: 0px;
 margin-top: 0px;
 color: #0084FE;
 `;
