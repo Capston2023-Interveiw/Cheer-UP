@@ -15,9 +15,8 @@ const Form = styled.div`
 
 const Lci = styled.div`
     width: 80%;
-    height: 70vh;
     margin: 0 auto;
-    margin-top: 200px;
+    height: 80vh;
     background-color: #E8F9FD;
 `;
 //position: absolute;
@@ -29,7 +28,8 @@ const Cm = styled.h1`
     vertical-align: bottom;
     text-align: center;
     color: #Black;
-    height: 100px;
+    margin: 0 auto;
+    height: 50px;
 `
 
 const Image = styled.div`
@@ -43,24 +43,28 @@ const Image = styled.div`
 `
 const Buttonmi = styled.button `
     margin-left: 70px;
-  width: 100px;
-  padding: 10px;
-  background-color: #0084FE;
-  color: #fff;
-  border: none;
-  border-radius: 25px;
-  font-size: 16px;
-  cursor: pointer;
-  text-align: center;
-  font: bold;
+    width: 100px;
+    padding: 10px;
+    background-color: #0084FE;
+    color: #fff;
+    border: none;
+    border-radius: 25px;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: center;
+    font: bold;
 `;
 
+const VoidDiv = styled.div`
+    height: 10vh;
+`
 
 
 export default function Main_Before() {
     return(
         <Form>
             <Header_Bef/>
+            <VoidDiv/>
             <Lci>
                 <Cm/>
                 <Cm>

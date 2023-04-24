@@ -14,9 +14,8 @@ const Form = styled.div`
 
 const Lci = styled.div`
     width: 80%;
-    height: 70vh;
     margin: 0 auto;
-    margin-top: 200px;
+    height: 80vh;
     background-color: #E8F9FD;
 `;
 //position: absolute;
@@ -28,7 +27,8 @@ const Cm = styled.h1`
     vertical-align: bottom;
     text-align: center;
     color: #Black;
-    height: 100px;
+    margin: 0 auto;
+    height: 50px;
 `
 
 const Image = styled.div`
@@ -54,12 +54,15 @@ const Buttonmi = styled.button `
   font: bold;
 `;
 
-
+const VoidDiv = styled.div`
+    height: 10vh;
+`
 
 export default function Main_After() {
     return(
         <Form>
             <Header_Aft/>
+            <VoidDiv/>
             <Lci>
                 <Cm/>
                 <Cm>
