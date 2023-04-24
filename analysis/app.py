@@ -9,12 +9,14 @@ app = Flask( __name__ )
 app.config['JSON_AS_ASCII'] = False
 isProgress = False
 isStream = False
-camera = Camera()
+result = None
 
 @app.route('/stream')
 def stream():
     src = request.args.get('src', default = 0, type = int)
     global isStream 
+    global result
+    result = None
     isStream = True
     try:
         return Response(
@@ -25,22 +27,25 @@ def stream():
         print('stream error : ',str(e))
 
 def stream_gen(src):
+    global result 
     try:
+        camera = Camera()
         camera.run(src)
         while isStream:
             frame = camera.bytescode()
             yield (b'--frame\r\n'
                 b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
+        camera.stop()
+        result = camera.model.result()
     except GeneratorExit:
         camera.stop()
 
 @app.route('/end')
 def end():
-    global isStream 
+    global isStream
     isStream = False
-    camera.stop()
-    time.sleep(1)
-    return camera.result()
+    time.sleep(10)
+    return result
     
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8888, debug=True)

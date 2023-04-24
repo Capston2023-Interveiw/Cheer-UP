@@ -19,7 +19,7 @@ class DectectionModel:
     def __init__(self):
         self.mp_holistic = mp.solutions.holistic
         self.holistic = self.mp_holistic.Holistic(min_detection_confidence=0.5, min_tracking_confidence=0.5)
-        self.gaze = GazeTracking()
+        self.gazeTracking = GazeTracking()
         self.gazeFeedback = []
         self.postureFeedback = []
         self.expressionFeedback = []
@@ -29,6 +29,10 @@ class DectectionModel:
         self.shoulderCount = 0
         self.postureCount = 0
         self.expressionCount = 0
+        self.face = None
+        self.gaze = None
+        self.shoulder = None
+        self.head = None
 
     def detection(self, frame):
         self.current_time = time.time()
@@ -37,14 +41,16 @@ class DectectionModel:
         fps += 1
         posture = run_posture(frame, self.holistic)
         frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-        face = run_face(frame)
-        gaze = run_gaze(frame, self.gaze)
-        if gaze != None:
+        self.face = run_face(frame)
+        self.gaze = run_gaze(frame, self.gazeTracking)
+        if self.gaze != None:
             self.gazeCount += 1
             if self.gazeCount >= 3 * fps:
-                self.gazeFeedback.append(gaze)
+                self.gazeFeedback.append(self.gaze)
                 self.gazeCount = 0
         if posture != None:
+            self.head = posture[0]
+            self.shoulder = posture[1]
             if posture[0] == 'Bad':
                 self.postureCount += 1
                 if self.postureCount >= 5 * fps:
@@ -55,14 +61,63 @@ class DectectionModel:
                 if self.shoulderCount >= 5 * fps:
                     self.postureFeedback.append("어깨 비대칭")
                     self.shoulderCount = 0
-        if face != None:
-            if face != "happy" and face != "neutral":
+        if self.face != None:
+            if self.face != "happy" and self.face != "neutral":
                 self.expressionCount += 1
                 if self.expressionCount >= 5 * fps:
-                    self.expressionFeedback.append(f"{face}한 표정")
+                    self.expressionFeedback.append(f"{self.face}한 표정")
                     self.expressionCount = 0
 
-class RecordThread():
+
+    def result(self):
+        gazeScore = 20
+        postureScore = 20
+        expressionScore = 20
+        if len(self.gazeFeedback) > 2:
+            gazeScore -= (len(self.gazeFeedback) - 2)
+        
+        if gazeScore < 0:
+            gazeScore = 0
+        
+        if len(self.postureFeedback) > 2:
+            postureScore -= (len(self.postureFeedback) - 2)
+
+        if postureScore < 0:
+            postureScore = 0
+        
+        if len(self.expressionFeedback) > 2:
+            expressionScore -= (len(self.expressionFeedback) - 2)
+
+        if expressionScore < 0:
+            expressionScore = 0
+
+        stt = SttService("./model/language/record.wav")
+        stt.getScripts()
+        interjectionResult = stt.getInterjectionResult()
+        speedResult = stt.getSpeedResult()
+        content = {
+            "gaze": {
+                "field": "gaze",
+                "score": gazeScore,
+                "feed_back": self.gazeFeedback
+            },
+            "posture": {
+                "field": "posture",
+                "score": postureScore,
+                "feed_back": self.postureFeedback
+            },
+            "face": {
+                "field": "face expression",
+                "score": expressionScore,
+                "feed_back": self.expressionFeedback
+            },
+            "interjection" : interjectionResult,
+            "speed" : speedResult
+        }
+        return content
+    
+class RecordThread:
+
     def __init__(self, audiofile='./model/language/record.wav'):
         self.thread = None
         self.audio = pyaudio.PyAudio()
@@ -91,7 +146,6 @@ class RecordThread():
             self.thread.start()
         self.bRecord = True
 
-
     def record(self):
         while True:
             if self.bRecord:
@@ -104,7 +158,7 @@ class RecordThread():
         self.wavstream.close()
         self.audio.terminate()
         self.wavfile.close()
-
+        self.wavfile = None
 
 class Camera:
     
@@ -125,59 +179,13 @@ class Camera:
         self.Q = Queue(maxsize=128)
         self.started = False
         self.model = DectectionModel()
-        self.soundRecord = RecordThread()
+        self.soundRecord = None
 
-    def result(self):
-        gazeScore = 20
-        postureScore = 20
-        expressionScore = 20
-        if len(self.model.gazeFeedback) > 2:
-            gazeScore -= (len(self.model.gazeFeedback) - 2)
-        
-        if gazeScore < 0:
-            gazeScore = 0
-        
-        if len(self.model.postureFeedback) > 2:
-            postureScore -= (len(self.model.postureFeedback) - 2)
-
-        if postureScore < 0:
-            postureScore = 0
-        
-        if len(self.model.expressionFeedback) > 2:
-            expressionScore -= (len(self.model.expressionFeedback) - 2)
-
-        if expressionScore < 0:
-            expressionScore = 0
-
-        stt = SttService("./model/language/record.wav")
-        stt.getScripts()
-        interjectionResult = stt.getInterjectionResult()
-        speedResult = stt.getSpeedResult()
-        content = {
-            "gaze": {
-                "field": "gaze",
-                "score": gazeScore,
-                "feed_back": self.model.gazeFeedback
-            },
-            "posture": {
-                "field": "posture",
-                "score": postureScore,
-                "feed_back": self.model.postureFeedback
-            },
-            "face": {
-                "field": "face expression",
-                "score": expressionScore,
-                "feed_back": self.model.expressionFeedback
-            },
-            "interjection" : interjectionResult,
-            "speed" : speedResult
-        }
-        return content
-    
     def run(self, src = 0 ) :
         
         self.stop()
-    
+
+        self.soundRecord = RecordThread()
         if platform.system() == 'Windows' :        
             self.capture = cv2.VideoCapture(src , cv2.CAP_DSHOW)
         
@@ -200,6 +208,8 @@ class Camera:
         if self.capture is not None:
             self.capture.release()
             self.video.release()
+            self.soundRecord.bRecord = False
+            self.soundRecord.stoprecord()
             self.clear()
             
     def update(self):
@@ -212,8 +222,6 @@ class Camera:
                     self.model.detection(frame)
                           
     def clear(self):
-        self.soundRecord.bRecord = False
-        self.soundRecord.stoprecord()
         with self.Q.mutex:
             self.Q.queue.clear()
 
@@ -229,15 +237,18 @@ class Camera:
         if not self.capture.isOpened():
             
             frame = self.blank()
-
-        else :
             
+        else :
+
             frame = imutils.resize(self.read(), width=int(self.width) )
-        
+            cv2.putText(frame, "face: " + str(self.model.face), (30, 45), cv2.FONT_HERSHEY_DUPLEX, 0.7, (147, 58, 31), 1)
+            cv2.putText(frame, "head: " + str(self.model.head), (30, 75), cv2.FONT_HERSHEY_DUPLEX, 0.7, (147, 58, 31), 1)
+            cv2.putText(frame, "shoulder: " + str(self.model.shoulder), (250, 45), cv2.FONT_HERSHEY_DUPLEX, 0.7, (147, 58, 31), 1)
+            cv2.putText(frame, "gaze: " + str(self.model.gaze), (250, 75), cv2.FONT_HERSHEY_DUPLEX, 0.7, (147, 58, 31), 1)
             if self.stat :  
                 cv2.rectangle( frame, (0,0), (120,30), (0,0,0), -1)
                 fps = 'FPS : ' + str(self.fps())
-                cv2.putText  ( frame, fps, (10,20), cv2.FONT_HERSHEY_PLAIN, 1, (0,0,255), 1, cv2.LINE_AA)
+                cv2.putText( frame, "ghjj", (10,20), cv2.FONT_HERSHEY_PLAIN, 1, (0,0,255), 1, cv2.LINE_AA)
             
             
         return cv2.imencode('.jpg', frame )[1].tobytes()
