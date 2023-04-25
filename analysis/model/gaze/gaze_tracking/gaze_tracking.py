@@ -14,7 +14,6 @@ class GazeTracking(object):
     """
 
     def __init__(self):
-        self.frame = None
         self.eye_left = None
         self.eye_right = None
         self.calibration = Calibration()
@@ -39,9 +38,8 @@ class GazeTracking(object):
         except Exception:
             return False
 
-    def _analyze(self):
+    def _analyze(self, frame):
         """Detects the face and initialize Eye objects"""
-        frame = cv2.cvtColor(self.frame, cv2.COLOR_BGR2GRAY)
         faces = self._face_detector(frame)
 
         try:
@@ -60,7 +58,7 @@ class GazeTracking(object):
             frame (numpy.ndarray): The frame to analyze
         """
         self.frame = frame
-        self._analyze()
+        self._analyze(frame)
 
     def pupil_left_coords(self):
         """Returns the coordinates of the left pupil"""
