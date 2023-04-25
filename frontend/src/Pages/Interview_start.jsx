@@ -3,6 +3,7 @@ import React from "react";
 import styled from "styled-components";
 import Header from "../Components/Header";
 import StartButton from "../Components/Button";
+import {Link} from "react-router-dom";
 
 const MainWrap = styled.div`
     position: fixed;
@@ -15,8 +16,10 @@ const MainWrap = styled.div`
 
 const Wrap = styled.div`
     width: 100%;
+    margin-top: 40px; //중앙 정렬 고정해야함
     text-align: center;
     align-items: center;
+    background-color: #e8f9fd;
 `;
 
 const Title = styled.h1`
@@ -25,24 +28,24 @@ const Title = styled.h1`
 `;
 
 const WrapContent = styled.div`
-    margin-top: 40px; //중앙 정렬 고정해야함
-    background-color: #e8f9fd;
+    margin-left: 20px;
     height: 75vh;
     text-align: center;
     align-items: center;
-    /* margin: auto 0; */
+    display: felx;
 `;
 
 const WrapText = styled.div`
     text-align: center;
     align-items: center;
     width: fit-content;
+    padding: 50px;
 `;
 const WrapStartButton = styled.div`
     float: bottom;
 `;
 
-function Interview() {
+function Interview_start() {
     const iframePart = () => {
         return {
             __html: '<iframe src="http://localhost:8888" width="640" height="360px"></iframe>',
@@ -61,17 +64,13 @@ function Interview() {
                     </WrapText>
 
                     <div
-                        // style={{
-                        //     margin: "auto",
-                        //     position: "relative",
-                        //     width: "100%",
-                        //     height: "100%",
-                        //     overflow: "hidden",
-                        // }}
                         dangerouslySetInnerHTML={iframePart()}
                     ></div>
 
-                    <WrapStartButton>
+            
+                </WrapContent>
+                <WrapStartButton>
+                    <Link to="/Interview">
                         <StartButton
                             color={"white"}
                             background={"#0084FE"}
@@ -80,11 +79,11 @@ function Interview() {
                             name="START"
                             borderRadius="0.3rem"
                         />
+                        </Link>
                     </WrapStartButton>
-                </WrapContent>
             </Wrap>
         </MainWrap>
     );
 }
 
-export default Interview;
+export default Interview_start;
