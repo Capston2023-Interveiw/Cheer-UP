@@ -10,6 +10,7 @@ const HeaderWrapper = styled.div`
   display: flex;
   padding: 0 4rem;
   border-bottom: solid 1px #828282;
+  // position: fixed;
 `;
 
 const Title = styled.h1`
