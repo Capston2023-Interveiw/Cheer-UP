@@ -107,7 +107,7 @@ class DectectionModel:
                 "feed_back": self.postureFeedback
             },
             "face": {
-                "field": "face expression",
+                "field": "face",
                 "score": expressionScore,
                 "feed_back": self.expressionFeedback
             },
@@ -173,6 +173,7 @@ class Camera:
         self.video = cv2.VideoWriter("test.avi", self.fourcc, cv2.CAP_PROP_FPS, (self.width, self.height))
         self.thread = None
         self.stat = False
+        self.videoWrite = False
         self.current_time = time.time()
         self.preview_time = time.time()
         self.sec = 0
@@ -181,7 +182,7 @@ class Camera:
         self.model = DectectionModel()
         self.soundRecord = None
 
-    def run(self, src = 0 ) :
+    def run(self, src = 0) :
         
         self.stop()
 
@@ -201,6 +202,7 @@ class Camera:
             self.thread.daemon = False
             self.thread.start()
         self.started = True
+        self.videoWrite = True
     
     def stop(self):
         
@@ -210,6 +212,7 @@ class Camera:
             self.video.release()
             self.soundRecord.bRecord = False
             self.soundRecord.stoprecord()
+            self.videoWrite = False
             self.clear()
             
     def update(self):
@@ -218,12 +221,13 @@ class Camera:
                 (grabbed, frame) = self.capture.read()
                 if grabbed:
                     self.Q.put(frame)
-                    self.video.write(frame)
-                    self.model.detection(frame)
-                          
+                    self.model.detection(frame)                    
+
+                 
     def clear(self):
         with self.Q.mutex:
             self.Q.queue.clear()
+
 
     def read(self):
         return self.Q.get()
@@ -237,7 +241,7 @@ class Camera:
         if not self.capture.isOpened():
             
             frame = self.blank()
-            
+
         else :
 
             frame = imutils.resize(self.read(), width=int(self.width) )
@@ -245,10 +249,10 @@ class Camera:
             cv2.putText(frame, "head: " + str(self.model.head), (30, 75), cv2.FONT_HERSHEY_DUPLEX, 0.7, (147, 58, 31), 1)
             cv2.putText(frame, "shoulder: " + str(self.model.shoulder), (250, 45), cv2.FONT_HERSHEY_DUPLEX, 0.7, (147, 58, 31), 1)
             cv2.putText(frame, "gaze: " + str(self.model.gaze), (250, 75), cv2.FONT_HERSHEY_DUPLEX, 0.7, (147, 58, 31), 1)
+            self.video.write(frame)
             if self.stat :  
                 cv2.rectangle( frame, (0,0), (120,30), (0,0,0), -1)
                 fps = 'FPS : ' + str(self.fps())
-                cv2.putText( frame, "ghjj", (10,20), cv2.FONT_HERSHEY_PLAIN, 1, (0,0,255), 1, cv2.LINE_AA)
             
             
         return cv2.imencode('.jpg', frame )[1].tobytes()
