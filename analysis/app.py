@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template, url_for
 from flask import request
 from flask import Response
 from flask import stream_with_context
@@ -10,6 +10,10 @@ app.config['JSON_AS_ASCII'] = False
 isProgress = False
 isStream = False
 result = None
+
+@app.route('/')
+def home():
+    return render_template('video.html')
 
 @app.route('/stream')
 def stream():
