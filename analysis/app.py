@@ -47,9 +47,10 @@ def stream_gen(src):
 @app.route('/end')
 def end():
     global isStream
+    global result
     isStream = False
-    time.sleep(10)
-    return result
+    time.sleep(20)
+    return render_template('result.html', data={"result": result})
     
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8888, debug=True)
