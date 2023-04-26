@@ -9,7 +9,7 @@ from queue import Queue
 
 from model.gaze.gaze_tracking.gaze_tracking import GazeTracking
 from model.gaze.gaze import run_gaze
-from model.posture.PoseProject import run_posture
+from model.posture.PoseProject import Posture
 from model.face.real_time_video import run_face
 from model.language.language import SttService
 import mediapipe as mp
@@ -19,6 +19,8 @@ class DectectionModel:
     def __init__(self):
         self.mp_holistic = mp.solutions.holistic
         self.holistic = self.mp_holistic.Holistic(min_detection_confidence=0.5, min_tracking_confidence=0.5)
+        self.mp_drawing = mp.solutions.drawing_utils
+        self.postureClass = Posture(self.holistic)
         self.gazeTracking = GazeTracking()
         self.gazeFeedback = []
         self.postureFeedback = []
@@ -43,7 +45,7 @@ class DectectionModel:
         fps = 1 / (self.current_time - self.preview_time)
         self.preview_time = self.current_time
         fps += 1
-        posture = run_posture(frame, self.holistic)
+        posture = self.postureClass.run_posture(frame)
         frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
         self.face = run_face(frame)
         self.gaze, self.x_left, self.y_left, self.x_right, self.y_right = run_gaze(frame, self.gazeTracking)
@@ -260,6 +262,13 @@ class Camera:
             cv2.line(frame, (self.model.x_left, self.model.y_left - 5), (self.model.x_left, self.model.y_left + 5), color)
             cv2.line(frame, (self.model.x_right - 5, self.model.y_right), (self.model.x_right + 5, self.model.y_right), color)
             cv2.line(frame, (self.model.x_right, self.model.y_right - 5), (self.model.x_right, self.model.y_right + 5), color)
+            if self.model.postureClass.results is not None:
+
+                self.model.mp_drawing.draw_landmarks(frame, self.model.postureClass.results.pose_landmarks, self.model.mp_holistic.POSE_CONNECTIONS, 
+                                        self.model.mp_drawing.DrawingSpec(color=(245,117,66), thickness=0, circle_radius=0),
+                                        self.model.mp_drawing.DrawingSpec(color=(245,66,230), thickness=1, circle_radius=1)
+                                        )
+
             self.video.write(frame)
             if self.stat :  
                 cv2.rectangle( frame, (0,0), (120,30), (0,0,0), -1)

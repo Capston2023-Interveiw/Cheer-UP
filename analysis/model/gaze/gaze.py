@@ -4,6 +4,7 @@ from .gaze_tracking.gaze_tracking import GazeTracking
 
 
 def run_gaze(frame, gaze):
+    print(frame)
     gaze.refresh(frame)
     x_left, y_left, x_right, y_right = gaze.annotated_frame()
     if gaze.is_right():
