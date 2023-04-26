@@ -56,16 +56,17 @@ class DectectionModel:
         frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
         faceResult = run_face(frame)
 
-        if run_face(frame) is not None:
+        if faceResult is not None:
             self.face, self.fX, self.fY, self.fW, self.fH = faceResult
         self.gaze, self.x_left, self.y_left, self.x_right, self.y_right = run_gaze(frame, self.gazeTracking)
 
         if self.gaze == "left" or self.gaze == "right":
             self.gazeCount += 1
-            self.gazeColor = (0, 0, 255)
+            self.gazeColor = (248, 72, 216)
             if self.gazeCount >= 3 * fps:
                 self.gazeFeedback.append(self.gaze)
                 self.gazeCount = 0
+                self.gazeColor = (0, 0, 255)
         else:
             self.gazeColor = (2, 247, 234)
 
@@ -79,20 +80,22 @@ class DectectionModel:
                     self.postureCount = 0
             if posture[1]:
                 self.shoulderCount += 1
-                self.shoulderColor = (0, 0, 255)
+                self.shoulderColor = (248, 72, 216)
                 if self.shoulderCount >= 5 * fps:
                     self.postureFeedback.append("어깨 비대칭")
                     self.shoulderCount = 0
+                    self.shoulderColor = (0, 0, 255)
             else:
                 self.shoulderColor = (2, 247, 234)
 
         if self.face != None:
             if self.face != "happy" and self.face != "neutral":
                 self.expressionCount += 1
-                self.faceColor = (0, 0, 255)
+                self.faceColor = (248, 72, 216)
                 if self.expressionCount >= 5 * fps:
                     self.expressionFeedback.append(f"{self.face}한 표정")
                     self.expressionCount = 0
+                    self.faceColor = (0, 0, 255)
             else:
                 self.faceColor = (2, 247, 234)
 

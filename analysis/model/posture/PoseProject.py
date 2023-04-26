@@ -77,7 +77,7 @@ class Posture:
             X = pd.DataFrame([row])
             body_language_class = model.predict(X)[0]
             body_language_prob = model.predict_proba(X)[0]
-            return body_language_class, angle<177
+            return body_language_class, angle<174
 
 
         except:

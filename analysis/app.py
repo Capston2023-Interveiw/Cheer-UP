@@ -49,8 +49,7 @@ def end():
     global isStream
     global result
     isStream = False
-    time.sleep(10)
-    print(result)
+    time.sleep(20)
     return render_template('result.html', data={"result": result})
     
 if __name__ == '__main__':
