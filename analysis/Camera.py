@@ -33,7 +33,11 @@ class DectectionModel:
         self.gaze = None
         self.shoulder = None
         self.head = None
-
+        self.x_left = 0
+        self.y_left = 0
+        self.x_right = 0
+        self.y_right = 0
+        
     def detection(self, frame):
         self.current_time = time.time()
         fps = 1 / (self.current_time - self.preview_time)
@@ -42,7 +46,7 @@ class DectectionModel:
         posture = run_posture(frame, self.holistic)
         frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
         self.face = run_face(frame)
-        self.gaze = run_gaze(frame, self.gazeTracking)
+        self.gaze, self.x_left, self.y_left, self.x_right, self.y_right = run_gaze(frame, self.gazeTracking)
         if self.gaze != None:
             self.gazeCount += 1
             if self.gazeCount >= 3 * fps:
@@ -93,8 +97,10 @@ class DectectionModel:
 
         stt = SttService("./model/language/record.wav")
         stt.getScripts()
-        interjectionResult = stt.getInterjectionResult()
-        speedResult = stt.getSpeedResult()
+        while stt.isEnd == False:
+            interjectionResult = stt.getInterjectionResult()
+            speedResult = stt.getSpeedResult()
+        time.sleep(2)
         content = {
             "gaze": {
                 "field": "gaze",
@@ -249,6 +255,11 @@ class Camera:
             cv2.putText(frame, "head: " + str(self.model.head), (30, 75), cv2.FONT_HERSHEY_DUPLEX, 0.7, (147, 58, 31), 1)
             cv2.putText(frame, "shoulder: " + str(self.model.shoulder), (250, 45), cv2.FONT_HERSHEY_DUPLEX, 0.7, (147, 58, 31), 1)
             cv2.putText(frame, "gaze: " + str(self.model.gaze), (250, 75), cv2.FONT_HERSHEY_DUPLEX, 0.7, (147, 58, 31), 1)
+            color = (0, 255, 0)
+            cv2.line(frame, (self.model.x_left - 5, self.model.y_left), (self.model.x_left + 5, self.model.y_left), color)
+            cv2.line(frame, (self.model.x_left, self.model.y_left - 5), (self.model.x_left, self.model.y_left + 5), color)
+            cv2.line(frame, (self.model.x_right - 5, self.model.y_right), (self.model.x_right + 5, self.model.y_right), color)
+            cv2.line(frame, (self.model.x_right, self.model.y_right - 5), (self.model.x_right, self.model.y_right + 5), color)
             self.video.write(frame)
             if self.stat :  
                 cv2.rectangle( frame, (0,0), (120,30), (0,0,0), -1)

@@ -13,8 +13,10 @@ class SttService:
     self.audio_path = audio_path
     self.scripts = ""
     self.result = {}
+    self.isEnd = False
 
   def getScripts(self):
+    self.isEnd = False
     self.result = getScripts(self.token, self.audio_path)
     
     for content in self.result:
@@ -61,4 +63,5 @@ class SttService:
       "minus_point": speed,
       "time_stamp": []
     }
+    self.isEnd = True
     return content

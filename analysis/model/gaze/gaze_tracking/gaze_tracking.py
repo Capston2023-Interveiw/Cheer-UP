@@ -120,14 +120,9 @@ class GazeTracking(object):
     def annotated_frame(self):
         """Returns the main frame with pupils highlighted"""
         frame = self.frame.copy()
-
+        x_left, y_left, x_right, y_right = 0, 0, 0, 0
         if self.pupils_located:
-            color = (0, 255, 0)
             x_left, y_left = self.pupil_left_coords()
             x_right, y_right = self.pupil_right_coords()
-            #cv2.line(frame, (x_left - 5, y_left), (x_left + 5, y_left), color)
-            #cv2.line(frame, (x_left, y_left - 5), (x_left, y_left + 5), color)
-            #cv2.line(frame, (x_right - 5, y_right), (x_right + 5, y_right), color)
-            #cv2.line(frame, (x_right, y_right - 5), (x_right, y_right + 5), color)
 
-        return frame
+        return x_left, y_left, x_right, y_right
