@@ -39,6 +39,13 @@ class DectectionModel:
         self.y_left = 0
         self.x_right = 0
         self.y_right = 0
+        self.fX = 0
+        self.fY = 0
+        self.fW = 0
+        self.fH = 0
+        self.faceColor = (0, 0, 255)
+        self.gazeColor = (0, 0, 255)
+        self.postureColor = (0, 0, 255)
         
     def detection(self, frame):
         self.current_time = time.time()
@@ -47,13 +54,18 @@ class DectectionModel:
         fps += 1
         posture = self.postureClass.run_posture(frame)
         frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-        self.face = run_face(frame)
+        faceResult = run_face(frame)
+        if run_face(frame) is not None:
+            self.face, self.fX, self.fY, self.fW, self.fH = faceResult
         self.gaze, self.x_left, self.y_left, self.x_right, self.y_right = run_gaze(frame, self.gazeTracking)
-        if self.gaze != None:
+        if self.gaze == "left" or self.gaze == "right":
             self.gazeCount += 1
+            self.gazeColor = (255, 0 , 0)
             if self.gazeCount >= 3 * fps:
                 self.gazeFeedback.append(self.gaze)
                 self.gazeCount = 0
+        else:
+            self.gazeColor = (0, 0, 255)
         if posture != None:
             self.head = posture[0]
             self.shoulder = posture[1]
@@ -73,7 +85,6 @@ class DectectionModel:
                 if self.expressionCount >= 5 * fps:
                     self.expressionFeedback.append(f"{self.face}한 표정")
                     self.expressionCount = 0
-
 
     def result(self):
         gazeScore = 20
@@ -230,12 +241,10 @@ class Camera:
                 if grabbed:
                     self.Q.put(frame)
                     self.model.detection(frame)                    
-
-                 
+           
     def clear(self):
         with self.Q.mutex:
             self.Q.queue.clear()
-
 
     def read(self):
         return self.Q.get()
@@ -262,19 +271,16 @@ class Camera:
             cv2.line(frame, (self.model.x_left, self.model.y_left - 5), (self.model.x_left, self.model.y_left + 5), color)
             cv2.line(frame, (self.model.x_right - 5, self.model.y_right), (self.model.x_right + 5, self.model.y_right), color)
             cv2.line(frame, (self.model.x_right, self.model.y_right - 5), (self.model.x_right, self.model.y_right + 5), color)
+            cv2.rectangle(frame, (self.model.fX, self.model.fY), (self.model.fX + self.model.fW, self.model.fY + self.model.fH), (0, 0, 255), 2)
             if self.model.postureClass.results is not None:
-
                 self.model.mp_drawing.draw_landmarks(frame, self.model.postureClass.results.pose_landmarks, self.model.mp_holistic.POSE_CONNECTIONS, 
                                         self.model.mp_drawing.DrawingSpec(color=(245,117,66), thickness=0, circle_radius=0),
-                                        self.model.mp_drawing.DrawingSpec(color=(245,66,230), thickness=1, circle_radius=1)
+                                        self.model.mp_drawing.DrawingSpec(color=(245,66,230), thickness=2, circle_radius=2)
                                         )
-
             self.video.write(frame)
-            if self.stat :  
-                cv2.rectangle( frame, (0,0), (120,30), (0,0,0), -1)
+            if self.stat:  
+                cv2.rectangle(frame, (0,0), (120,30), (0,0,0), -1)
                 fps = 'FPS : ' + str(self.fps())
-            
-            
         return cv2.imencode('.jpg', frame )[1].tobytes()
     
     def fps(self):
