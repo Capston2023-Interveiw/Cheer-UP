@@ -43,9 +43,9 @@ class DectectionModel:
         self.fY = 0
         self.fW = 0
         self.fH = 0
-        self.faceColor = (0, 0, 255)
-        self.gazeColor = (0, 0, 255)
-        self.postureColor = (0, 0, 255)
+        self.faceColor = (2, 247, 234)
+        self.gazeColor = (2, 247, 234)
+        self.shoulderColor = (2, 247, 234)
         
     def detection(self, frame):
         self.current_time = time.time()
@@ -55,17 +55,20 @@ class DectectionModel:
         posture = self.postureClass.run_posture(frame)
         frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
         faceResult = run_face(frame)
+
         if run_face(frame) is not None:
             self.face, self.fX, self.fY, self.fW, self.fH = faceResult
         self.gaze, self.x_left, self.y_left, self.x_right, self.y_right = run_gaze(frame, self.gazeTracking)
+
         if self.gaze == "left" or self.gaze == "right":
             self.gazeCount += 1
-            self.gazeColor = (255, 0 , 0)
+            self.gazeColor = (0, 0, 255)
             if self.gazeCount >= 3 * fps:
                 self.gazeFeedback.append(self.gaze)
                 self.gazeCount = 0
         else:
-            self.gazeColor = (0, 0, 255)
+            self.gazeColor = (2, 247, 234)
+
         if posture != None:
             self.head = posture[0]
             self.shoulder = posture[1]
@@ -76,15 +79,22 @@ class DectectionModel:
                     self.postureCount = 0
             if posture[1]:
                 self.shoulderCount += 1
+                self.shoulderColor = (0, 0, 255)
                 if self.shoulderCount >= 5 * fps:
                     self.postureFeedback.append("어깨 비대칭")
                     self.shoulderCount = 0
+            else:
+                self.shoulderColor = (2, 247, 234)
+
         if self.face != None:
             if self.face != "happy" and self.face != "neutral":
                 self.expressionCount += 1
+                self.faceColor = (0, 0, 255)
                 if self.expressionCount >= 5 * fps:
                     self.expressionFeedback.append(f"{self.face}한 표정")
                     self.expressionCount = 0
+            else:
+                self.faceColor = (2, 247, 234)
 
     def result(self):
         gazeScore = 20
@@ -118,17 +128,17 @@ class DectectionModel:
             "gaze": {
                 "field": "gaze",
                 "score": gazeScore,
-                "feed_back": self.gazeFeedback
+                "feedback": self.gazeFeedback
             },
             "posture": {
                 "field": "posture",
                 "score": postureScore,
-                "feed_back": self.postureFeedback
+                "feedback": self.postureFeedback
             },
             "face": {
                 "field": "face",
                 "score": expressionScore,
-                "feed_back": self.expressionFeedback
+                "feedback": self.expressionFeedback
             },
             "interjection" : interjectionResult,
             "speed" : speedResult
@@ -266,16 +276,15 @@ class Camera:
             cv2.putText(frame, "head: " + str(self.model.head), (30, 75), cv2.FONT_HERSHEY_DUPLEX, 0.7, (147, 58, 31), 1)
             cv2.putText(frame, "shoulder: " + str(self.model.shoulder), (250, 45), cv2.FONT_HERSHEY_DUPLEX, 0.7, (147, 58, 31), 1)
             cv2.putText(frame, "gaze: " + str(self.model.gaze), (250, 75), cv2.FONT_HERSHEY_DUPLEX, 0.7, (147, 58, 31), 1)
-            color = (0, 255, 0)
-            cv2.line(frame, (self.model.x_left - 5, self.model.y_left), (self.model.x_left + 5, self.model.y_left), color)
-            cv2.line(frame, (self.model.x_left, self.model.y_left - 5), (self.model.x_left, self.model.y_left + 5), color)
-            cv2.line(frame, (self.model.x_right - 5, self.model.y_right), (self.model.x_right + 5, self.model.y_right), color)
-            cv2.line(frame, (self.model.x_right, self.model.y_right - 5), (self.model.x_right, self.model.y_right + 5), color)
-            cv2.rectangle(frame, (self.model.fX, self.model.fY), (self.model.fX + self.model.fW, self.model.fY + self.model.fH), (0, 0, 255), 2)
+            cv2.line(frame, (self.model.x_left - 5, self.model.y_left), (self.model.x_left + 5, self.model.y_left), self.model.gazeColor)
+            cv2.line(frame, (self.model.x_left, self.model.y_left - 5), (self.model.x_left, self.model.y_left + 5), self.model.gazeColor)
+            cv2.line(frame, (self.model.x_right - 5, self.model.y_right), (self.model.x_right + 5, self.model.y_right), self.model.gazeColor)
+            cv2.line(frame, (self.model.x_right, self.model.y_right - 5), (self.model.x_right, self.model.y_right + 5), self.model.gazeColor)
+            cv2.rectangle(frame, (self.model.fX, self.model.fY), (self.model.fX + self.model.fW, self.model.fY + self.model.fH), self.model.faceColor, 2)
             if self.model.postureClass.results is not None:
                 self.model.mp_drawing.draw_landmarks(frame, self.model.postureClass.results.pose_landmarks, self.model.mp_holistic.POSE_CONNECTIONS, 
-                                        self.model.mp_drawing.DrawingSpec(color=(245,117,66), thickness=0, circle_radius=0),
-                                        self.model.mp_drawing.DrawingSpec(color=(245,66,230), thickness=2, circle_radius=2)
+                                        self.model.mp_drawing.DrawingSpec(color=self.model.shoulderColor, thickness=0, circle_radius=0),
+                                        self.model.mp_drawing.DrawingSpec(color=self.model.shoulderColor, thickness=2, circle_radius=2)
                                         )
             self.video.write(frame)
             if self.stat:  

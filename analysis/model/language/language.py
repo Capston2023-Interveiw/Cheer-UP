@@ -48,7 +48,7 @@ class SttService:
     content = {
       "field": "interjection",
       "score": self.interjectionScore(interjections),
-      "minus_point": interjections,
+      "feedback": interjections,
       "time_stamp": timestamp
     }
     return content
@@ -60,7 +60,7 @@ class SttService:
     content = {
       "field": "speed",
       "score": score,
-      "minus_point": speed,
+      "feedback": speed,
       "time_stamp": []
     }
     self.isEnd = True

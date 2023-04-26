@@ -84,8 +84,6 @@ class GazeTracking(object):
             pupil_right = self.eye_right.pupil.x / (self.eye_right.center[0] * 2 - 10)
             return (pupil_left + pupil_right) / 2
 
-        print(pupil_left, pupil_right)
-
     def vertical_ratio(self):
         """Returns a number between 0.0 and 1.0 that indicates the
         vertical direction of the gaze. The extreme top is 0.0,
