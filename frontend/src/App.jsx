@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Welcome from './Pages/Welcome';
 import Interview_start from './Pages/Interview_start';
-import Interview from './Pages/Interview_start';
+import Interview from './Pages/Interview';
 
 
 function App() {
