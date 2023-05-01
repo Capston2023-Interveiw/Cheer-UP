@@ -46,6 +46,7 @@ class DectectionModel:
         self.faceColor = (2, 247, 234)
         self.gazeColor = (2, 247, 234)
         self.shoulderColor = (2, 247, 234)
+        self.headColor = (2, 247, 234)
         
     def detection(self, frame):
         self.current_time = time.time()
@@ -75,9 +76,13 @@ class DectectionModel:
             self.shoulder = posture[1]
             if posture[0] == 'Bad':
                 self.postureCount += 1
+                self.headColor = (248, 72, 216)
                 if self.postureCount >= 5 * fps:
                     self.postureFeedback.append(posture[0])
                     self.postureCount = 0
+                    self.headColor = (0, 0, 255)
+            else:
+                self.headColor = (2, 247, 234)
             if posture[1]:
                 self.shoulderCount += 1
                 self.shoulderColor = (248, 72, 216)
@@ -189,8 +194,9 @@ class RecordThread:
         self.wavstream.stop_stream()
         self.wavstream.close()
         self.audio.terminate()
-        self.wavfile.close()
-        self.wavfile = None
+        if self.wavfile is not None:
+            self.wavfile.close()
+            self.wavfile = None
 
 class Camera:
     
@@ -285,9 +291,14 @@ class Camera:
             cv2.line(frame, (self.model.x_right, self.model.y_right - 5), (self.model.x_right, self.model.y_right + 5), self.model.gazeColor)
             cv2.rectangle(frame, (self.model.fX, self.model.fY), (self.model.fX + self.model.fW, self.model.fY + self.model.fH), self.model.faceColor, 2)
             if self.model.postureClass.results is not None:
-                self.model.mp_drawing.draw_landmarks(frame, self.model.postureClass.results.pose_landmarks, self.model.mp_holistic.POSE_CONNECTIONS, 
-                                        self.model.mp_drawing.DrawingSpec(color=self.model.shoulderColor, thickness=0, circle_radius=0),
-                                        self.model.mp_drawing.DrawingSpec(color=self.model.shoulderColor, thickness=2, circle_radius=2)
+                self.model.mp_drawing.draw_landmarks(frame, self.model.postureClass.results.pose_landmarks, {(12, 14), (11, 12), (11, 12)}, 
+                                        None,
+                                        self.model.mp_drawing.DrawingSpec(color=self.model.shoulderColor, thickness=2, circle_radius=4),
+                                        )
+               
+                self.model.mp_drawing.draw_landmarks(frame, self.model.postureClass.results.face_landmarks, self.model.mp_holistic.FACEMESH_CONTOURS, 
+                                            None,
+                                            self.model.mp_drawing.DrawingSpec(color=self.model.headColor, thickness=1, circle_radius=1)
                                         )
             self.video.write(frame)
             if self.stat:  

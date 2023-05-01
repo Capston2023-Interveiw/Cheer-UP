@@ -10,4 +10,6 @@ def run_gaze(frame, gaze):
         return "right", x_left, y_left, x_right, y_right
     elif gaze.is_left():
         return "left", x_left, y_left, x_right, y_right
+    elif gaze.is_center():
+        return "center", x_left, y_left, x_right, y_right
     return None, x_left, y_left, x_right, y_right
