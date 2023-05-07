@@ -1,19 +1,21 @@
 package com.example.backend.service;
 
 import com.example.backend.entity.Member;
-import com.example.backend.repository.MemberRepositoy;
+import com.example.backend.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
 public class CustomUserDetailsService implements UserDetailsService {
 
-    private final MemberRepositoy memberRepository;
+    private final MemberRepository memberRepository;
+    private final PasswordEncoder passwordEncoder;
     @Override
     public UserDetails loadUserByUsername(String accountId) throws UsernameNotFoundException {
         return memberRepository.findMemberByAccountId(accountId)
@@ -23,9 +25,8 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     private UserDetails createUserDetails(Member member) {
         return User.builder()
-                .username(member.getUsername())
-                .password(member.getPassword())
-                .roles(member.getRoles().toArray(new String[0]))
+                .username(member.getAccountId())
+                .password(passwordEncoder.encode(member.getPassword()))
                 .build();
     }
 }

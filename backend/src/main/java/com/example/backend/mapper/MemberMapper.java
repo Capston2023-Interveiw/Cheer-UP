@@ -12,6 +12,7 @@ public class MemberMapper {
         return Member.builder()
                 .accountId(dto.getAccountId())
                 .password(dto.getPassword())
+                .username(dto.getUsername())
                 .email(dto.getEmail())
                 .gender(dto.getGender())
                 .age(dto.getAge())

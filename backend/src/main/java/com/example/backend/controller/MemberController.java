@@ -8,6 +8,7 @@ import com.example.backend.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,7 +21,7 @@ public class MemberController {
     private final MemberService memberService;
 
     @PostMapping("/account")
-    public ResponseEntity<Void> create(@RequestBody MemberRequest dto) {
+    public ResponseEntity<Void> create(@Validated @RequestBody MemberRequest dto) throws Exception  {
         memberService.create(dto);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
