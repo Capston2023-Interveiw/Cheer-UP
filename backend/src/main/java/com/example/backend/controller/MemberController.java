@@ -1,7 +1,7 @@
 package com.example.backend.controller;
 
 import com.example.backend.dto.TokenInfo;
-import com.example.backend.dto.request.MemberLoginRequestDto;
+import com.example.backend.dto.request.MemberLoginRequest;
 import com.example.backend.dto.request.MemberRequest;
 import com.example.backend.dto.response.MemberResponse;
 import com.example.backend.service.MemberService;
@@ -29,7 +29,7 @@ public class MemberController {
     }
 
     @PostMapping("/login")
-    public TokenInfo login(@RequestBody MemberLoginRequestDto dto) {
+    public TokenInfo login(@RequestBody MemberLoginRequest dto) {
         return memberService.login(dto);
     }
 

@@ -1,7 +1,7 @@
 package com.example.backend.service;
 
 import com.example.backend.dto.TokenInfo;
-import com.example.backend.dto.request.MemberLoginRequestDto;
+import com.example.backend.dto.request.MemberLoginRequest;
 import com.example.backend.dto.request.MemberRequest;
 import com.example.backend.dto.response.MemberResponse;
 import com.example.backend.entity.Member;
@@ -45,8 +45,8 @@ public class MemberService {
     }
 
     @Transactional
-    public TokenInfo login(MemberLoginRequestDto memberLoginRequestDto) {
-        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(memberLoginRequestDto.getAccountId(), memberLoginRequestDto.getPassword());
+    public TokenInfo login(MemberLoginRequest memberLoginRequest) {
+        UsernamePasswordAuthenticationToken authenticationToken = memberLoginRequest.toAuthentication();
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
         return jwtTokenProvider.generateToken(authentication);
     }

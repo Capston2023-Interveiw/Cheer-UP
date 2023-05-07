@@ -21,7 +21,6 @@ public class Member {
     private int age;
     private int gender;
 
-    @Column(columnDefinition="default Role.ROLE_USER")
     @Enumerated(EnumType.STRING)
     private Role role;
 

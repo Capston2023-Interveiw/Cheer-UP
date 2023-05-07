@@ -8,7 +8,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class MemberLoginRequestDto {
+public class MemberLoginRequest {
 
     private String accountId;
     private String password;
