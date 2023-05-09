@@ -39,11 +39,12 @@ public class SecurityConfig {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/api/v1/members/**").permitAll()
+                .antMatchers("/api/v1/members/account/").permitAll()
+                .antMatchers("/api/v1/members/login/").permitAll()
                 .antMatchers("/api/v1/members/test").hasRole("USER")
                 .anyRequest().authenticated()
-                // Exception Handling
                 .and()
+                // Exception Handling
                 .exceptionHandling()
                 .authenticationEntryPoint((AuthenticationEntryPoint) jwtAuthenticationEntryPoint)
                 .accessDeniedHandler(jwtAccessDeniedHandler)

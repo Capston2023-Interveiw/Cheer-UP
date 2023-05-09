@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 public class CustomUserDetailsService implements UserDetailsService {
 
     private final MemberRepository memberRepository;
+
     @Override
     public UserDetails loadUserByUsername(String accountId) throws UsernameNotFoundException {
         return memberRepository.findMemberByAccountId(accountId)
@@ -22,10 +23,17 @@ public class CustomUserDetailsService implements UserDetailsService {
     }
 
     private UserDetails createUserDetails(Member member) {
+        String role;
+        if (String.valueOf(member.getRole()).equals("ROLE_ADMIN")) {
+            role = "ADMIN";
+        }
+        else {
+            role = "USER";
+        }
         return User.builder()
                 .username(member.getAccountId())
                 .password(member.getPassword())
-                .roles(String.valueOf(member.getRole()))
+                .roles(role)
                 .build();
     }
 }
