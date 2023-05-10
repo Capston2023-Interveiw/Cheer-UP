@@ -25,10 +25,14 @@ public class Question {
     @NotNull
     private LocalDateTime createdAt;
 
-    public Question(Long id, String content, String status, LocalDateTime createdAt) {
+    @ManyToOne
+    private Member member;
+
+    public Question(Long id, String content, String status, LocalDateTime createdAt, Member member) {
         this.id = id;
         this.content = content;
         this.status = status;
         this.createdAt = createdAt;
+        this.member = member;
     }
 }

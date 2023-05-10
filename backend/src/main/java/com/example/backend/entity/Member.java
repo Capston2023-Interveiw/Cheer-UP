@@ -1,5 +1,6 @@
 package com.example.backend.entity;
 
+import io.jsonwebtoken.Claims;
 import lombok.*;
 
 import javax.persistence.*;
@@ -24,6 +25,9 @@ public class Member {
     @Enumerated(EnumType.STRING)
     private Role role;
 
+    public Member(Claims claims) {
+        this.id = Long.parseLong(claims.get("id").toString());
+    }
     @Builder
     public Member(Long id, String accountId, String password, String username, String email, int age, int gender, Role role) {
         this.id = id;

@@ -49,7 +49,8 @@ public class MemberService {
     public TokenInfo login(MemberLoginRequest memberLoginRequest) {
         UsernamePasswordAuthenticationToken authenticationToken = memberLoginRequest.toAuthentication();
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
-        return jwtTokenProvider.generateToken(authentication);
+        Member member = memberRepository.findMemberByAccountId(memberLoginRequest.getAccountId()).orElseThrow();
+        return jwtTokenProvider.generateToken(authentication, member.getId());
     }
     public MemberResponse getById(Long id) {
         Member member = memberRepository.findById(id)
