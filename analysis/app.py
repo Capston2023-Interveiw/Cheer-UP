@@ -16,7 +16,7 @@ camera = Camera()
 def home():
     return render_template('video.html')
 
-@app.route('/stream')
+@app.route('/interview/progress')
 def stream():
     src = request.args.get('src', default = 0, type = int)
     global isStream 
@@ -42,16 +42,13 @@ def stream_gen(src):
     except GeneratorExit:
         camera.stop()
 
-@app.route('/end')
+@app.route('/interview/end')
 def end():
     global isStream
     isStream = False
     result = camera.model.result()
     time.sleep(5)
     return render_template('result.html', data={"result": result})
-
-
-################################################################
 
 cam = cv2.VideoCapture(0)  # use 0 for web camera
 cam.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
