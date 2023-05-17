@@ -85,41 +85,49 @@ const P2 = styled.div`
 
 export default function Login() {
 
-  const [accountId, setAccountId] = useState('');
-  const [password, setPassword] = useState(''); 
+  const [id, setId] = useState('');
+  const [pw, setPw] = useState('');
+
   const [errorMessage, setErrorMessage] = useState(''); 
 
   const handleAccountIdChange = (e) => { 
-    setAccountId(e.target.value);
+    setId(e.target.value);
   };
 
   const handlePasswordChange = (e) => { 
-    setPassword(e.target.value);
+    setPw(e.target.value);
   };
 
   const handleLogin = () => { // 로그인 버튼 클릭 이벤트 처리 기능
-    if (!accountId || !password) { // accountId 또는 암호가 비어 있으면 오류 메시지를 설정합니다
+    if (!id || !pw) { // accountId 또는 암호가 비어 있으면 오류 메시지를 설정합니다
       setErrorMessage('아이디와 비밀번호를 모두 입력해주세요.');
       return;
     }
 
-    axios.post('https://localhost:8080/api/v1/members/login', { // 입력한 accountId와 비밀번호로 서버에 POST 요청 전송
-      accountId,
-      password,
+    axios.post('/api/v1/members/login', { // 입력한 accountId와 비밀번호로 서버에 POST 요청 전송
+      id,
+      pw
     })
       .then((response) => { // 요청이 성공하면 액세스 토큰을 로컬 저장소에 저장합니다
         const { accessToken } = response.data;
         localStorage.setItem('accessToken', accessToken);
-        // 기본 페이지로 리디렉션하거나 다른 필요한 작업 수행
+        setErrorMessage('로그인 성공~!')
+        //기본 페이지로 리디렉션하거나 다른 필요한 작업 수행
+        // console.log(response.data);
+        // if(response.data.code === 200){
+        //   console.log("로그인");
+        //   dispatch(loginUser(res.data.userInfo));
+        //   setErrorMessage("");
+        // }
 
       })
-      .catch((error) => { // 요청이 실패할 경우 응답의 상태 코드에 따라 오류 메시지를 설정합니다
-        if (error.response.status === 401) {
-          setErrorMessage('아이디 또는 비밀번호를 잘못 입력했습니다. 입력하신 내용을 다시 확인해주세요.');
-        } else {
-          setErrorMessage('서버 오류가 발생했습니다. 나중에 다시 시도해주세요.');
-        }
-      });
+      // .catch((error) => { // 요청이 실패할 경우 응답의 상태 코드에 따라 오류 메시지를 설정합니다
+      //  if (error.response.status === 401) {
+      //    setErrorMessage('아이디 또는 비밀번호를 잘못 입력했습니다. 입력하신 내용을 다시 확인해주세요.');
+      //  } else {
+      //    setErrorMessage('서버 오류가 발생했습니다. 나중에 다시 시도해주세요.');
+      //  }
+      // });
   };
 
   return (
@@ -127,9 +135,17 @@ export default function Login() {
       <H1></H1>
       <H1>Cheer Up</H1>
       <Lci>
-        <Text placeholder="아이디를 입력해주세요" id="account-id" value={accountId} onChange={handleAccountIdChange}/>
-        <Password placeholder="비밀번호를 입력해주세요" id="password" value={password} onChange={handlePasswordChange}/>
+        <Text placeholder="아이디를 입력해주세요" 
+        type="text" 
+        value={id} 
+        onChange={handleAccountIdChange}/>
+
+        <Password placeholder="비밀번호를 입력해주세요" 
+        type="password" 
+        value={pw} 
+        onChange={handlePasswordChange}/>
         {errorMessage && <div>{errorMessage}</div>}
+
         <Submit onClick={handleLogin} >로그인</Submit>
         <P>
           <P2><a href= "/FindPW">비밀번호 찾기</a></P2>
