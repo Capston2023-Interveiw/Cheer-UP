@@ -25,7 +25,7 @@ const Wrap = styled.div`
 
 const WrapContent = styled.div`
     display: flex;
-    margin: 60px;
+    margin: 30px;
     text-align: center;
     align-items: center;
     justify-content: space-between;
@@ -42,7 +42,7 @@ const Question = styled.div`
 const TimerText = styled.div`
   font-size: 30px;
   font-weight: 700;
-  margin-left: 100px; //중앙 정렬
+  margin-left: 70px; //중앙 정렬
 `
 
 const WrapNextButton = styled.div`
@@ -75,7 +75,7 @@ function Interview() {
 
     const iframePart = () => {
         return {
-            __html: '<iframe src="http://localhost:8888" width="640" height="360px"></iframe>',
+            __html: '<iframe src="http://localhost:8888" width="700" height="450px"></iframe>',
         };
     };
     return (
