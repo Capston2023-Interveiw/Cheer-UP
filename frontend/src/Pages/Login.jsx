@@ -103,7 +103,8 @@ export default function Login() {
       setErrorMessage('아이디와 비밀번호를 모두 입력해주세요.');
       return;
     }
-
+    console.log(id);
+    console.log(pw);
     axios.post('/api/v1/members/login', { // 입력한 accountId와 비밀번호로 서버에 POST 요청 전송
       id,
       pw
@@ -113,21 +114,20 @@ export default function Login() {
         localStorage.setItem('accessToken', accessToken);
         setErrorMessage('로그인 성공~!')
         //기본 페이지로 리디렉션하거나 다른 필요한 작업 수행
-        // console.log(response.data);
-        // if(response.data.code === 200){
-        //   console.log("로그인");
-        //   dispatch(loginUser(res.data.userInfo));
-        //   setErrorMessage("");
-        // }
-
+        console.log(response.data);
+        if(response.data.code === 200){
+          console.log("로그인");
+          dispatch(loginUser(res.data.userInfo));
+          setErrorMessage("");
+        }
       })
-      // .catch((error) => { // 요청이 실패할 경우 응답의 상태 코드에 따라 오류 메시지를 설정합니다
-      //  if (error.response.status === 401) {
-      //    setErrorMessage('아이디 또는 비밀번호를 잘못 입력했습니다. 입력하신 내용을 다시 확인해주세요.');
-      //  } else {
-      //    setErrorMessage('서버 오류가 발생했습니다. 나중에 다시 시도해주세요.');
-      //  }
-      // });
+      .catch((error) => { // 요청이 실패할 경우 응답의 상태 코드에 따라 오류 메시지를 설정합니다
+       if (error.response.status === 401) {
+         setErrorMessage('아이디 또는 비밀번호를 잘못 입력했습니다. 입력하신 내용을 다시 확인해주세요.');
+       } else {
+         setErrorMessage('서버 오류가 발생했습니다. 나중에 다시 시도해주세요.');
+       }
+      });
   };
 
   return (
