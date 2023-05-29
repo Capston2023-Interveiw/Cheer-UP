@@ -2,40 +2,42 @@ from flask import Flask, render_template, url_for
 from flask import request
 from flask import Response
 from flask import stream_with_context
-import time
 import cv2
 from Camera import Camera
+import time
 
 app = Flask( __name__ )
 app.config['JSON_AS_ASCII'] = False
 isStream = False
 result = None
-camera = Camera()
 
-@app.route('/progress')
+
+@app.route('/interview/progress')
 def home():
     return render_template('video.html')
 
-@app.route('/interview/progress')
+@app.route('/progress')
 def stream():
     src = request.args.get('src', default = 0, type = int)
     global isStream
     isStream = True
+    camera = Camera()
     try:
         return Response(
-                            stream_with_context( stream_gen(src) ),
+                            stream_with_context( stream_gen(src, camera) ),
                             mimetype='multipart/x-mixed-replace; boundary=frame' 
                         )    
     except Exception as e :
         print('stream error : ',str(e))
 
-def stream_gen(src):
+def stream_gen(src, camera):
     try:
         camera.run(src)
         while isStream:
             frame = camera.bytescode()
             yield (b'--frame\r\n'
                 b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
+        print(camera.detection.result())
         camera.stop()
     except GeneratorExit:
         camera.stop()
@@ -44,9 +46,8 @@ def stream_gen(src):
 def end():
     global isStream
     isStream = False
-    result = camera.detection.result()
     time.sleep(5)
-    return result
+    return {}
 
 # cam = cv2.VideoCapture(0)
 # cam.set(cv2.CAP_PROP_FRAME_WIDTH, 640)

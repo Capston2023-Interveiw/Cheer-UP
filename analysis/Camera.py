@@ -18,13 +18,14 @@ class Camera:
         self.height = 360
         self.thread = None
         self.stat = False
-        self.current_time = time.time()
-        self.preview_time = time.time()
+        self.current_time = 1
+        self.preview_time = 1
         self.sec = 0
         self.Q = Queue(maxsize=128)
         self.started = False
         self.detection = Detection()
         self.soundRecord = None
+        self.fps = 10
 
     def run(self, src = 0):
         self.stop()
@@ -38,8 +39,8 @@ class Camera:
             
         self.capture.set(cv2.CAP_PROP_FRAME_WIDTH, self.width)
         self.capture.set(cv2.CAP_PROP_FRAME_HEIGHT, self.height)
-
-        self.soundRecord.run()
+        self.started = True
+        # self.soundRecord.run()
         self.threadStart()
     
     def threadStart(self):
@@ -52,26 +53,24 @@ class Camera:
     def stop(self):
         self.started = False
         if self.capture is not None:
-            self.capture.release()
-            self.stopRecording()
+            # self.capture.release()
+            # self.stopRecording()
             self.clear()
-        self.endThread()
+
 
     def stopRecording(self):
         self.soundRecord.bRecord = False
         self.soundRecord.stopRecording()
 
-    def endThread(self):
-        if self.thread is not None:
-            self.thread.join()
-
     def update(self):
-        while True:
+        while self.started:
+            self.current_time = time.time() - self.preview_time
             if self.started:
                 (grabbed, frame) = self.capture.read()
-                if grabbed:
-                    self.detection.detection(frame)
+                if grabbed and (self.current_time > 1./self.fps):
+                    self.preview_time = time.time()
                     self.Q.put(frame)
+                    self.detection.detection(frame)
            
     def clear(self):
         with self.Q.mutex:

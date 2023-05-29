@@ -45,6 +45,16 @@ class Detection:
         self.headColor = (2, 247, 234)
         self.fps = 0
 
+    def update(self, image):
+		# if the background model is None, initialize it
+        if self.bg is None:
+            self.bg = image.copy().astype("float")
+            return
+
+		# update the background model by accumulating the weighted
+		# average
+        cv2.accumulateWeighted(image, self.bg, self.accumWeight)
+                
     def detection(self, frame):
         if frame is not None:
 
