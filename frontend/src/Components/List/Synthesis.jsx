@@ -20,7 +20,7 @@ const Graph_Box  = styled.div`
 
 const Graph = styled.div`
     width: 25vw;
-    height: 25vh;
+    height: 32vh;
     border: 1px solid;
     margin: auto;
 `;
@@ -68,7 +68,7 @@ export default function Synthesis(){
     return(
         <Main>
         <Graph_Box>
-            <Graph>그래프 추가 예정</Graph>
+            <Graph>그래프 연동 예정</Graph>
         </Graph_Box>
         <Result_Box>
             <Rank_img>A</Rank_img>
