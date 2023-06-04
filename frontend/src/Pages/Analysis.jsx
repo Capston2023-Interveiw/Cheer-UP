@@ -1,6 +1,13 @@
 import React, {useState,useEffect } from 'react';
 import styled from 'styled-components';
 import Header_Aft from '../Components/Header_Aft';
+import Synthesis from "../Components/List/Synthesis";
+import Posture from "../Components/List/Posture";
+import Speed from "../Components/List/Speed";
+import Language from "../Components/List/Language";
+import Gaze from '../Components/List/gaze';
+import Face from '../Components/List/face';
+import {MAIN_DATA} from '../Components/List/MAIN_DATA';
 
 const Form = styled.div`
     width: 100%;
@@ -10,23 +17,18 @@ const Form = styled.div`
     box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
 `;
 
-const List = styled.button`
-  width: 150px;
-  padding: 10px;
-  color: #000000;
-  background-color: #FFFF;
-  font-size: 16px;
-  cursor: pointer;
-  border: 1px solid;
-  font: bold;
-`;
-
-const Main = styled.div`
-    width: 900px;
-    flex-direction: row;
-    border: 1px solid;
+const Button  = styled.button`
+    width: 10vw;
+    height: 3vh;
+    padding: 0px;
+    color: #000000;
+    font-style: normal;
+    font-weight: bolder;
     background-color: #FFFF;
-    
+    font-size: 16px;
+    cursor: pointer;
+    border: 1px solid;
+    font: bold;
 `;
 
 const Lci = styled.div`
@@ -34,47 +36,57 @@ const Lci = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 70vh;
+  height: 80vh;
 `;
 
-const Graph = styled.div`
-    width: 400px;
-    height: 400px;
-    border: 1px solid;
-`;
+const Content = styled.div`
 
-const Rank =styled.div`
-    width: 200px;
-    height: 30px;
-    border: 1px solid;
 `;
-
-const Score = styled.div`
-width:200px;
-height:50px;
-border: 1px solid;
+const Container = styled.div`
+  
 `;
-
 
 export default function Analysis(){
-    
+  
+    const [content, setContent] = useState('Synthesis');
+
+    const handleClickButton = e => {
+      const { name } = e.target;
+      setContent(name);
+    };
+  
+    const selectComponent = {
+        Synthesis: <Synthesis />,
+        Gaze: <Gaze />,
+        Face: <Face />,
+        Posture: <Posture />,
+        Speed: <Speed />,
+        Language: <Language />,
+    };
+  
+    console.log(content);
+
+
+
+
     return(
         <Form>
             <Header_Aft/>
             <Lci>
                 <div>                
-                    <List>종합</List>
-                    <List>시선</List>
-                    <List>표정</List>
-                    <List>자세</List>
-                    <List>말속도</List>
-                    <List>추임새</List>
+                <Container>
+                    {MAIN_DATA.map(data => {
+                    return (
+                        <Button onClick={handleClickButton} name={data.name} key={data.id}>
+                        {data.text}
+                        </Button>
+                    );
+                    })}
+                </Container>
                 </div>
-                <Main>
-                    <Graph>그래프 추가 예정</Graph>
-                    <Rank>랭크 이미지 추가예정</Rank>
-                    <Score>상세 점수 추가 예정</Score>
-                </Main>
+                <div>
+                {content && <Content>{selectComponent[content]}</Content>}
+                </div>
                 
             </Lci>
         </Form>
