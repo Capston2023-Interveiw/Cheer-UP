@@ -40,6 +40,7 @@ const Rank_score =styled.div`
     left: 10%;
 `;
 const Timestamp = styled.div`
+    overflow-y: scroll;
     width: 20vw;
     height: 12vh;
     border: 1px solid;
@@ -57,6 +58,10 @@ const Feedback = styled.div`
     left: 15%;
 `;
 
+const DummyTable = styled.div`
+    white-space: pre-line;
+`
+
 
 export default function Face(){
 
@@ -67,7 +72,19 @@ export default function Face(){
             </Video_Box>
             <Result_Box>
                 <Rank_score>15점 / 20점</Rank_score>
-                <Timestamp>1. 11:35(감점이유)</Timestamp>
+                <Timestamp>
+                    <DummyTable>
+                    1. 11:13(감점이유)<br/>
+                    2. 12:01(감점이유)<br/>
+                    3. 13:34(감점이유)<br/>
+                    4. 13:36(감점이유)<br/>
+                    5. 13:44(감점이유)<br/>
+                    6. 14:03(감점이유)<br/>
+                    7. 15:45(감점이유)<br/>
+                    8. 16:11(감점이유)<br/>
+                    9. 20:36(감점이유)<br/>
+                    </DummyTable>
+                </Timestamp>
                 <Feedback>피드백 내용 연동 예정</Feedback>
             </Result_Box>
 
