@@ -19,17 +19,17 @@ const Form = styled.div`
 
 const Button  = styled.button`
     width: 10vw;
-    height: 3vh;
-    padding: 0px;
-    color: #000000;
+    height: 4vh;
+    border: 0px;
+    border-right: 1px solid;
+    border-bottom: 1px solid;
     font-style: normal;
     font-weight: bolder;
-    background-color: #FFFF;
-    font-size: 16px;
-    cursor: pointer;
-    border: 1px solid;
-    font: bold;
+    font-size: 20px;
+    background-color: ${props => (props.isActive ? '#A3D8F4' : '#FFFF')};
+    border-bottom:  ${props => (props.isActive ? '0px solid' : '1px solid')};
 `;
+
 
 const Lci = styled.div`
   display: flex;
@@ -39,21 +39,21 @@ const Lci = styled.div`
   height: 80vh;
 `;
 
-const Content = styled.div`
 
-`;
-const Container = styled.div`
-  
+const Container = styled.div`   
+    border: 1px solid;
+    border-bottom: 0px;
 `;
 
 export default function Analysis(){
   
     const [content, setContent] = useState('Synthesis');
+    const [activeButton, setActiveButton] = useState(null);
 
-    const handleClickButton = e => {
-      const { name } = e.target;
-      setContent(name);
-    };
+    const handleClickButton = (name) => {
+        setContent(name);
+        setActiveButton(name);
+      };
   
     const selectComponent = {
         Synthesis: <Synthesis />,
@@ -66,9 +66,6 @@ export default function Analysis(){
   
     console.log(content);
 
-
-
-
     return(
         <Form>
             <Header_Aft/>
@@ -77,17 +74,18 @@ export default function Analysis(){
                 <Container>
                     {MAIN_DATA.map(data => {
                     return (
-                        <Button onClick={handleClickButton} name={data.name} key={data.id}>
+                        <Button
+                        key={data.id}
+                        isActive={activeButton === data.name}
+                        onClick={e => handleClickButton(data.name)}
+                      >
                         {data.text}
                         </Button>
                     );
                     })}
                 </Container>
                 </div>
-                <div>
-                {content && <Content>{selectComponent[content]}</Content>}
-                </div>
-                
+                {content && <div>{selectComponent[content]}</div>}
             </Lci>
         </Form>
 

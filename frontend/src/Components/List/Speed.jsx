@@ -5,6 +5,7 @@ const Main = styled.div`
     width: 60vw;
     height:60vh;
     border: 1px solid;
+    border-top: 0px;
     background-color: #FFFF;
     display: flex;
     flex-direction: row;
@@ -23,6 +24,7 @@ const Video = styled.div`
     height: 32vh;
     border: 1px solid;
     margin: auto;
+    font-size: 20pt;
 `;
 
 const Result_Box = styled.div`
