@@ -7,7 +7,6 @@ import Interview from './Pages/Interview';
 
 function App() {
   return (
-    <>
       <Router>
         <Routes>
           {/* ---- 메인페이지 ---- */}
@@ -18,7 +17,7 @@ function App() {
           <Route path='/Interview' element={<Interview/>} />
         </Routes>
       </Router>
-    </>
+   
   );
 }
 

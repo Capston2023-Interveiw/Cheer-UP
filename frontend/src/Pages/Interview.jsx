@@ -1,9 +1,8 @@
 import React,{useRef, useState, useEffect} from "react";
-// import ReactDOM from "react-dom";
 import styled from "styled-components";
 import Header from "../Components/Header";
 import NextButton from "../Components/Button";
-
+import axios from "axios";
 
 const MainWrap = styled.div`
     position: fixed;
@@ -56,6 +55,8 @@ function Interview() {
     const time = useRef(90);
     const timerId = useRef(null);
 
+    const [data, setData] = useState();
+
     useEffect(()=>{
       timerId.current = setInterval(()=>{
         setMin(parseInt(time.current / 60));
@@ -73,6 +74,21 @@ function Interview() {
       }
     },[sec]);
 
+    useEffect(()=>{
+    },[]);
+
+   async function questions () {
+    try{
+      await axios.get('/http://localhost:8080/api/v1/progress')
+      .then(response =>{
+        console.log(response.data)
+        setData(response.data)
+      })
+      }catch(e){ //에러 처리
+        console.error(e); 
+    }
+  }
+
     const iframePart = () => {
         return {
             __html: '<iframe src="http://localhost:8888" width="700" height="450px"></iframe>',
@@ -82,8 +98,14 @@ function Interview() {
         <MainWrap>
             <Header />
             <Wrap>
-            <Question>Q. 자기소개를 해주세요.</Question>
+            <Question>
+            
+              {questions}
+            {data && <textarea rows={10} value={JSON.stringify(data)} readOnly={true}/>}
+              
+            </Question>
                 <WrapContent>
+                 
                   <TimerText>
                   {min} 분  {sec} 초
                   </TimerText>
