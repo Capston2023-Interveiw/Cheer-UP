@@ -16,6 +16,10 @@ spring:
       mode: always
       data-locations: classpath:db/mysql/data.sql
 
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+
 mybatis:
   mapper-locations: classpath:mybatis/mapper/**/**.xml
 
