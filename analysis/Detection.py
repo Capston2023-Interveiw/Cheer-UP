@@ -21,6 +21,9 @@ class Detection:
         self.gazeFeedback = []
         self.postureFeedback = []
         self.expressionFeedback = []
+        self.expressionTimeStamp = []
+        self.gazeTimeStamp = []
+        self.postureTimeStamp = []
         self.current_time = time.time()
         self.preview_time = time.time()
         self.gazeCount = 0
@@ -43,7 +46,8 @@ class Detection:
         self.gazeColor = (2, 247, 234)
         self.shoulderColor = (2, 247, 234)
         self.headColor = (2, 247, 234)
-        self.fps = 0
+        self.startTime = None
+        self.fps = 10
 
     def update(self, image):
 		# if the background model is None, initialize it
@@ -61,7 +65,7 @@ class Detection:
             posture = self.postureClass.run_posture(frame)
             frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
             faceResult = run_face(frame)
-
+            print(self.expressionTimeStamp, self.gazeTimeStamp, self.expressionTimeStamp)
             if faceResult is not None:
                 self.face, self.fX, self.fY, self.fW, self.fH = faceResult
             self.gaze, self.x_left, self.y_left, self.x_right, self.y_right = run_gaze(frame, self.gazeTracking)
@@ -86,6 +90,7 @@ class Detection:
             self.gazeColor = (248, 72, 216)
             if self.gazeCount >= 3 * self.fps:
                 self.gazeFeedback.append(self.gaze)
+                self.gazeTimeStamp.append(int(time.time() - self.startTime))
                 self.gazeCount = 0
                 self.gazeColor = (0, 0, 255)
         else:
@@ -99,16 +104,18 @@ class Detection:
             self.headColor = (248, 72, 216)
             if self.postureCount >= 5 * self.fps:
                 self.postureFeedback.append(posture[0])
+                self.postureTimeStamp.append(int(time.time() - self.startTime))
                 self.postureCount = 0
                 self.headColor = (0, 0, 255)
         else:
             self.headColor = (2, 247, 234)
-            
+
         if posture[1]:
             self.shoulderCount += 1
             self.shoulderColor = (248, 72, 216)
             if self.shoulderCount >= 5 * self.fps:
                 self.postureFeedback.append("어깨 비대칭")
+                self.postureTimeStamp.append(int(time.time() - self.startTime))
                 self.shoulderCount = 0
                 self.shoulderColor = (0, 0, 255)
         else:
@@ -120,6 +127,7 @@ class Detection:
             self.faceColor = (248, 72, 216)
             if self.expressionCount >= 5 * self.fps:
                 self.expressionFeedback.append(f"{self.face}한 표정")
+                self.expressionTimeStamp.append(int(time.time() - self.startTime))
                 self.expressionCount = 0
                 self.faceColor = (0, 0, 255)
         else:
@@ -163,17 +171,20 @@ class Detection:
             "gaze": {
                 "field": "gaze",
                 "score": gazeScore,
-                "feedback": self.gazeFeedback
+                "feedback": self.gazeFeedback,
+                "time_stamp": self.gazeTimeStamp
             },
             "posture": {
                 "field": "posture",
                 "score": postureScore,
-                "feedback": self.postureFeedback
+                "feedback": self.postureFeedback,
+                "time_stamp": self.postureTimeStamp
             },
             "face": {
                 "field": "face",
                 "score": expressionScore,
-                "feedback": self.expressionFeedback
+                "feedback": self.expressionFeedback,
+                "time_stamp": self.expressionTimeStamp
             },
             "interjection" : interjectionResult,
             "speed" : speedResult

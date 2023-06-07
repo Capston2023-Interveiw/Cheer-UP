@@ -40,6 +40,7 @@ class Camera:
         self.capture.set(cv2.CAP_PROP_FRAME_WIDTH, self.width)
         self.capture.set(cv2.CAP_PROP_FRAME_HEIGHT, self.height)
         self.started = True
+        self.detection.startTime = time.time()
         # self.soundRecord.run()
         self.threadStart()
     
@@ -56,7 +57,6 @@ class Camera:
             # self.capture.release()
             # self.stopRecording()
             self.clear()
-
 
     def stopRecording(self):
         self.soundRecord.bRecord = False
