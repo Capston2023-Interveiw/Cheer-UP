@@ -10,14 +10,14 @@ app = Flask( __name__ )
 app.config['JSON_AS_ASCII'] = False
 isStream = False
 result = None
-
+camera = None
 
 @app.route('/interview/progress')
 def home():
     return render_template('video.html')
 
 @app.route('/progress')
-def stream():
+def progress():
     src = request.args.get('src', default = 0, type = int)
     global isStream
     isStream = True
