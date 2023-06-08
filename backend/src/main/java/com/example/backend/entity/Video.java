@@ -13,28 +13,33 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Question {
+public class Video {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String content;
+    private String url;
     private String status;
+
     @CreatedDate
     @Column(updatable = false)
     @Getter
     @NotNull
     private LocalDateTime createdAt;
 
+    @Column(updatable = false)
+    @Getter
+    private LocalDateTime deletedAt;
     @ManyToOne
     private Member member;
 
     @Builder
-    public Question(Long id, String content, String status, LocalDateTime createdAt, Member member) {
+    public Video(Long id, String url, String status, LocalDateTime createdAt, LocalDateTime deletedAt, Member member) {
         this.id = id;
-        this.content = content;
+        this.url = url;
         this.status = status;
         this.createdAt = createdAt;
         this.member = member;
+        this.deletedAt = deletedAt;
     }
 }
