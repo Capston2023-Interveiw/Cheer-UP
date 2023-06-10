@@ -65,7 +65,6 @@ class Detection:
             posture = self.postureClass.run_posture(frame)
             frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
             faceResult = run_face(frame)
-            print(self.expressionTimeStamp, self.gazeTimeStamp, self.expressionTimeStamp)
             if faceResult is not None:
                 self.face, self.fX, self.fY, self.fW, self.fH = faceResult
             self.gaze, self.x_left, self.y_left, self.x_right, self.y_right = run_gaze(frame, self.gazeTracking)

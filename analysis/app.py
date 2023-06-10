@@ -10,7 +10,7 @@ app = Flask( __name__ )
 app.config['JSON_AS_ASCII'] = False
 isStream = False
 result = None
-camera = None
+camera = Camera()
 
 @app.route('/interview/progress')
 def home():
@@ -21,23 +21,21 @@ def progress():
     src = request.args.get('src', default = 0, type = int)
     global isStream
     isStream = True
-    camera = Camera()
     try:
         return Response(
-                            stream_with_context( stream_gen(src, camera) ),
+                            stream_with_context( stream_gen(src) ),
                             mimetype='multipart/x-mixed-replace; boundary=frame' 
                         )    
     except Exception as e :
         print('stream error : ',str(e))
 
-def stream_gen(src, camera):
+def stream_gen(src):
     try:
         camera.run(src)
         while isStream:
             frame = camera.bytescode()
             yield (b'--frame\r\n'
                 b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
-        print(camera.detection.result())
         camera.stop()
     except GeneratorExit:
         camera.stop()
@@ -47,7 +45,7 @@ def end():
     global isStream
     isStream = False
     time.sleep(5)
-    return {}
+    return camera.detection.result()
 
 # cam = cv2.VideoCapture(0)
 # cam.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
