@@ -61,7 +61,6 @@ class Detection:
                 
     def detection(self, frame):
         if frame is not None:
-
             posture = self.postureClass.run_posture(frame)
             frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
             faceResult = run_face(frame)

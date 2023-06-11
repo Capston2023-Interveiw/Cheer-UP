@@ -29,6 +29,8 @@ class Camera:
         self.isRecord = False
         self.rec_frame = None
         self.videoTread = None
+        fourcc = cv2.VideoWriter_fourcc(*'MJPG')
+        self.videoWriter = cv2.VideoWriter('test.avi', fourcc, 8.5, (self.width, 480))
 
     def run(self, src = 0):
         self.stop()
@@ -59,6 +61,7 @@ class Camera:
         self.rec = False
         if self.capture is not None:
             self.capture.release()
+            self.videoWriter.release()
             self.stopRecording()
             self.isRecord = False
             self.clear()
@@ -68,17 +71,15 @@ class Camera:
         self.soundRecord.stopRecording()
 
     def update(self):
-        fourcc = cv2.VideoWriter_fourcc(*'DIVX')
-        videoWriter = cv2.VideoWriter('test.mp4', fourcc, 20.0, (self.width, self.height))
         while self.started:
             self.current_time = time.time() - self.preview_time
             (grabbed, frame) = self.capture.read()
             if grabbed and (self.current_time > 1./self.fps):
-                videoWriter.write(frame)
                 self.preview_time = time.time()
-                self.rec_frame = frame
                 self.Q.put(frame)
-                self.detection.detection(frame) 
+                self.videoWriter.write(frame)
+                self.detection.detection(frame)
+                
            
     def clear(self):
         with self.Q.mutex:
@@ -91,6 +92,7 @@ class Camera:
         return np.ones(shape=[self.height, self.width, 3], dtype=np.uint8)
     
     def bytescode(self):
+
         if not self.capture.isOpened():
             frame = self.blank()
         else :
@@ -133,23 +135,7 @@ class Camera:
             
         else :
             fps = 1
-            
         return fps
-    
-    def record(self, video):
-        while True:
-            if self.isRecord:
-                time.sleep(0.05)
-                video.write(frame)
-                
-
-    def recStart(self):
-        fourcc = cv2.VideoWriter_fourcc(*'DIVX')
-        video = cv2.VideoWriter('test.mp4', fourcc, 20.0, (self.width, self.height))
-        self.isRecord = True
-        self.videoTread = Thread(target = self.record, args=[video])
-        self.videoTread.daemon = False
-        self.videoTread.start()
 
     def __exit__(self) :
         print( '* streamer class exit')
