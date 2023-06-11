@@ -5,6 +5,7 @@ from flask import stream_with_context
 import cv2
 from Camera import Camera
 import time
+from CombineVideoAndAudio import combineVideo
 
 app = Flask( __name__ )
 app.config['JSON_AS_ASCII'] = False
@@ -44,6 +45,7 @@ def stream_gen(src):
 def end():
     global isStream
     isStream = False
+    combineVideo()
     time.sleep(5)
     return camera.detection.result()
 
