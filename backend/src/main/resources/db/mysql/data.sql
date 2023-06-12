@@ -15,6 +15,7 @@ INSERT INTO analysis (type) VALUES ('posture');
 INSERT INTO analysis (type) VALUES ('gaze');
 INSERT INTO analysis (type) VALUES ('interjection');
 INSERT INTO analysis (type) VALUES ('speed');
+INSERT INTO analysis (type) VALUES ('total');
 
 INSERT INTO feedback (content, score, analysis_id) VALUES ('면접 영상에 긍정적인 표정이 많습니다. 긍정적인 표정을 많을 경우, 면접관에게 좋은 인상을 남길 수 있습니다.', '20', '1');
 INSERT INTO feedback (content, score, analysis_id) VALUES ('표정 변화가 상대적으로 유동적입니다. 이에 유의해서 긍정적 표정을 유지하며 면접에 응시하기 바랍니다.', '15', '1');
@@ -57,3 +58,4 @@ INSERT INTO score (score, video_id, feedback_id, analysis_id) VALUES(20, 1, 5, 2
 INSERT INTO score (score, video_id, feedback_id, analysis_id) VALUES(0, 1, 12, 3);
 INSERT INTO score (score, video_id, feedback_id, analysis_id) VALUES(3, 1, 16, 4);
 INSERT INTO score (score, video_id, feedback_id, analysis_id) VALUES(15, 1, 18, 5);
+INSERT INTO score (score, video_id, feedback_id, analysis_id) VALUES(53, 1, 1, 6);
