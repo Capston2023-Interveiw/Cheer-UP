@@ -9,6 +9,9 @@ import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 @Getter
@@ -33,13 +36,25 @@ public class Video {
     @ManyToOne
     private Member member;
 
+    @OneToMany(mappedBy = "video", cascade = CascadeType.ALL)
+    private Set<VideoAnalysisLog> videoAnalysisLogs = new HashSet<>();
+
     @Builder
-    public Video(Long id, String url, String status, LocalDateTime createdAt, LocalDateTime deletedAt, Member member) {
+    public Video(Long id, String url, String status, LocalDateTime createdAt, LocalDateTime deletedAt, Member member, Set<AnalysisLog> videoAnalysisLogs) {
         this.id = id;
         this.url = url;
         this.status = status;
         this.createdAt = createdAt;
         this.member = member;
         this.deletedAt = deletedAt;
+        setVideoAnalysisLog(videoAnalysisLogs);
+    }
+
+    public void setVideoAnalysisLog(Set<AnalysisLog> videoAnalysisLogs) {
+        this.videoAnalysisLogs =
+                videoAnalysisLogs.stream()
+                        .map(analysisLog -> new VideoAnalysisLog(this, analysisLog))
+                        .collect(Collectors.toSet());
+
     }
 }
