@@ -40,6 +40,8 @@ public class SecurityConfig {
                 .authorizeRequests()
                 .antMatchers("/api/v1/members/account").permitAll()
                 .antMatchers("/api/v1/members/login").permitAll()
+                .antMatchers("/api/v1/members/account/").permitAll()
+                .antMatchers("/api/v1/members/login/").permitAll()
                 .antMatchers("/swagger-ui/**").permitAll()
                 .antMatchers("/v3/api-docs").permitAll()
                 .antMatchers("/swagger-resources/**").permitAll()

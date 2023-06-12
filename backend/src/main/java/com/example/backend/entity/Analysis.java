@@ -18,4 +18,9 @@ public class Analysis {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String type;
+
+    public Analysis(Long id, String type) {
+        this.id = id;
+        this.type = type;
+    }
 }
