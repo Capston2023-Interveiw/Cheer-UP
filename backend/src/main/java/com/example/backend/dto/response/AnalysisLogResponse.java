@@ -1,15 +1,14 @@
 package com.example.backend.dto.response;
 
-import com.example.backend.entity.VideoAnalysisLog;
+import com.example.backend.entity.Analysis;
 import lombok.Builder;
 import lombok.Getter;
-
-import java.util.Set;
 
 @Getter
 @Builder
 public class AnalysisLogResponse {
 
-    private String url;
-    private Set<VideoAnalysisLog> analysisLogs;
+    private final Analysis analysis;
+    private final String timestamp;
+    private final String reason;
 }

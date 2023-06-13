@@ -1,7 +1,9 @@
 package com.example.backend.controller;
 
 import com.example.backend.dto.response.ScoreResponse;
+import com.example.backend.dto.response.VideoResponse;
 import com.example.backend.entity.Member;
+import com.example.backend.service.AnalysisLogService;
 import com.example.backend.service.TotalScoreService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -19,10 +21,15 @@ import java.util.List;
 public class ScoreController {
 
     private final TotalScoreService totalScoreService;
+    private final AnalysisLogService analysisLogService;
 
-    @GetMapping
+    @GetMapping("/total")
     public ResponseEntity<List<ScoreResponse>> getResponseList(@AuthenticationPrincipal Member member, @PathVariable long video_id){
         return ResponseEntity.ok(totalScoreService.findAllByVideoId(video_id));
     }
 
+    @GetMapping("/face")
+    public ResponseEntity<VideoResponse> getFaceAnalysisLog(@AuthenticationPrincipal Member member, @PathVariable Long video_id){
+        return ResponseEntity.ok(analysisLogService.findFaceResult(video_id));
+    }
 }

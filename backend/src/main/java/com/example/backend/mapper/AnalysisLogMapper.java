@@ -1,16 +1,18 @@
 package com.example.backend.mapper;
 
 import com.example.backend.dto.response.AnalysisLogResponse;
-import com.example.backend.entity.Video;
+import com.example.backend.entity.AnalysisLog;
+
 import org.springframework.stereotype.Component;
 
 @Component
 public class AnalysisLogMapper {
 
-    AnalysisLogResponse mapToDto(Video entity) {
+    public static AnalysisLogResponse mapToDto(AnalysisLog entity) {
         return AnalysisLogResponse.builder()
-                .url(entity.getUrl())
-                .analysisLogs(entity.getVideoAnalysisLogs())
+                .analysis(entity.getAnalysis())
+                .reason(entity.getReason())
+                .timestamp(entity.getTimestamp())
                 .build();
     }
 }

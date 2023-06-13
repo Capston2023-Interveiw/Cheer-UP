@@ -18,9 +18,12 @@ public class Score {
 
     @ManyToOne
     private Video video;
+
     @OneToOne
     private Feedback feedback;
+
     @OneToOne
+    @JoinColumn(name = "analysis_id")
     private Analysis analysis;
 
 

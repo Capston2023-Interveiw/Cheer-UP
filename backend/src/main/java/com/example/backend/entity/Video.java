@@ -1,17 +1,13 @@
 package com.example.backend.entity;
 
 import com.sun.istack.NotNull;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -36,25 +32,19 @@ public class Video {
     @ManyToOne
     private Member member;
 
-    @OneToMany(mappedBy = "video", cascade = CascadeType.ALL)
-    private Set<VideoAnalysisLog> videoAnalysisLogs = new HashSet<>();
+
+    @OneToMany(mappedBy = "video", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ToString.Exclude
+    private List<AnalysisLog> analysisLogs = new ArrayList<>();
 
     @Builder
-    public Video(Long id, String url, String status, LocalDateTime createdAt, LocalDateTime deletedAt, Member member, Set<AnalysisLog> videoAnalysisLogs) {
+    public Video(Long id, String url, String status, LocalDateTime createdAt, LocalDateTime deletedAt, Member member, List<AnalysisLog> analysisLogs) {
         this.id = id;
         this.url = url;
         this.status = status;
         this.createdAt = createdAt;
         this.member = member;
         this.deletedAt = deletedAt;
-        setVideoAnalysisLog(videoAnalysisLogs);
-    }
-
-    public void setVideoAnalysisLog(Set<AnalysisLog> videoAnalysisLogs) {
-        this.videoAnalysisLogs =
-                videoAnalysisLogs.stream()
-                        .map(analysisLog -> new VideoAnalysisLog(this, analysisLog))
-                        .collect(Collectors.toSet());
-
+        this.analysisLogs = analysisLogs;
     }
 }
