@@ -36,6 +36,5 @@ def run_face(frame):
         
         preds = emotion_classifier.predict(roi)[0]
         label = EMOTIONS[preds.argmax()]
-        print(fX, fY, fW, fH)
         return label, fX, fY, fW, fH
     
