@@ -13,8 +13,8 @@ function App() {
             <Router>
                 <Routes>
                     <Route path = '/' element={<Analysis/>}/>
-                    {//<Route path = '/' element={<Main_Before/>} />
-                     }<Route path = '/Login' element={<Login/>} />
+                    <Route path = '/Main_Before' element={<Main_Before/>} />
+                    <Route path = '/Login' element={<Login/>} />
                     <Route path = '/SignUp' element={<SignUp/>} />
                     <Route path = '/FindPW' element={<FindPW/>} />
                     <Route path = '/Main_After' element={<Main_After/>} />

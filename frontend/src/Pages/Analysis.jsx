@@ -48,7 +48,7 @@ const Container = styled.div`
 export default function Analysis(){
   
     const [content, setContent] = useState('Synthesis');
-    const [activeButton, setActiveButton] = useState(null);
+    const [activeButton, setActiveButton] = useState('Synthesis');
 
     const handleClickButton = (name) => {
         setContent(name);
