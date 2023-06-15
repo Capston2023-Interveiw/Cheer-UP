@@ -1,6 +1,7 @@
 package com.example.backend.interviewresult;
 
 import com.example.backend.interviewresult.dto.ScoreResponse;
+import com.example.backend.interviewresult.dto.VideoResponse;
 import com.example.backend.member.entity.Member;
 import com.example.backend.interviewresult.service.AnalysisLogService;
 import com.example.backend.interviewresult.service.TotalScoreService;
@@ -28,7 +29,7 @@ public class ScoreController {
     }
 
     @GetMapping("/{analysis_type}")
-    public ResponseEntity<List<Object>> getFaceAnalysisLog(@AuthenticationPrincipal Member member, @PathVariable Long video_id, @PathVariable String analysis_type){
+    public ResponseEntity<VideoResponse> getFaceAnalysisLog(@AuthenticationPrincipal Member member, @PathVariable Long video_id, @PathVariable String analysis_type){
         return ResponseEntity.ok(analysisLogService.findFaceResult(video_id, analysis_type));
     }
 }
