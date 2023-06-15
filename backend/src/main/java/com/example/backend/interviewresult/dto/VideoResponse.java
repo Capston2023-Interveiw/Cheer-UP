@@ -1,6 +1,5 @@
 package com.example.backend.interviewresult.dto;
 
-import com.example.backend.interviewresult.entity.Score;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -10,7 +9,8 @@ import java.util.List;
 @Builder
 public class VideoResponse {
 
-    private String url;
-    private Score score;
-    List<AnalysisLogResponse> analysisLogs;
+    private final String url;
+    private final String score;
+    private final String feedback;
+    private final List<Object> logs;
 }
