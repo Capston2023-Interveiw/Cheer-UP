@@ -30,7 +30,7 @@ public class SwaggerConfig {
                 .securitySchemes(List.of(this.apiKey()))
                 .ignoredParameterTypes(AuthenticationPrincipal.class)
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.example.backend.controller"))
+                .apis(RequestHandlerSelectors.basePackage("com.example.backend"))
                 .paths(PathSelectors.any())
                 .build();
     }
