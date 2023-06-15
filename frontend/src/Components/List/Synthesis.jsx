@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import PentagonGraph from '../PentagonGraph';
 
 const Main = styled.div`
     width: 60vw;
@@ -17,15 +18,9 @@ const Graph_Box  = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+    
 `;
 
-const Graph = styled.div`
-    width: 25vw;
-    height: 32vh;
-    border: 1px solid;
-    margin: auto;
-    font-size: 20pt;
-`;
 
 const Result_Box = styled.div`
     width: 30vw;
@@ -70,7 +65,7 @@ export default function Synthesis(){
     return(
         <Main>
         <Graph_Box>
-            <Graph>그래프 연동 예정</Graph>
+            <PentagonGraph />        
         </Graph_Box>
         <Result_Box>
             <Rank_img>A</Rank_img>

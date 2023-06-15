@@ -43,6 +43,7 @@ const Lci = styled.div`
 const Container = styled.div`   
     border: 1px solid;
     border-bottom: 0px;
+    border-right: 0px;
 `;
 
 export default function Analysis(){
