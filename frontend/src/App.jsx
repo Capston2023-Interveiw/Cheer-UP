@@ -6,14 +6,13 @@ import FindPW from "./Pages/FindPW";
 import Main_Before from "./Pages/Main_Before";
 import Main_After from "./Pages/Main_After";
 import Analysis from "./Pages/Analysis";
-import PentagonGraph from './Components/PentagonGraph';
+
 
 function App() {
     return (
         <>
             <Router>
                 <Routes>
-                    <Route path = '/PentagonGraph' element={<PentagonGraph/>}/>
                     <Route path = '/' element={<Analysis/>}/>
                     <Route path = '/Main_Before' element={<Main_Before/>} />
                     <Route path = '/Login' element={<Login/>} />

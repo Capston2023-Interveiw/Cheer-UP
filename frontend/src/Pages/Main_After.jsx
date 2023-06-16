@@ -10,61 +10,62 @@ const Form = styled.div`
     padding: 0px;
     background-color: #FFFF;
     box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+    position: relative;
 `;
 
 const Lci = styled.div`
-    width: 80%;
+    width: 1400px;
+    height: 800px;
     margin: 0 auto;
-    height: 80vh;
     background-color: #E8F9FD;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+
 `;
 //position: absolute;
 
 const Cm = styled.h1`
+    width: 800px;
     font-style: normal;
-    font-weight: bolder;
     font-size: 15pt;
-    vertical-align: bottom;
-    text-align: center;
     color: #Black;
-    margin: 0 auto;
-    height: 50px;
+    position: absolute;
+    left: 50%;
+    top: 10%;
+    transform: translate(-50%, 0%);
 `
 
 const Image = styled.div`
-    //display: flex
-    //align-items: flex-start;
-    //float:left;
-    text-align: center;
-    //position: absolute;
- 
-
+    position: absolute;
+    left: 10%;
+    top: 30%;
 `
 const Buttonmi = styled.button `
-    margin-left: 70px;
-  width: 100px;
-  padding: 10px;
-  background-color: #0084FE;
-  color: #fff;
-  border: none;
-  border-radius: 25px;
-  font-size: 16px;
-  cursor: pointer;
-  text-align: center;
-  font: bold;
+    height: 50px;
+    width: 150px;
+    padding: 10px;
+    background-color: #E8F9FD;
+    color: #0084FE;
+    border: 1px solid;
+    border-radius: 25px;
+    border-color: Black;
+    font-style: normal;
+    font-weight: bolder;
+    font-size: 20px;
+    text-align: center;
+    position: absolute;
+    left: 135%;
+    top: 85%;
 `;
 
-const VoidDiv = styled.div`
-    height: 10vh;
-`
 
 export default function Main_After() {
     return(
         <Form>
             <Header_Aft/>
-            <VoidDiv/>
             <Lci>
-                <Cm/>
                 <Cm>
                     Cheer Up은 취업 준비생들을 위해 면접 태도를 분석하고 교정해주는 서비스입니다.
                 </Cm>

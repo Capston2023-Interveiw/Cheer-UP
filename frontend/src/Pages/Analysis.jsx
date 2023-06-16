@@ -19,7 +19,7 @@ const Form = styled.div`
 
 const Button  = styled.button`
     width: 10vw;
-    height: 4vh;
+    height: 6vh;
     border: 0px;
     border-right: 1px solid;
     border-bottom: 1px solid;

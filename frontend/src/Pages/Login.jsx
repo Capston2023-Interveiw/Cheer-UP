@@ -117,7 +117,7 @@ export default function Login() {
         console.log(response.data);
         if(response.data.code === 200){
           console.log("로그인");
-          dispatch(loginUser(res.data.userInfo));
+          //dispatch(loginUser(res.data.userInfo));
           setErrorMessage("");
         }
       })
