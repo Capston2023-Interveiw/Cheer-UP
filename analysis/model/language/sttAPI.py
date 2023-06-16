@@ -1,7 +1,5 @@
 import requests
 import json
-from time_conversion import time_conversion
-from interjection import check_sentence
 from dotenv import load_dotenv
 import os 
 import time
@@ -20,7 +18,7 @@ def getSttToken():
   return token_json['access_token']
 
 
-def getScripts(token):
+def getScripts(token, audio_path):
   # 음성 파일 분석 요청
   config = {
     "diarization": {
@@ -36,7 +34,7 @@ def getScripts(token):
       'https://openapi.vito.ai/v1/transcribe',
       headers={'Authorization': 'bearer '+ token},
       data={'config': json.dumps(config)},
-      files={'file': open('./analysis/model/language/sample.wav', 'rb')},
+      files={'file': open(audio_path, 'rb')},
       
   )
   response.raise_for_status()
