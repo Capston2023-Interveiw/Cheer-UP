@@ -9,6 +9,20 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: create
+<<<<<<< HEAD
+=======
+    defer-datasource-initialization: true
+  
+  sql:
+    init:
+      mode: always
+      data-locations: classpath:db/mysql/data.sql
+
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+
+>>>>>>> a5a39a2fc7489df9b98673cab6ae48b247b79898
 
 mybatis:
   mapper-locations: classpath:mybatis/mapper/**/**.xml
