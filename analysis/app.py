@@ -10,8 +10,6 @@ from CombineVideoAndAudio import combineVideo
 app = Flask( __name__ )
 app.config['JSON_AS_ASCII'] = False
 isStream = False
-result = None
-camera = Camera()
 
 @app.route('/interview/progress')
 def home():
@@ -19,18 +17,19 @@ def home():
 
 @app.route('/progress')
 def progress():
-    src = request.args.get('src', default = 0, type = int)
     global isStream
+    src = request.args.get('src', default = 0, type = int)
+    camera = Camera()
     isStream = True
     try:
         return Response(
-                            stream_with_context( stream_gen(src) ),
+                            stream_with_context( stream_gen(src, camera) ),
                             mimetype='multipart/x-mixed-replace; boundary=frame' 
                         )    
     except Exception as e :
         print('stream error : ',str(e))
 
-def stream_gen(src):
+def stream_gen(src, camera):
     try:
         camera.run(src)
         while isStream:
@@ -38,6 +37,7 @@ def stream_gen(src):
             yield (b'--frame\r\n'
                 b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
         camera.stop()
+        del camera
     except GeneratorExit:
         camera.stop()
 
@@ -46,8 +46,8 @@ def end():
     global isStream
     isStream = False
     combineVideo()
-    time.sleep(5)
-    return camera.detection.result()
+    time.sleep(1)
+    return {"message": "end"}
 
 # cam = cv2.VideoCapture(0)
 # cam.set(cv2.CAP_PROP_FRAME_WIDTH, 640)

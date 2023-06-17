@@ -60,8 +60,6 @@ class Camera:
         self.started = False
         self.rec = False
         if self.capture is not None:
-            self.capture.release()
-            self.videoWriter.release()
             self.stopRecording()
             self.isRecord = False
             self.clear()
@@ -74,7 +72,7 @@ class Camera:
         while self.started:
             self.current_time = time.time() - self.preview_time
             (grabbed, frame) = self.capture.read()
-            if grabbed and (self.current_time > 1./self.fps):
+            if grabbed and (self.current_time > 1./ self.fps):
                 self.preview_time = time.time()
                 self.Q.put(frame)
                 self.videoWriter.write(frame)
@@ -137,6 +135,7 @@ class Camera:
             fps = 1
         return fps
 
-    def __exit__(self) :
+    def __del__(self) :
         print( '* streamer class exit')
         self.capture.release()
+        self.videoWriter.release()

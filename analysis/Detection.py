@@ -8,6 +8,7 @@ from model.gaze.gaze import run_gaze
 from model.posture.PoseProject import Posture
 from model.face.real_time_video import run_face
 from model.language.language import SttService
+from DataDao import DataDao
 
 class Detection:
 
@@ -48,6 +49,7 @@ class Detection:
         self.headColor = (2, 247, 234)
         self.startTime = None
         self.fps = 10
+        self.database = DataDao()
 
     def update(self, image):
 		# if the background model is None, initialize it
@@ -83,14 +85,16 @@ class Detection:
         time.sleep(1)
 
     def checkGaze(self):
-        if (self.gaze is "left") or (self.gaze is "right"):
+        if (self.gaze == "left") or (self.gaze == "right"):
             self.gazeCount += 1
             self.gazeColor = (248, 72, 216)
             if self.gazeCount >= 3 * self.fps:
                 self.gazeFeedback.append(self.gaze)
-                self.gazeTimeStamp.append(int(time.time() - self.startTime))
+                timestamp = int(time.time() - self.startTime)
+                self.gazeTimeStamp.append(timestamp)
                 self.gazeCount = 0
                 self.gazeColor = (0, 0, 255)
+                self.database.insertLog(self.gaze, timestamp, 3, 1)
         else:
             self.gazeColor = (2, 247, 234)
 
@@ -102,9 +106,11 @@ class Detection:
             self.headColor = (248, 72, 216)
             if self.postureCount >= 5 * self.fps:
                 self.postureFeedback.append(posture[0])
-                self.postureTimeStamp.append(int(time.time() - self.startTime))
+                timestamp = int(time.time() - self.startTime)
+                self.postureTimeStamp.append(timestamp)
                 self.postureCount = 0
                 self.headColor = (0, 0, 255)
+                self.database.insertLog(posture[0], timestamp, 2, 1)
         else:
             self.headColor = (2, 247, 234)
 
@@ -113,9 +119,11 @@ class Detection:
             self.shoulderColor = (248, 72, 216)
             if self.shoulderCount >= 5 * self.fps:
                 self.postureFeedback.append("어깨 비대칭")
-                self.postureTimeStamp.append(int(time.time() - self.startTime))
+                timestamp = int(time.time() - self.startTime)
+                self.postureTimeStamp.append(timestamp)
                 self.shoulderCount = 0
                 self.shoulderColor = (0, 0, 255)
+                self.database.insertLog("어깨 비대칭", timestamp, 2, 1)
         else:
             self.shoulderColor = (2, 247, 234)
 
@@ -124,10 +132,13 @@ class Detection:
             self.expressionCount += 1
             self.faceColor = (248, 72, 216)
             if self.expressionCount >= 5 * self.fps:
-                self.expressionFeedback.append(f"{self.face}한 표정")
-                self.expressionTimeStamp.append(int(time.time() - self.startTime))
+                reason = f"{self.face}한 표정"
+                self.expressionFeedback.append(reason)
+                timestamp = int(time.time() - self.startTime)
+                self.expressionTimeStamp.append(timestamp)
                 self.expressionCount = 0
                 self.faceColor = (0, 0, 255)
+                self.database.insertLog(reason, timestamp, 1, 1)
         else:
             self.faceColor = (2, 247, 234)
 
