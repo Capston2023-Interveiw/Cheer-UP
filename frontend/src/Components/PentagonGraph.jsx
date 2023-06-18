@@ -88,9 +88,9 @@ const PentagonGraph = () => {
   }, []); // 빈 의존성 배열은 이펙트가 컴포넌트 마운트 시에만 실행되도록 보장합니다.
 
   return (
-    <div>
-      <canvas ref={chartRef} /> 
-    </div>
+    
+    <canvas ref={chartRef} /> 
+    
   );
 };
 
