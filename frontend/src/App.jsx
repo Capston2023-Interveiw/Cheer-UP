@@ -13,12 +13,12 @@ import Analysis from "./Pages/Analysis";
 
 function App() {
     return (
-        <>
+  
             <Router>
                 <Routes>
                     
                     {/* ---- 분석 페이지 ---- */}
-                    <Route path = '/' element={<Analysis/>}/>
+                    <Route path = '/Analysis' element={<Analysis/>}/>
                     {/* ---- 메인페이지_로그인 전 ---- */}
                     <Route path = '/Main_Before' element={<Main_Before/>} />
                     {/* ---- 메인페이지_로그인 후 ---- */}
@@ -38,8 +38,8 @@ function App() {
                     <Route path='/Interview' element={<Interview/>} />
                 </Routes>
             </Router>
-        </>
+      
     );
-  };
+  }
   
   export default App;
