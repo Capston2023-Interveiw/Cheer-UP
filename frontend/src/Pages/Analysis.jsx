@@ -78,7 +78,9 @@ export default function Analysis(){
                         <Button
                         key={data.id}
                         isActive={activeButton === data.name}
-                        onClick={handleClickButton(data.name)}
+                        onClick={() =>{
+                            handleClickButton(data.name)
+                        }}
                       >
                         {data.text}
                         </Button>
