@@ -1,4 +1,4 @@
-import React, {useState,useEffect } from 'react';
+import React, {useState } from 'react';
 import styled from 'styled-components';
 import Header_Aft from '../Components/Header_Aft';
 import Synthesis from "../Components/List/Synthesis";
@@ -65,7 +65,7 @@ export default function Analysis(){
         Language: <Language />,
     };
   
-    console.log(content);
+    
 
     return(
         <Form>
@@ -78,7 +78,7 @@ export default function Analysis(){
                         <Button
                         key={data.id}
                         isActive={activeButton === data.name}
-                        onClick={e => handleClickButton(data.name)}
+                        onClick={handleClickButton(data.name)}
                       >
                         {data.text}
                         </Button>
