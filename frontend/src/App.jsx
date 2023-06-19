@@ -18,7 +18,7 @@ function App() {
                 <Routes>
                     
                     {/* ---- 분석 페이지 ---- */}
-                    <Route path = '/' element={<Analysis/>}/>
+                    <Route path = '/Analysis' element={<Analysis/>}/>
                     {/* ---- 메인페이지_로그인 전 ---- */}
                     <Route path = '/Main_Before' element={<Main_Before/>} />
                     {/* ---- 메인페이지_로그인 후 ---- */}
@@ -31,7 +31,7 @@ function App() {
                     <Route path = '/FindPW' element={<FindPW/>} />
 
                     {/* ---- 메인페이지 ---- */}
-                    <Route path='/Welcome' element={<Welcome />} />
+                    <Route path='/' element={<Welcome />} />
                     {/* ---- 면접 시작 전페이지---- */}
                     <Route path='/Interview_start' element={<Interview_start />} />
                     {/* ---- 면접 페이지---- */}

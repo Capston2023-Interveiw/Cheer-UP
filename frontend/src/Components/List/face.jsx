@@ -71,44 +71,69 @@ export default function Face(){
     
     useEffect(() => {
         axios({
-        url: "/result/1/face",
+        url: "api/v1/result/1/face",
         method: "get",
+
       }).then((response) => {
-        setfaceInfo(<>
-            <p>{response.data.url}</p>
-            <p>{response.data.score}</p>
-            <p>{response.data.feedback}</p>
-            <p>{response.data.logs}</p>
-            </>
-            );
+        setfaceInfo(response.data);
   
-        console(setfaceInfo);
-      });
+        console.log(response.data);
+
+      }).catch(function (error) {//실패 시 catch 실행
+        console.log(error);
+    })
+    //성공이던 실패던 항상 실행
+    .then(function () {
+        // always executed
+    });
     },[]);
   
+    // const Loglist = ({data}) => {
+    //     return(
+    //         <div>
+    //             {data&&data.map(face => {
+    //                 return(
+    //                     <div key={face.id}>
+    //                         <div>{face.url}</div>
+    //                         <div>{face.score}</div>
+    //                         <div>{face.feedback}</div>
+    //                         <div>{face.logs}</div>
+    //                     </div>
+    //                 )
+    //             })}
+    //         </div>
+    //     )
+    // }
     return(
 
         <Main>
-            {faceInfo}
+            
             <Video_Box>
-                <Video>동영상 연동 예정_표정</Video>
+                <Video>동영상 연동 예정_표정
+                     {faceInfo.url}
+                </Video>
+                
             </Video_Box>
             <Result_Box>
-                <Rank_score>15점 / 20점</Rank_score>
+                <Rank_score>{faceInfo.score}점 / 20점</Rank_score>
                 <Timestamp>
                     <DummyTable>
-                    1. 11:13(감점이유)<br/>
-                    2. 12:01(감점이유)<br/>
-                    3. 13:34(감점이유)<br/>
-                    4. 13:36(감점이유)<br/>
-                    5. 13:44(감점이유)<br/>
-                    6. 14:03(감점이유)<br/>
-                    7. 15:45(감점이유)<br/>
-                    8. 16:11(감점이유)<br/>
-                    9. 20:36(감점이유)<br/>
+                        <ul>
+                        {faceInfo.logs !== undefined
+                            ? faceInfo.logs.map((data, index) => {
+                                return(
+                                    <div key={index}>
+                                        {index+1}. {data.timestamp}({data.reason})
+                                    </div>
+                                )
+                            })
+                            : null}
+                        </ul>
                     </DummyTable>
                 </Timestamp>
-                <Feedback>피드백 내용 연동 예정</Feedback>
+                <Feedback>
+                    {faceInfo.feedback}
+                    피드백 내용 연동 예정</Feedback>
             </Result_Box>
 
         </Main>
