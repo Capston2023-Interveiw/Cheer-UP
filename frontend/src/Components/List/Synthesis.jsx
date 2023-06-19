@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import PentagonGraph from '../PentagonGraph';
+import axios from 'axios';
 
 const Main = styled.div`
     width: 60vw;
@@ -61,6 +62,12 @@ height:3vh;
 `;
 
 export default function Synthesis(){
+
+  
+
+    axios.get('/v1/result/1/total')
+    .then((Response)=>{console.log(Response.data)})
+    .catch((Error)=>{console.log(Error)})
 
     return(
         <Main>
