@@ -65,7 +65,7 @@ export default function Synthesis(){
 
   
 
-    axios.get('/v1/result/1/total')
+    axios.get('api/v1/result/1/total')
     .then((Response)=>{console.log(Response.data)})
     .catch((Error)=>{console.log(Error)})
 
