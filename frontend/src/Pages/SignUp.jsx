@@ -3,7 +3,6 @@ import {useState} from 'react';
 import styled from 'styled-components';
 import {darken} from 'polished';
 import {AiFillCaretDown} from 'react-icons/ai';
-import {AiFillCaretUp} from 'react-icons/ai';
 
 const Form = styled.div`
   width: 65%;
@@ -38,10 +37,9 @@ const Sci_2 = styled.div`
   align-items: flex-start;
 `;
 
-const Text = styled.input.attrs(props=>({
+const Text = styled.input.attrs(()=>({
   type: "text"
-}))
-`
+}))`
   width: 300px;
   height: 20px;
   padding: 10px;
@@ -51,10 +49,9 @@ const Text = styled.input.attrs(props=>({
   font-size: 14px;
 `;
 
-const Text_age = styled.input.attrs(props=>({
+const Text_age = styled.input.attrs(()=>({
   type: "text"
-}))
-`
+}))`
   width: 200px;
   height: 20px;
   padding: 10px;
@@ -64,10 +61,9 @@ const Text_age = styled.input.attrs(props=>({
   font-size: 14px;
 `;
 
-const Password = styled.input.attrs(props=>({
+const Password = styled.input.attrs(()=>({
   type: "password"
-}))
-`
+}))`
   width: 300px;
   height: 20px;
   padding: 10px;
@@ -220,4 +216,4 @@ export default function SignUp(){
 
   );
  
-};
+}

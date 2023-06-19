@@ -31,10 +31,9 @@ margin-top: 0px;
 color: #0084FE;
 `;
 
-const Text = styled.input.attrs(props=>({
+const Text = styled.input.attrs(()=>({
   type: "text"
-}))
-`
+}))`
   width: 300px;
   height: 20px;
   padding: 10px;
@@ -72,4 +71,4 @@ export default function FindPW() {
         </Lci>
       </Form>
     );
-  };
+  }

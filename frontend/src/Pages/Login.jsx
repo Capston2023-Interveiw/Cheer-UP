@@ -23,10 +23,9 @@ margin-top: 0px;
 color: #0084FE;
 `;
 
-const Text = styled.input.attrs(props=>({
+const Text = styled.input.attrs(()=>({
   type: "text"
-}))
-`
+}))`
   width: 300px;
   height: 20px;
   padding: 10px;
@@ -36,10 +35,9 @@ const Text = styled.input.attrs(props=>({
   font-size: 14px;
 `;
 
-const Password = styled.input.attrs(props=>({
+const Password = styled.input.attrs(()=>({
   type: "password"
-}))
-`
+}))`
   width: 300px;
   height: 20px;
   padding: 10px;
@@ -154,4 +152,4 @@ export default function Login() {
       </Lci>    
     </Form>
   );
-};
+}
