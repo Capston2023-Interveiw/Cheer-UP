@@ -1,4 +1,4 @@
-import React,{useState, useEffect} from 'react';
+import React,{useState, useEffect, useRef} from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 
@@ -21,9 +21,6 @@ const Video_Box  = styled.div`
 `;
 
 const Video = styled.div`
-    width: 25vw;
-    height: 32vh;
-    border: 1px solid;
     margin: auto;
     font-size: 20pt;
 `;
@@ -68,7 +65,23 @@ const DummyTable = styled.div`
 
 export default function Face(){
     const [faceInfo, setfaceInfo] = useState([]);
-    
+    const [timestamp, setTimestamp] = useState([]);
+    const videoRef = useRef(null);
+
+    const handleTimestampChange = (event) =>{
+        setTimestamp(event.target.value);
+    };
+
+    const handleGoToTimestamp =(timestamp) =>{
+        console.log(timestamp);
+        if(videoRef.current){
+            const timeComponents = timestamp.split(':');
+            const minutes = parseInt(timeComponents[0]) || 0;
+            const seconds = parseInt(timeComponents[1]) || 0;
+            const totalSeconds = minutes * 60 + seconds;
+            videoRef.current.currentTime = totalSeconds;
+        }
+    }
     useEffect(() => {
         axios({
         url: "api/v1/result/1/face",
@@ -87,30 +100,19 @@ export default function Face(){
         // always executed
     });
     },[]);
-  
-    // const Loglist = ({data}) => {
-    //     return(
-    //         <div>
-    //             {data&&data.map(face => {
-    //                 return(
-    //                     <div key={face.id}>
-    //                         <div>{face.url}</div>
-    //                         <div>{face.score}</div>
-    //                         <div>{face.feedback}</div>
-    //                         <div>{face.logs}</div>
-    //                     </div>
-    //                 )
-    //             })}
-    //         </div>
-    //     )
-    // }
+
     return(
 
         <Main>
-            
+            {/* <input type="text" value={timestamp} onChange={handleTimestampChange} placeholder="hh:mm:ss" />
+            <button onClick={handleGoToTimestamp}>Go</button> */}
+            {/* <div>
+                <video ref={videoRef} src="https://www.youtube.com/embed/dQw4w9WgXcQ" controls width="640" height="360"></video>
+            </div> */}
             <Video_Box>
-                <Video>동영상 연동 예정_표정
-                     {faceInfo.url}
+                <Video>
+                     {/* {faceInfo.url} */}
+                     <video ref={videoRef} height="400" width="300" src="/video/test.mp4" controls/>
                 </Video>
                 
             </Video_Box>
@@ -123,7 +125,9 @@ export default function Face(){
                             ? faceInfo.logs.map((data, index) => {
                                 return(
                                     <div key={index}>
-                                        {index+1}. {data.timestamp}({data.reason})
+                                        {index+1}. <button value={timestamp} onChange={handleTimestampChange} onClick={()=>handleGoToTimestamp(data.timestamp)} >
+                                                {data.timestamp}
+                                            </button> ({data.reason})
                                     </div>
                                 )
                             })
@@ -133,7 +137,7 @@ export default function Face(){
                 </Timestamp>
                 <Feedback>
                     {faceInfo.feedback}
-                    피드백 내용 연동 예정</Feedback>
+                </Feedback>
             </Result_Box>
 
         </Main>
