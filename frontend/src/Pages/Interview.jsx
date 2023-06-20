@@ -35,7 +35,7 @@ const Question = styled.div`
   float: top;
   padding-top: 50px;
   font-weight: bolder;
-  font-size: 20px;
+  font-size: 16px;
 `
 
 const TimerText = styled.div`
@@ -55,7 +55,7 @@ function Interview() {
     const time = useRef(90);
     const timerId = useRef(null);
 
-    const [data, setData] = useState();
+    const [question, setQuestion] = useState([]);
 
     useEffect(()=>{
       timerId.current = setInterval(()=>{
@@ -74,34 +74,54 @@ function Interview() {
       }
     },[sec]);
 
-    useEffect(()=>{
-    },[]);
+    useEffect(() => {
+      axios({
+      url: "api/v1/interview/progress",
+      method: "get",
 
-   async function questions () {
-    try{
-      await axios.get('/http://localhost:8080/api/v1/progress')
-      .then(response =>{
-        console.log(response.data)
-        setData(response.data)
-      })
-      }catch(e){ //에러 처리
-        console.error(e); 
-    }
-  }
+    }).then((response) => {
+      setQuestion(response.data);
+
+      console.log(response.data);
+
+    }).catch(function (error) {//실패 시 catch 실행
+      console.log(error);
+  })
+  //성공이던 실패던 항상 실행
+  .then(function () {
+      // always executed
+  });
+  },[]);
 
     const iframePart = () => {
         return {
             __html: '<iframe src="http://localhost:8888/interview/progress" width="640" height="360px"></iframe>',
         };
     };
+    function QuestionItem({ item }) {
+      return <>{item}</>;
+    }
+
+    const selectedData = question.length > 0 ? question[0].content : null;
+
     return (
         <MainWrap>
             <Header />
             <Wrap>
             <Question>
-            
-              {questions}
-            {data && <textarea rows={10} value={JSON.stringify(data)} readOnly={true}/>}
+            Q1. {selectedData && <QuestionItem item={selectedData} />}
+               {/* {question !== undefined
+                              ? question.map((data, index) => {
+                                  return(
+                                      <div key={index}>
+                                        Q{index+1}.
+                                        {data.content}
+                                         
+                                      </div>
+                                  )
+                              })
+                              : null}  */}
+              
               
             </Question>
                 <WrapContent>

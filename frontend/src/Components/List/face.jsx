@@ -1,6 +1,7 @@
 import React,{useState, useEffect, useRef} from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
+import {FaRegLightbulb} from 'react-icons/fa';
 
 const Main = styled.div`
     width: 60vw;
@@ -26,6 +27,7 @@ const Video = styled.div`
 `;
 
 const Result_Box = styled.div`
+    display: grid;
     width: 30vw;
     height: 60vh;
     position: relative;
@@ -34,25 +36,23 @@ const Result_Box = styled.div`
 const Rank_score =styled.div`
     width: 10vw;
     height: 8vh;
-    border: 1px solid;
+    font-size: 20px;
     position: absolute;
-    top: 12%;
-    left: 10%;
+    top: 15%;
+    left: 30%;
 `;
 const Timestamp = styled.div`
     overflow-y: scroll;
     width: 20vw;
     height: 12vh;
-    border: 1px solid;
     position: absolute;
     top: 30%;
     left: 15%;
 `;
 
 const Feedback = styled.div`
-    width: 20vw;
+    width: 25vw;
     height: 12vh;
-    border: 1px solid;
     position: absolute;
     top: 55%;
     left: 15%;
@@ -60,6 +60,16 @@ const Feedback = styled.div`
 
 const DummyTable = styled.div`
     white-space: pre-line;
+`
+
+const TimestampButton = styled.button`
+    border: none;
+    background: none;
+    font-size: 16px;
+    font-weight: bolder;
+    cursor: pointer;
+    color: blue;
+    
 `
 
 
@@ -73,7 +83,6 @@ export default function Face(){
     };
 
     const handleGoToTimestamp =(timestamp) =>{
-        console.log(timestamp);
         if(videoRef.current){
             const timeComponents = timestamp.split(':');
             const minutes = parseInt(timeComponents[0]) || 0;
@@ -104,15 +113,10 @@ export default function Face(){
     return(
 
         <Main>
-            {/* <input type="text" value={timestamp} onChange={handleTimestampChange} placeholder="hh:mm:ss" />
-            <button onClick={handleGoToTimestamp}>Go</button> */}
-            {/* <div>
-                <video ref={videoRef} src="https://www.youtube.com/embed/dQw4w9WgXcQ" controls width="640" height="360"></video>
-            </div> */}
             <Video_Box>
                 <Video>
                      {/* {faceInfo.url} */}
-                     <video ref={videoRef} height="400" width="300" src="/video/test.mp4" controls/>
+                     <video ref={videoRef} height="400" width="300" src={faceInfo.url} controls/>
                 </Video>
                 
             </Video_Box>
@@ -125,9 +129,9 @@ export default function Face(){
                             ? faceInfo.logs.map((data, index) => {
                                 return(
                                     <div key={index}>
-                                        {index+1}. <button value={timestamp} onChange={handleTimestampChange} onClick={()=>handleGoToTimestamp(data.timestamp)} >
+                                        {index+1}. <TimestampButton value={timestamp} onChange={handleTimestampChange} onClick={()=>handleGoToTimestamp(data.timestamp)} >
                                                 {data.timestamp}
-                                            </button> ({data.reason})
+                                            </TimestampButton> ({data.reason})
                                     </div>
                                 )
                             })
@@ -136,7 +140,11 @@ export default function Face(){
                     </DummyTable>
                 </Timestamp>
                 <Feedback>
-                    {faceInfo.feedback}
+                    <FaRegLightbulb size='30px' color='#ffd400'/>
+                    <p>
+                        {faceInfo.feedback}
+                    </p>
+                    
                 </Feedback>
             </Result_Box>
 
