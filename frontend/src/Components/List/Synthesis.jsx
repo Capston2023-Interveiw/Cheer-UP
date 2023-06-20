@@ -31,7 +31,7 @@ const Result_Box = styled.div`
 
 const Rank_img =styled.div`
     width: 5vw;
-    height: 10vh;
+    height: 20vh;
     position: absolute;
     top: 16%;
     left: 10%;
@@ -45,10 +45,10 @@ const Rank_score =styled.div`
 `;
 
 const Score_Box = styled.div`
-width:15vw;
-height:15vh;
+width:20vw;
+height:30vh;
 position: absolute;
-top: 46%;
+top: 50%;
 left: 20%;
 `;
 
@@ -66,7 +66,7 @@ margin:0px;
 text-align:left;
 font-style: medium;
 font-weight: medium;
-font-size: 23px;
+font-size: 30px;
 `;
 
 const P2 =styled.p`
@@ -76,7 +76,7 @@ margin:0px;
 text-align:right;
 font-style: medium;
 font-weight: medium;
-font-size: 23px;
+font-size: 30px;
 `;
 
 const P3 =styled.p`
@@ -84,7 +84,7 @@ position: absolute;
 margin:0px;
 font-style: normal;
 font-weight: bolder;
-font-size: 30px;
+font-size: 45px;
 `;
 
 const P4 =styled.p`
@@ -92,9 +92,13 @@ position: absolute;
 margin:0px;
 font-style: normal;
 font-weight: bolder;
-font-size: 80px;
+font-size: 90px;
 `;
 
+const Graph =styled.div`
+width: 23vw; 
+height: 45vh;
+`;
 
 
 export default function Synthesis(){
@@ -148,7 +152,9 @@ export default function Synthesis(){
     return(
         <Main>
         <Graph_Box>
-            <PentagonGraph />        
+            <Graph>
+                {totalData && <PentagonGraph data={otherData} />}
+            </Graph>       
         </Graph_Box>
         <Result_Box>
             <Rank_img>
