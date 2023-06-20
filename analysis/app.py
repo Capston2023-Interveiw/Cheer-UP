@@ -2,14 +2,23 @@ from flask import Flask, render_template, url_for
 from flask import request
 from flask import Response
 from flask import stream_with_context
+from dotenv import load_dotenv
 import cv2
+import uuid
+import os
 from Camera import Camera
 import time
 from CombineVideoAndAudio import combineVideo
+from DataDao import DataDao
 
 app = Flask( __name__ )
 app.config['JSON_AS_ASCII'] = False
 isStream = False
+database = DataDao()
+camera = None
+fname = ""
+load_dotenv()
+
 
 @app.route('/interview/progress')
 def home():
@@ -18,36 +27,46 @@ def home():
 @app.route('/progress')
 def progress():
     global isStream
+    global camera
+    global fname
+
     src = request.args.get('src', default = 0, type = int)
-    camera = Camera()
+    fname = (str(uuid.uuid4()))
+    key = f"{os.environ.get('DOMAIN_NAME')}/{fname}"
+    database.insertVideo(key, 1)
+    video_id = database.selectVideo(1)
+    camera = Camera(video_id)
     isStream = True
     try:
         return Response(
-                            stream_with_context( stream_gen(src, camera) ),
+                            stream_with_context( stream_gen(src) ),
                             mimetype='multipart/x-mixed-replace; boundary=frame' 
                         )    
     except Exception as e :
         print('stream error : ',str(e))
 
-def stream_gen(src, camera):
+def stream_gen(src):
     try:
         camera.run(src)
         while isStream:
             frame = camera.bytescode()
             yield (b'--frame\r\n'
                 b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
-        camera.stop()
-        del camera
     except GeneratorExit:
         camera.stop()
 
 @app.route('/interview/end')
 def end():
     global isStream
+    global camera
     isStream = False
-    combineVideo()
-    time.sleep(1)
-    return {"message": "end"}
+    camera.started = False
+    del(camera)
+    combineVideo(fname)
+    time.sleep(5)
+
+
+    return {"video_id": database.selectVideo(1)}
 
 # cam = cv2.VideoCapture(0)
 # cam.set(cv2.CAP_PROP_FRAME_WIDTH, 640)

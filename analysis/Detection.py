@@ -2,7 +2,6 @@ import mediapipe as mp
 import time
 import cv2
 
-from threading import Thread
 from model.gaze.gaze_tracking.gaze_tracking import GazeTracking
 from model.gaze.gaze import run_gaze
 from model.posture.PoseProject import Posture
@@ -12,7 +11,7 @@ from DataDao import DataDao
 
 class Detection:
 
-    def __init__(self):
+    def __init__(self, video_id):
         self.thread = None
         self.mp_holistic = mp.solutions.holistic
         self.holistic = self.mp_holistic.Holistic(min_detection_confidence=0.5, min_tracking_confidence=0.5)
@@ -50,6 +49,7 @@ class Detection:
         self.startTime = None
         self.fps = 10
         self.database = DataDao()
+        self.video_id = video_id
 
     def update(self, image):
 		# if the background model is None, initialize it
@@ -94,7 +94,7 @@ class Detection:
                 self.gazeTimeStamp.append(timestamp)
                 self.gazeCount = 0
                 self.gazeColor = (0, 0, 255)
-                self.database.insertLog(self.gaze, timestamp, 3, 1)
+                self.database.insertLog(self.gaze, timestamp, 3, self.video_id)
         else:
             self.gazeColor = (2, 247, 234)
 
@@ -110,7 +110,7 @@ class Detection:
                 self.postureTimeStamp.append(timestamp)
                 self.postureCount = 0
                 self.headColor = (0, 0, 255)
-                self.database.insertLog(posture[0], timestamp, 2, 1)
+                self.database.insertLog(posture[0], timestamp, 2, self.video_id)
         else:
             self.headColor = (2, 247, 234)
 
@@ -123,7 +123,7 @@ class Detection:
                 self.postureTimeStamp.append(timestamp)
                 self.shoulderCount = 0
                 self.shoulderColor = (0, 0, 255)
-                self.database.insertLog("어깨 비대칭", timestamp, 2, 1)
+                self.database.insertLog("어깨 비대칭", timestamp, 2, self.video_id)
         else:
             self.shoulderColor = (2, 247, 234)
 
@@ -138,7 +138,7 @@ class Detection:
                 self.expressionTimeStamp.append(timestamp)
                 self.expressionCount = 0
                 self.faceColor = (0, 0, 255)
-                self.database.insertLog(reason, timestamp, 1, 1)
+                self.database.insertLog(reason, timestamp, 1, self.video_id)
         else:
             self.faceColor = (2, 247, 234)
 
