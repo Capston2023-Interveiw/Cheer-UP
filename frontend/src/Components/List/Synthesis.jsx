@@ -1,4 +1,4 @@
-import React from 'react';
+import React ,{ useState ,useEffect } from 'react';
 import styled from 'styled-components';
 import PentagonGraph from '../PentagonGraph';
 import axios from 'axios';
@@ -31,43 +31,119 @@ const Result_Box = styled.div`
 
 const Rank_img =styled.div`
     width: 5vw;
-    height: 8vh;
-    border: 1px solid;
+    height: 10vh;
     position: absolute;
-    top: 20%;
+    top: 16%;
     left: 10%;
 `;
 const Rank_score =styled.div`
-    width: 10vw;
+    width: 15vw;
     height: 8vh;
-    border: 1px solid;
     position: absolute;
-    top: 20%;
+    top: 21%;
     left: 40%;
 `;
 
 const Score_Box = styled.div`
-width:11.1vw;
+width:15vw;
 height:15vh;
-border: 1px solid;
 position: absolute;
 top: 46%;
 left: 20%;
 `;
 
 const Score = styled.div`
-width:11.1vw;
+width:15vw;
 height:3vh;
+position: relative;
 
 `;
 
+const P1 =styled.p`
+position: absolute;
+left: 0%;
+margin:0px;
+text-align:left;
+font-style: medium;
+font-weight: medium;
+font-size: 23px;
+`;
+
+const P2 =styled.p`
+position: absolute;
+right: 0%;
+margin:0px;
+text-align:right;
+font-style: medium;
+font-weight: medium;
+font-size: 23px;
+`;
+
+const P3 =styled.p`
+position: absolute;
+margin:0px;
+font-style: normal;
+font-weight: bolder;
+font-size: 30px;
+`;
+
+const P4 =styled.p`
+position: absolute;
+margin:0px;
+font-style: normal;
+font-weight: bolder;
+font-size: 80px;
+`;
+
+
+
 export default function Synthesis(){
+    const [totalData, setTotalData] = useState(null);
+    const [otherData, setOtherData] = useState([]);
+    const [grade, setGrade] = useState('');
 
-  
+    useEffect(() => {
+        axios.get('api/v1/result/1/total')
+        .then(response => {
+            const data = response.data;
+            const total = data.find(item => item.analysis_type === 'total');
+            const others = data.filter(item => item.analysis_type !== 'total');
+            setTotalData(total);
+            setOtherData(others);
+            setGrade(calculateGrade(total.score));
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }, []);
 
-    axios.get('api/v1/result/1/total')
-    .then((Response)=>{console.log(Response.data)})
-    .catch((Error)=>{console.log(Error)})
+    const calculateGrade = (score) => {
+        if (score >= 1 && score <= 30) {
+          return 'F';
+        } else if (score >= 31 && score <= 45) {
+          return 'C';
+        } else if (score >= 46 && score <= 60) {
+          return 'C+';
+        } else if (score >= 61 && score <= 70) {
+          return 'B';
+        } else if (score >= 71 && score <= 80) {
+          return 'B+';
+        } else if (score >= 81 && score <= 90) {
+          return 'A';
+        } else if (score >= 91 && score <= 100) {
+          return 'A+';
+        } else {
+          return '';
+        }
+      };
+    
+    const analysisTypeMap = {
+        face: '표정',
+        posture: '자세',
+        gaze: '시선',
+        interjection: '추임새',
+        speed: '말속도'
+    };
 
     return(
         <Main>
@@ -75,16 +151,26 @@ export default function Synthesis(){
             <PentagonGraph />        
         </Graph_Box>
         <Result_Box>
-            <Rank_img>A</Rank_img>
-            <Rank_score>총 90점 / 100점</Rank_score>
+            <Rank_img>
+                {totalData && (
+                    <P4>{grade}</P4>
+                )}
+            </Rank_img>
+                {totalData &&(
+                    <Rank_score><P3>총 {totalData.score}점 / 100점</P3></Rank_score>
+                )}
             <Score_Box>
-                <Score>시선 _점</Score>
-                <Score>표정 _점</Score>
-                <Score>자세 _점</Score>
-                <Score>평균 말속도 _점</Score>
-                <Score>추임새  _점</Score>
+                {otherData.length > 0 && (
+                    <div>
+                    {otherData.map((item, index) => (
+                        <Score key={index} >
+                            <P1>{analysisTypeMap[item.analysis_type]}</P1>
+                            <P2>{item.score}점</P2>
+                        </Score>
+                    ))}
+                    </div>
+                )}
             </Score_Box>
-
         </Result_Box>
  
     </Main>
