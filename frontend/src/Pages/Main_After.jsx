@@ -35,13 +35,13 @@ const Cm = styled.h1`
     left: 50%;
     top: 10%;
     transform: translate(-50%, 0%);
-`
+`;
 
 const Image = styled.div`
     position: absolute;
     left: 10%;
     top: 30%;
-`
+`;
 const Buttonmi = styled.button `
     height: 50px;
     width: 150px;

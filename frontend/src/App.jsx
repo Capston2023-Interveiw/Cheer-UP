@@ -9,6 +9,7 @@ import FindPW from "./Pages/FindPW";
 import Main_Before from "./Pages/Main_Before";
 import Main_After from "./Pages/Main_After";
 import Analysis from "./Pages/Analysis";
+import Wait_Analysis from "./Pages/Wait_Analysis";
 
 
 function App() {
@@ -18,6 +19,8 @@ function App() {
                 <Routes>
                     {/* ---- 분석 페이지 ---- */}
                     <Route path = '/' element={<Analysis/>}/>
+                    {/* ---- 분석대기 페이지 ---- */}
+                    <Route path = '/Wait_Analysis' element={<Wait_Analysis/>}/>
                     {/* ---- 메인페이지_로그인 전 ---- */}
                     <Route path = '/Main_Before' element={<Main_Before/>} />
                     {/* ---- 메인페이지_로그인 후 ---- */}
