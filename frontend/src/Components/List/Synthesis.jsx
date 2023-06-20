@@ -66,7 +66,7 @@ margin:0px;
 text-align:left;
 font-style: medium;
 font-weight: medium;
-font-size: 2rem;
+font-size: 2.5vh;
 `;
 
 const P2 =styled.p`
@@ -76,7 +76,7 @@ margin:0px;
 text-align:right;
 font-style: medium;
 font-weight: medium;
-font-size: 2rem;
+font-size: 2.5vh;
 `;
 
 const P3 =styled.p`
@@ -84,7 +84,7 @@ position: absolute;
 margin:0px;
 font-style: normal;
 font-weight: bolder;
-font-size: 2.7rem;
+font-size: 3vh;
 `;
 
 const P4 =styled.p`
@@ -92,7 +92,7 @@ position: absolute;
 margin:0px;
 font-style: normal;
 font-weight: bolder;
-font-size: 6rem;
+font-size: 7vh;
 `;
 
 const Graph =styled.div`

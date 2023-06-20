@@ -25,7 +25,7 @@ const Button  = styled.button`
     border-bottom: 1px solid;
     font-style: normal;
     font-weight: bolder;
-    font-size: 2rem;
+    font-size: 3vh;
     background-color: ${props => (props.isActive ? '#A3D8F4' : '#FFFF')};
     border-bottom:  ${props => (props.isActive ? '0px solid' : '1px solid')};
 `;
