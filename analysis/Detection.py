@@ -212,7 +212,6 @@ class Detection:
             if second > 60:
                 minute += second // 60
                 second -= 60 * minute
-                stamp = time(minute=minute, second=second)
             return f"{minute}:{second}"
     
     def speed_score(self, speedResult):

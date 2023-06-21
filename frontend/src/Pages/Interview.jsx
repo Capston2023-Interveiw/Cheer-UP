@@ -77,7 +77,7 @@ function Interview() {
 
     useEffect(() => {
       axios({
-      url: "api/v1/interview/progress",
+      url: "api/v1/interview/question",
       method: "get",
 
     }).then((response) => {
