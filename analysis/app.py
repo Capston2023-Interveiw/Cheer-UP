@@ -46,6 +46,7 @@ def progress():
         print('stream error : ',str(e))
 
 def stream_gen(src):
+    global camera
     try:
         camera.run(src)
         while isStream:
@@ -60,10 +61,10 @@ def end():
     global isStream
     global camera
     isStream = False
+    print(camera)
     camera.started = False
     del(camera)
     combineVideo(fname)
-    time.sleep(5)
 
 
     return {"video_id": database.selectVideo(1)}
