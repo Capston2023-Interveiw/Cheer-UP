@@ -76,6 +76,7 @@ export default function Wait_Analysis() {
             if(response.data.code === 200){
                 console.log("성공");
                 setVido_num(response.data);
+                window.alert('분석 완료!');
                 setLoading(false);  // api 호출 완료 됐을 때 false로 변경하려 로딩화면 숨김처리
             }
             else{
