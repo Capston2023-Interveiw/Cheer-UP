@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Header from "../Components/Header";
 import NextButton from "../Components/Button";
 import axios from "axios";
+import {Link} from "react-router-dom";
 
 const MainWrap = styled.div`
     position: fixed;
@@ -118,17 +119,17 @@ function Interview() {
             
                 </WrapContent>
                 <WrapNextButton>
-                    
-                        <NextButton
-                            color={"white"}
-                            background={"#0084FE"}
-                            width="6rem"
-                            height="2.5rem"
-                            name="NEXT"
-                            borderRadius="0.3rem"
-                        />
-                      
-                    </WrapNextButton>
+                  <Link to="/Wait_Analysis">
+                      <NextButton
+                          color={"white"}
+                          background={"#0084FE"}
+                          width="6rem"
+                          height="2.5rem"
+                          name="NEXT"
+                          borderRadius="0.3rem"
+                      />
+                    </Link> 
+                </WrapNextButton>
             </Wrap>
         </MainWrap>
     );
