@@ -27,8 +27,7 @@ const Lci = styled.div`
 `;
 
 const Loading_Box = styled.div`
-    position: absolute;
-
+position: absolute;
     
 `;
 
@@ -50,10 +49,22 @@ const Buttonmi = styled.button `
     top: 66%;
 `;
 
+const Loading_end = styled.div`
+    width: 70vw;
+    height: 70vh;
+    z-index: 999;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-style: normal;
+    font-weight: bolder;
+    font-size: 30px;
+`;
 
 export default function Wait_Analysis() {
 
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
     const [video_num, setVido_num] = useState();
 
 
@@ -86,10 +97,10 @@ export default function Wait_Analysis() {
             <Header_Aft/>
             <Lci>
                 <Loading_Box>
-                    {loading ? <Loading /> : null}
+                    {loading ? <Loading /> : <Loading_end>분석 완료</Loading_end>}
                 </Loading_Box>
                 <Link to ='/Analysis' state={{num : video_num}}>
-                <Buttonmi >분석결과 보기</Buttonmi>
+                    <Buttonmi >분석결과 보기</Buttonmi>
                 </Link>
             </Lci>
         </Form>
