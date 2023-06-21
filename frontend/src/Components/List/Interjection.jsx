@@ -73,10 +73,13 @@ const TimestampButton = styled.button`
     
 `
 
-export default function Interjection(){
+export default function Interjection(props){
     const [interjectionInfo, setinterjectionInfo] = useState([]);
     const [timestamp, setTimestamp] = useState([]);
     const videoRef = useRef(null);
+
+    const num = props.video_num;
+    const api = 'api/v1/result/'+num+'/interjection';
 
     const handleTimestampChange = (event) =>{
         setTimestamp(event.target.value);
@@ -93,7 +96,7 @@ export default function Interjection(){
     }
     useEffect(() => {
         axios({
-        url: "api/v1/result/{video_id}/interjection",
+        url: api,
         method: "get",
 
       }).then((response) => {

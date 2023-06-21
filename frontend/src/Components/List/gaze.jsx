@@ -70,11 +70,14 @@ const TimestampButton = styled.button`
     color: blue;
 `
 
-export default function Gaze(){
+export default function Gaze(props){
     const [gazeInfo, setgazeInfo] = useState([]);
     const [timestamp, setTimestamp] = useState([]);
     const videoRef = useRef(null);
 
+    const num = props.video_num;
+    const api = 'api/v1/result/'+num+'/gaze';
+    
     const handleTimestampChange = (event) =>{
         setTimestamp(event.target.value);
     };
@@ -90,7 +93,7 @@ export default function Gaze(){
     }
     useEffect(() => {
         axios({
-        url: "api/v1/result/1/gaze",
+        url: api,
         method: "get",
 
       }).then((response) => {

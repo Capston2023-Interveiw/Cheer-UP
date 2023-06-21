@@ -72,15 +72,22 @@ const TimestampButton = styled.button`
 `
 
 
-export default function Speed(){
+export default function Speed(props){
     const [speedInfo, setspeedInfo] = useState([]);
     const [timestamp, setTimestamp] = useState([]);
     const videoRef = useRef(null);
 
+    const num = props.video_num;
+    console.log("--------");
+    console.log(num);
+    const api = 'api/v1/result/'+num+'/speed';
+    console.log("+++++++");
+    console.log(api);
+
     const handleTimestampChange = (event) =>{
         setTimestamp(event.target.value);
     };
-
+    
     const handleGoToTimestamp =(timestamp) =>{
         if(videoRef.current){
             const timeComponents = timestamp.split(':');
@@ -92,7 +99,7 @@ export default function Speed(){
     }
     useEffect(() => {
         axios({
-        url: "api/v1/result/{video_id}/speed",
+        url: api,
         method: "get",
 
       }).then((response) => {

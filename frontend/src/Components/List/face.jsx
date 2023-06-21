@@ -73,10 +73,13 @@ const TimestampButton = styled.button`
 `
 
 
-export default function Face(){
+export default function Face(props){
     const [faceInfo, setfaceInfo] = useState([]);
     const [timestamp, setTimestamp] = useState([]);
     const videoRef = useRef(null);
+
+    const num = props.video_num;
+    const api = 'api/v1/result/'+num+'/face';
 
     const handleTimestampChange = (event) =>{
         setTimestamp(event.target.value);
@@ -93,7 +96,7 @@ export default function Face(){
     }
     useEffect(() => {
         axios({
-        url: "api/v1/result/1/face",
+        url: api,
         method: "get",
 
       }).then((response) => {
@@ -110,14 +113,10 @@ export default function Face(){
     });
     },[]);
 
-  
     return(
-
         <Main>
-            {faceInfo}
             <Video_Box>
                 <Video>
-                     {/* {faceInfo.url} */}
                      <video ref={videoRef} height="400" width="300" src={faceInfo.url} controls/>
                 </Video>
                 
