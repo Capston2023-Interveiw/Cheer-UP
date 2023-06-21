@@ -69,6 +69,9 @@ export default function Analysis(){
 =======
   
     
+<<<<<<< HEAD
+>>>>>>> #57
+=======
 >>>>>>> #57
 
     return(
@@ -82,13 +85,10 @@ export default function Analysis(){
                         <Button
                         key={data.id}
                         isActive={activeButton === data.name}
-<<<<<<< HEAD
-                        onClick={() => handleClickButton(data.name)}
-=======
                         onClick={() =>{
                             handleClickButton(data.name)
                         }}
->>>>>>> #57
+
                       >
                         {data.text}
                         </Button>
