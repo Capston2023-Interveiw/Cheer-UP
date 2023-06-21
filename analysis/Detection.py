@@ -9,6 +9,12 @@ from model.face.real_time_video import run_face
 from model.language.language import SttService
 from DataDao import DataDao
 
+FACE_ANALYSIS_ID=1
+POSTURE_ANALYSIS_ID=2
+GAZE_ANALYSIS_ID=3
+INTERJECTION_ANALYSIS_ID=4
+SPEED_ANALYSIS_ID=5
+
 class Detection:
 
     def __init__(self, video_id):
@@ -94,7 +100,7 @@ class Detection:
                 self.gazeTimeStamp.append(timestamp)
                 self.gazeCount = 0
                 self.gazeColor = (0, 0, 255)
-                self.database.insertLog(self.gaze, timestamp, 3, self.video_id)
+                self.database.insertLog(self.gaze, timestamp, GAZE_ANALYSIS_ID, self.video_id)
         else:
             self.gazeColor = (2, 247, 234)
 
@@ -110,7 +116,7 @@ class Detection:
                 self.postureTimeStamp.append(timestamp)
                 self.postureCount = 0
                 self.headColor = (0, 0, 255)
-                self.database.insertLog(posture[0], timestamp, 2, self.video_id)
+                self.database.insertLog(posture[0], timestamp, POSTURE_ANALYSIS_ID, self.video_id)
         else:
             self.headColor = (2, 247, 234)
 
@@ -123,7 +129,7 @@ class Detection:
                 self.postureTimeStamp.append(timestamp)
                 self.shoulderCount = 0
                 self.shoulderColor = (0, 0, 255)
-                self.database.insertLog("어깨 비대칭", timestamp, 2, self.video_id)
+                self.database.insertLog("어깨 비대칭", timestamp, POSTURE_ANALYSIS_ID, self.video_id)
         else:
             self.shoulderColor = (2, 247, 234)
 
@@ -138,7 +144,7 @@ class Detection:
                 self.expressionTimeStamp.append(timestamp)
                 self.expressionCount = 0
                 self.faceColor = (0, 0, 255)
-                self.database.insertLog(reason, timestamp, 1, self.video_id)
+                self.database.insertLog(reason, timestamp, FACE_ANALYSIS_ID, self.video_id)
         else:
             self.faceColor = (2, 247, 234)
 
@@ -149,26 +155,28 @@ class Detection:
         self.fps += 1
         
     def result(self):
+        
         gazeScore = 20
         postureScore = 20
         expressionScore = 20
         if len(self.gazeFeedback) > 2:
             gazeScore -= (len(self.gazeFeedback) - 2)
-        
-        if gazeScore < 0:
-            gazeScore = 0
-        
+            if gazeScore < 0:
+                gazeScore = 0
+        self.save_score(GAZE_ANALYSIS_ID, gazeScore)
+
         if len(self.postureFeedback) > 2:
             postureScore -= (len(self.postureFeedback) - 2)
 
-        if postureScore < 0:
-            postureScore = 0
-        
+            if postureScore < 0:
+                postureScore = 0
+        self.save_score(POSTURE_ANALYSIS_ID, postureScore)
+
         if len(self.expressionFeedback) > 2:
             expressionScore -= (len(self.expressionFeedback) - 2)
-
-        if expressionScore < 0:
-            expressionScore = 0
+            if expressionScore < 0:
+                expressionScore = 0
+        self.save_score(FACE_ANALYSIS_ID, expressionScore)
 
         stt = SttService("./model/language/record.wav")
         stt.getScripts()
@@ -176,26 +184,28 @@ class Detection:
             interjectionResult = stt.getInterjectionResult()
             speedResult = stt.getSpeedResult()
         time.sleep(2)
-        content = {
-            "gaze": {
-                "field": "gaze",
-                "score": gazeScore,
-                "feedback": self.gazeFeedback,
-                "time_stamp": self.gazeTimeStamp
-            },
-            "posture": {
-                "field": "posture",
-                "score": postureScore,
-                "feedback": self.postureFeedback,
-                "time_stamp": self.postureTimeStamp
-            },
-            "face": {
-                "field": "face",
-                "score": expressionScore,
-                "feedback": self.expressionFeedback,
-                "time_stamp": self.expressionTimeStamp
-            },
-            "interjection" : interjectionResult,
-            "speed" : speedResult
-        }
-        return content
+        self.speed_score(speedResult)
+        self.save_interjection_log(interjectionResult)
+        totalScore = gazeScore + expressionScore + postureScore + speedResult['score'] + interjectionResult['score']
+        self.database.insertScore(totalScore, self.video_id, None, 6)
+    
+    def save_score(self, analysis_id, score):
+        if score == 20:
+            feedback_id = 4 * (analysis_id - 1) + 1
+        elif 15 <= score <= 19:
+            feedback_id = 4 * (analysis_id - 1) + 2
+        elif 10 <= score <= 14:
+            feedback_id = 4 * (analysis_id - 1) + 3
+        else:
+            feedback_id = 4 * (analysis_id - 1) + 4
+        
+        self.database.insertScore(score, self.video_id, feedback_id, analysis_id)
+    
+    def save_interjection_log(self, contents):
+        self.save_score(contents['analysis_id'], contents['score'])
+        for log in contents['feedback']:
+            print(log)
+            self.database.insertLog(log, None, INTERJECTION_ANALYSIS_ID, self.video_id)
+
+    def speed_score(self, speedResult):
+        self.database.insertScore(speedResult['score'], self.video_id, speedResult['feedback'], speedResult['field'])

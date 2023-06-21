@@ -37,9 +37,11 @@ INSERT INTO feedback (content, score, analysis_id) VALUES ('조금의 감점이 
 INSERT INTO feedback (content, score, analysis_id) VALUES ('추임새가 자주 반복된다면 자신의 답변에 확신이 없어보일 수 있습니다. 미리 질문을 본 후 말을 생각하여 천천히 답변한다면 자신의 의견을 정확하게 전달할 수 있습니다.', '10', '4');
 INSERT INTO feedback (content, score, analysis_id) VALUES ('면접에서 불필요한 추임새는 준비되지 않은 지원자로 보일 수 있어 삼가하는 것이 좋습니다. 조금 천천히 답변하더라도 본인의 의견을 정확하고 매끄럽게 전달하는 것이 중요합니다. 불필요한 추임새가 반복된다면 조금 천천히 말하더라도 자신의 의견을 정확하고 매끄럽게 전달하는 것이 좋습니다.', '0', '4');
 
+INSERT INTO feedback (content, score, analysis_id) VALUES ('말 속도가 매우 빠릅니다. 말 속도를 조절하지 못 할 경우 전달력이 떨어져 면접 시 불이익을 얻을 수 있습니다. 모의면접이나 거울을 보고 반복적으로 연습하는 것이 도움이 됩니다.', '10', '5');
+INSERT INTO feedback (content, score, analysis_id) VALUES ('말 속도가 조금 빠릅니다. 말하는 의도를 면접관에게 잘 전달하기 위해서는 주어진 시간을 고려해 말의 속도를 조절해야 합니다.', '15', '5');
 INSERT INTO feedback (content, score, analysis_id) VALUES ('말 속도가 적당합니다. 말하는 의도가 면접관에게 잘 전달 되어 좋은 인상을 남길 수 있습니다.', '20', '5');
-INSERT INTO feedback (content, score, analysis_id) VALUES ('말 속도가 조금 느리거나 빠릅니다. 말하는 의도를 면접관에게 잘 전달하기 위해서는 주어진 시간을 고려해 말의 속도를 조절해야 합니다.', '10', '5');
-INSERT INTO feedback (content, score, analysis_id) VALUES ('말 속도 가 너무 느리거나 빠릅니다. 말 속도를 조절하지 못 할 경우 전달력이 떨어져 면접 시 불이익을 얻을 수 있습니다. 모의면접이나 거울을 보고 반복적으로 연습하는 것이 도움이 됩니다.', '0', '5');
+INSERT INTO feedback (content, score, analysis_id) VALUES ('말 속도가 조금 느립니다. 말하는 의도를 면접관에게 잘 전달하기 위해서는 주어진 시간을 고려해 말의 속도를 조절해야 합니다.', '0', '5');
+INSERT INTO feedback (content, score, analysis_id) VALUES ('말 속도가 너무 느립니다. 말 속도를 조절하지 못 할 경우 전달력이 떨어져 면접 시 불이익을 얻을 수 있습니다. 모의면접이나 거울을 보고 반복적으로 연습하는 것이 도움이 됩니다.', '0', '5');
 
 INSERT INTO video (url, member_id) VALUES ('/static/test.mp4', 1);
 
