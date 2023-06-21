@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import {darken} from 'polished';
 import {AiFillCaretDown} from 'react-icons/ai';
 
-
 const Form = styled.div`
   width: 65%;
   height: 100vh;
@@ -39,8 +38,8 @@ const Sci_2 = styled.div`
 `;
 
 
-const Text = styled.input`
 
+const Text = styled.input`
   width: 300px;
   height: 20px;
   padding: 10px;
@@ -49,7 +48,6 @@ const Text = styled.input`
   border-radius: 10px;
   font-size: 14px;
 `;
-
 
 const Text_age = styled.input`
 

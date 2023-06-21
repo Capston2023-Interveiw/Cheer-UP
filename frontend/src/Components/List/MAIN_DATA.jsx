@@ -32,7 +32,7 @@ export const MAIN_DATA = [
     {
     id: 6,
     text: '추임새',
-    name: 'Language',
+    name: 'Interjection',
     color: '#A3D8F4',
     },
     ];

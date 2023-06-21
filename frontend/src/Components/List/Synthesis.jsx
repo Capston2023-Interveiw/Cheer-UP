@@ -45,17 +45,22 @@ const Rank_score =styled.div`
 `;
 
 const Score_Box = styled.div`
-width:20vw;
-height:30vh;
-position: absolute;
-top: 50%;
-left: 20%;
+    width:20vw;
+    height:15vh;
+    position: absolute;
+    top: 50%;
+    left: 10%;
+    border: 1px solid;
+    border-radius: 10px;
+    padding: 10px;
 `;
 
 const Score = styled.div`
-width:15vw;
-height:3vh;
-position: relative;
+    width:15vw;
+    height:3vh;
+    position: relative;
+    margin-left: 15px;
+    text-align: center;
 
 `;
 
@@ -107,7 +112,7 @@ export default function Synthesis(){
     const [grade, setGrade] = useState('');
 
     useEffect(() => {
-        axios.get('api/v1/result/1/total')
+        axios.get('api/v1/result/{video_id}/total')
         .then(response => {
             const data = response.data;
             const total = data.find(item => item.analysis_type === 'total');

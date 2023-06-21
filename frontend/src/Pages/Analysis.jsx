@@ -5,7 +5,7 @@ import Header_Aft from '../Components/Header_Aft';
 import Synthesis from "../Components/List/Synthesis";
 import Posture from "../Components/List/Posture";
 import Speed from "../Components/List/Speed";
-import Language from "../Components/List/Language";
+import Interjection from "../Components/List/Interjection";
 import Gaze from '../Components/List/gaze';
 import Face from '../Components/List/face';
 import {MAIN_DATA} from '../Components/List/MAIN_DATA';
@@ -63,10 +63,9 @@ export default function Analysis(){
         Face: <Face />,
         Posture: <Posture />,
         Speed: <Speed />,
-        Language: <Language />,
+        Interjection: <Interjection />,
     };
-  
-    
+
 
     return(
         <Form>
@@ -82,6 +81,7 @@ export default function Analysis(){
                         onClick={() =>{
                             handleClickButton(data.name)
                         }}
+
                       >
                         {data.text}
                         </Button>

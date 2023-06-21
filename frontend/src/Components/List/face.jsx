@@ -1,6 +1,7 @@
-import {React,useEffect,useState} from 'react';
+import React,{useState, useEffect, useRef} from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
+import {FaRegLightbulb} from 'react-icons/fa';
 
 const Main = styled.div`
     width: 60vw;
@@ -21,14 +22,12 @@ const Video_Box  = styled.div`
 `;
 
 const Video = styled.div`
-    width: 25vw;
-    height: 32vh;
-    border: 1px solid;
     margin: auto;
     font-size: 20pt;
 `;
 
 const Result_Box = styled.div`
+    display: grid;
     width: 30vw;
     height: 60vh;
     position: relative;
@@ -37,25 +36,23 @@ const Result_Box = styled.div`
 const Rank_score =styled.div`
     width: 10vw;
     height: 8vh;
-    border: 1px solid;
+    font-size: 20px;
     position: absolute;
-    top: 12%;
-    left: 10%;
+    top: 15%;
+    left: 30%;
 `;
 const Timestamp = styled.div`
     overflow-y: scroll;
     width: 20vw;
     height: 12vh;
-    border: 1px solid;
     position: absolute;
     top: 30%;
     left: 15%;
 `;
 
 const Feedback = styled.div`
-    width: 20vw;
+    width: 25vw;
     height: 12vh;
-    border: 1px solid;
     position: absolute;
     top: 55%;
     left: 15%;
@@ -65,8 +62,53 @@ const DummyTable = styled.div`
     white-space: pre-line;
 `
 
+const TimestampButton = styled.button`
+    border: none;
+    background: none;
+    font-size: 16px;
+    font-weight: bolder;
+    cursor: pointer;
+    color: blue;
+    
+`
+
 
 export default function Face(){
+    const [faceInfo, setfaceInfo] = useState([]);
+    const [timestamp, setTimestamp] = useState([]);
+    const videoRef = useRef(null);
+
+    const handleTimestampChange = (event) =>{
+        setTimestamp(event.target.value);
+    };
+
+    const handleGoToTimestamp =(timestamp) =>{
+        if(videoRef.current){
+            const timeComponents = timestamp.split(':');
+            const minutes = parseInt(timeComponents[0]) || 0;
+            const seconds = parseInt(timeComponents[1]) || 0;
+            const totalSeconds = minutes * 60 + seconds;
+            videoRef.current.currentTime = totalSeconds;
+        }
+    }
+    useEffect(() => {
+        axios({
+        url: "api/v1/result/1/face",
+        method: "get",
+
+      }).then((response) => {
+        setfaceInfo(response.data);
+  
+        console.log(response.data);
+
+      }).catch(function (error) {//실패 시 catch 실행
+        console.log(error);
+    })
+    //성공이던 실패던 항상 실행
+    .then(function () {
+        // always executed
+    });
+    },[]);
 
     const [faceInfo, setfaceInfo] = useState([]);
     
@@ -92,24 +134,38 @@ export default function Face(){
         <Main>
             {faceInfo}
             <Video_Box>
-                <Video>동영상 연동 예정_표정</Video>
+                <Video>
+                     {/* {faceInfo.url} */}
+                     <video ref={videoRef} height="400" width="300" src={faceInfo.url} controls/>
+                </Video>
+                
             </Video_Box>
             <Result_Box>
-                <Rank_score>15점 / 20점</Rank_score>
+                <Rank_score>{faceInfo.score}점 / 20점</Rank_score>
                 <Timestamp>
                     <DummyTable>
-                    1. 11:13(감점이유)<br/>
-                    2. 12:01(감점이유)<br/>
-                    3. 13:34(감점이유)<br/>
-                    4. 13:36(감점이유)<br/>
-                    5. 13:44(감점이유)<br/>
-                    6. 14:03(감점이유)<br/>
-                    7. 15:45(감점이유)<br/>
-                    8. 16:11(감점이유)<br/>
-                    9. 20:36(감점이유)<br/>
+                        <ul>
+                        {faceInfo.logs !== undefined
+                            ? faceInfo.logs.map((data, index) => {
+                                return(
+                                    <div key={index}>
+                                        {index+1}. <TimestampButton value={timestamp} onChange={handleTimestampChange} onClick={()=>handleGoToTimestamp(data.timestamp)} >
+                                                {data.timestamp}
+                                            </TimestampButton> ({data.reason})
+                                    </div>
+                                )
+                            })
+                            : null}
+                        </ul>
                     </DummyTable>
                 </Timestamp>
-                <Feedback>피드백 내용 연동 예정</Feedback>
+                <Feedback>
+                    <FaRegLightbulb size='30px' color='#ffd400'/>
+                    <p>
+                        {faceInfo.feedback}
+                    </p>
+                    
+                </Feedback>
             </Result_Box>
 
         </Main>
