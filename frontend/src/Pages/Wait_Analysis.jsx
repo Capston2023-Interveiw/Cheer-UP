@@ -54,7 +54,7 @@ const Buttonmi = styled.button `
 export default function Wait_Analysis() {
 
     const [loading, setLoading] = useState(true);
-    const [video_num, setVido_num] = useState('13');
+    const [video_num, setVido_num] = useState('1');
 
 
     const mainApi = async () => {

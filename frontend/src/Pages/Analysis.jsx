@@ -63,7 +63,7 @@ export default function Analysis(){
       };
   
     const selectComponent = {
-        Synthesis: <Synthesis />,
+        Synthesis: <Synthesis video_num = {videonum}/>,
         Gaze: <Gaze />,
         Face: <Face />,
         Posture: <Posture />,
