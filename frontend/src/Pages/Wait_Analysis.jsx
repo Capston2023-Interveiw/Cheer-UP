@@ -54,11 +54,11 @@ const Buttonmi = styled.button `
 export default function Wait_Analysis() {
 
     const [loading, setLoading] = useState(true);
-    const [video_num, setVido_num] = useState('1');
+    const [video_num, setVido_num] = useState('');
 
 
     const mainApi = async () => {
-        setLoading(false); // api 호출 전에 true로 변경하여 로딩화면 띄우기
+        setLoading(true); // api 호출 전에 true로 변경하여 로딩화면 띄우기
 
         axios.get('api/v1/interview/end')
         .then(response => {
