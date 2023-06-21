@@ -38,7 +38,9 @@ const Sci_2 = styled.div`
   align-items: flex-start;
 `;
 
+
 const Text = styled.input`
+
   width: 300px;
   height: 20px;
   padding: 10px;
@@ -48,7 +50,9 @@ const Text = styled.input`
   font-size: 14px;
 `;
 
+
 const Text_age = styled.input`
+
   width: 200px;
   height: 20px;
   padding: 10px;
@@ -58,7 +62,9 @@ const Text_age = styled.input`
   font-size: 14px;
 `;
 
+
 const Password = styled.input`
+
   width: 300px;
   height: 20px;
   padding: 10px;

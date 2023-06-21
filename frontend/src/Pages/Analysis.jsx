@@ -1,4 +1,5 @@
-import React, {useState } from 'react';
+
+import React, {useState} from 'react';
 import styled from 'styled-components';
 import Header_Aft from '../Components/Header_Aft';
 import Synthesis from "../Components/List/Synthesis";
@@ -94,3 +95,4 @@ export default function Analysis(){
 
     );
 }
+

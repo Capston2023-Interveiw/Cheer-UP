@@ -14,7 +14,7 @@ import Wait_Analysis from "./Pages/Wait_Analysis";
 
 function App() {
     return (
-        <>
+  
             <Router>
                 <Routes>
                     {/* ---- 메인페이지 ---- */}
@@ -39,7 +39,7 @@ function App() {
                     <Route path='/Interview' element={<Interview/>} />
                 </Routes>
             </Router>
-        </>
+      
     );
   }
   
