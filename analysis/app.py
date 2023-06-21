@@ -6,6 +6,7 @@ from dotenv import load_dotenv
 import cv2
 import uuid
 import os
+import json
 from Camera import Camera
 import time
 from CombineVideoAndAudio import combineVideo
@@ -66,8 +67,7 @@ def end():
     del(camera)
     combineVideo(fname)
 
-
-    return {"video_id": database.selectVideo(1)}
+    return json.dumps({"video_id": database.selectVideo(1)})
 
 # cam = cv2.VideoCapture(0)
 # cam.set(cv2.CAP_PROP_FRAME_WIDTH, 640)

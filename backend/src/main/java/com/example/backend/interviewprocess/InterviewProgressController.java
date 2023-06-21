@@ -28,8 +28,8 @@ public class InterviewProgressController {
         return interviewProgressService.getDetectionTemplate();
     }
 
-    @GetMapping("/end")
-    public Object getDetectioResult(@AuthenticationPrincipal Member member) {
-        return interviewProgressService.getDetectionResult();
+    @GetMapping(value = "/end", produces = "application/json")
+    public ResponseEntity<Object> getDetectionResult(@AuthenticationPrincipal Member member) {
+        return ResponseEntity.ok(interviewProgressService.getDetectionResult());
     }
 }
