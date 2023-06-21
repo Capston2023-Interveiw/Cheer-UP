@@ -64,15 +64,7 @@ export default function Analysis(){
         Speed: <Speed />,
         Interjection: <Interjection />,
     };
-<<<<<<< HEAD
 
-=======
-  
-    
-<<<<<<< HEAD
->>>>>>> #57
-=======
->>>>>>> #57
 
     return(
         <Form>

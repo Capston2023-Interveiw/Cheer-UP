@@ -35,10 +35,12 @@ const Result_Box = styled.div`
 const Rank_score =styled.div`
     width: 10vw;
     height: 8vh;
+    font-size: 20px;
     position: absolute;
     top: 15%;
     left: 30%;
 `;
+
 const Timestamp = styled.div`
     overflow-y: scroll;
     width: 20vw;
@@ -90,7 +92,7 @@ export default function Speed(){
     }
     useEffect(() => {
         axios({
-        url: "api/v1/result/1/speed",
+        url: "api/v1/result/{video_id}/speed",
         method: "get",
 
       }).then((response) => {
@@ -109,7 +111,7 @@ export default function Speed(){
     return(
         <Main>
             <Video_Box>
-                <Video><video ref={videoRef} height="400" width="300" src="/video/test.mp4" controls/></Video>
+                <Video><video ref={videoRef} height="400" width="300" src={speedInfo.url} controls/></Video>
             </Video_Box>
             <Result_Box>
                 <Rank_score>{speedInfo.score}점 / 20점</Rank_score>

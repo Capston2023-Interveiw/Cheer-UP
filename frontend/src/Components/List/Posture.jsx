@@ -40,6 +40,7 @@ const Rank_score =styled.div`
     top: 15%;
     left: 30%;
 `;
+
 const Timestamp = styled.div`
     overflow-y: scroll;
     width: 20vw;
@@ -92,7 +93,7 @@ export default function Posture(){
     }
     useEffect(() => {
         axios({
-        url: "api/v1/result/1/posture",
+        url: "api/v1/result/{video_id}/posture",
         method: "get",
 
       }).then((response) => {
@@ -112,7 +113,7 @@ export default function Posture(){
     return(
         <Main>
             <Video_Box>
-                <Video><Video><video ref={videoRef} height="400" width="300" src="/video/test.mp4" controls/></Video></Video>
+                <Video><video ref={videoRef} height="400" width="300" src={postureInfo.url} controls/></Video>
             </Video_Box>
             <Result_Box>
                 <Rank_score>{postureInfo.score}점 / 20점</Rank_score>
