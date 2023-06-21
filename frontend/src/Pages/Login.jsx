@@ -24,7 +24,6 @@ color: #0084FE;
 `;
 
 
-
 const Text = styled.input`
 
   width: 300px;
@@ -35,7 +34,6 @@ const Text = styled.input`
   border-radius: 10px;
   font-size: 14px;
 `;
-
 
 const Password = styled.input`
   width: 300px;

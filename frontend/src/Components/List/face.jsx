@@ -110,9 +110,29 @@ export default function Face(){
     });
     },[]);
 
+    const [faceInfo, setfaceInfo] = useState([]);
+    
+    useEffect(() => {
+        axios({
+        url: "/v1/result/1/face",
+        method: "get",
+      }).then((response) => {
+        setfaceInfo(<>
+            <p>{response.data.url}</p>
+            <p>{response.data.score}</p>
+            <p>{response.data.feedback}</p>
+            <p>{response.data.logs}</p>
+            </>
+            );
+  
+        console(setfaceInfo);
+      });
+    },[]);
+  
     return(
 
         <Main>
+            {faceInfo}
             <Video_Box>
                 <Video>
                      {/* {faceInfo.url} */}
