@@ -54,14 +54,17 @@ const Buttonmi = styled.button `
 export default function Wait_Analysis() {
 
     const [loading, setLoading] = useState(true);
+    const [video_num, setVido_num] = useState('13');
+
 
     const mainApi = async () => {
-        setLoading(true); // api 호출 전에 true로 변경하여 로딩화면 띄우기
+        setLoading(false); // api 호출 전에 true로 변경하여 로딩화면 띄우기
 
         axios.get('api/v1/interview/end')
         .then(response => {
             if(response.data.code === 200){
                 console.log("성공");
+                setVido_num(response.data);
                 setLoading(false);  // api 호출 완료 됐을 때 false로 변경하려 로딩화면 숨김처리
             }
             else{
@@ -69,6 +72,7 @@ export default function Wait_Analysis() {
             }
         })
         .catch(error => {
+
             console.error('Error:', error);
             console.log("실패 2");
         });
@@ -84,13 +88,9 @@ export default function Wait_Analysis() {
                 <Loading_Box>
                     {loading ? <Loading /> : null}
                 </Loading_Box>
-                
-                 
-                <Link to ='/Analysis'>
+                <Link to ='/Analysis' state={{num : video_num}}>
                 <Buttonmi >분석결과 보기</Buttonmi>
                 </Link>
-                
-                
             </Lci>
         </Form>
         

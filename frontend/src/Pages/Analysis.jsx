@@ -9,6 +9,7 @@ import Language from "../Components/List/Language";
 import Gaze from '../Components/List/gaze';
 import Face from '../Components/List/face';
 import {MAIN_DATA} from '../Components/List/MAIN_DATA';
+import { useLocation } from "react-router-dom";
 
 const Form = styled.div`
     width: 100%;
@@ -52,6 +53,10 @@ export default function Analysis(){
     const [content, setContent] = useState('Synthesis');
     const [activeButton, setActiveButton] = useState('Synthesis');
 
+    const location = useLocation();
+	const videonum = location.state.num;
+
+    console.log(videonum);
     const handleClickButton = (name) => {
         setContent(name);
         setActiveButton(name);
