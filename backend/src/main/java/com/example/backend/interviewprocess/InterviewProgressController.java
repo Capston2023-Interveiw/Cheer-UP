@@ -17,8 +17,19 @@ public class InterviewProgressController {
 
     private final InterviewProgressService interviewProgressService;
 
-    @GetMapping("/progress")
+
+    @GetMapping("/question")
     public ResponseEntity<List<QuestionResponse>> getQuestionList(@AuthenticationPrincipal Member member) {
         return ResponseEntity.ok(interviewProgressService.getQuestionList(member.getId()));
+    }
+
+    @GetMapping("/progress")
+    public Object getDetectionTemplate(@AuthenticationPrincipal Member member) {
+        return interviewProgressService.getDetectionTemplate();
+    }
+
+    @GetMapping(value = "/end", produces = "application/json")
+    public ResponseEntity<Object> getDetectionResult(@AuthenticationPrincipal Member member) {
+        return ResponseEntity.ok(interviewProgressService.getDetectionResult());
     }
 }

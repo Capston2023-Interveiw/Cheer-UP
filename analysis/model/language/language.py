@@ -27,6 +27,8 @@ class SttService:
     score = 20
     if len(interjections) > 2:
       score = 20 - (len(interjections) - 2)
+      if score < 0:
+        score = 0
     return score
 
   def getInterjectionResult(self):
@@ -46,11 +48,12 @@ class SttService:
     count = 0
 
     content = {
-      "field": "interjection",
+      "analysis_id": 4,
       "score": self.interjectionScore(interjections),
       "feedback": interjections,
       "time_stamp": timestamp
     }
+    print(content)
     return content
 
   def getSpeedResult(self):
@@ -58,7 +61,7 @@ class SttService:
     length = scripts_length(self.scripts)
     speed, score = speaking_speed(time, length)
     content = {
-      "field": "speed",
+      "field": 5,
       "score": score,
       "feedback": speed,
       "time_stamp": []

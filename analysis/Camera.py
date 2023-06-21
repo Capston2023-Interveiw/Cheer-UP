@@ -10,7 +10,7 @@ from Record import Record
 
 class Camera:
     
-    def __init__(self):
+    def __init__(self, video_id):
         if cv2.ocl.haveOpenCL() :
             cv2.ocl.setUseOpenCL(True)
         self.capture = None
@@ -23,19 +23,15 @@ class Camera:
         self.sec = 0
         self.Q = Queue(maxsize=128)
         self.started = False
-        self.detection = Detection()
-        self.soundRecord = None
+        self.detection = Detection(video_id)
+        self.soundRecord = Record()
         self.fps = 20.0
         self.isRecord = False
-        self.rec_frame = None
-        self.videoTread = None
         fourcc = cv2.VideoWriter_fourcc(*'MJPG')
         self.videoWriter = cv2.VideoWriter('test.avi', fourcc, 8.5, (self.width, 480))
 
     def run(self, src = 0):
-        self.stop()
 
-        self.soundRecord = Record()
         if platform.system() == 'Windows' :        
             self.capture = cv2.VideoCapture(src , cv2.CAP_DSHOW)
         
@@ -58,13 +54,10 @@ class Camera:
 
     def stop(self):
         self.started = False
-        self.rec = False
-        if self.capture is not None:
-            self.capture.release()
-            self.videoWriter.release()
-            self.stopRecording()
-            self.isRecord = False
-            self.clear()
+        self.stopRecording()
+        # if self.capture is not None:
+        #     self.stopRecording()
+        #     self.clear()
 
     def stopRecording(self):
         self.soundRecord.bRecord = False
@@ -74,7 +67,7 @@ class Camera:
         while self.started:
             self.current_time = time.time() - self.preview_time
             (grabbed, frame) = self.capture.read()
-            if grabbed and (self.current_time > 1./self.fps):
+            if grabbed and (self.current_time > 1./ self.fps):
                 self.preview_time = time.time()
                 self.Q.put(frame)
                 self.videoWriter.write(frame)
@@ -137,6 +130,9 @@ class Camera:
             fps = 1
         return fps
 
-    def __exit__(self) :
+    def __del__(self) :
         print( '* streamer class exit')
-        self.capture.release()
+        if self.thread != None :
+            self.capture.release()
+            self.videoWriter.release()
+            self.thread.join()
