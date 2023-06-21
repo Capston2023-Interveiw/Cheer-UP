@@ -100,7 +100,7 @@ class Detection:
                 self.gazeTimeStamp.append(timestamp)
                 self.gazeCount = 0
                 self.gazeColor = (0, 0, 255)
-                self.database.insertLog(self.gaze, timestamp, GAZE_ANALYSIS_ID, self.video_id)
+                self.database.insertLog(self.gaze, self.timestamp_form(timestamp), GAZE_ANALYSIS_ID, self.video_id)
         else:
             self.gazeColor = (2, 247, 234)
 
@@ -116,7 +116,7 @@ class Detection:
                 self.postureTimeStamp.append(timestamp)
                 self.postureCount = 0
                 self.headColor = (0, 0, 255)
-                self.database.insertLog(posture[0], timestamp, POSTURE_ANALYSIS_ID, self.video_id)
+                self.database.insertLog(posture[0], self.timestamp_form(timestamp), POSTURE_ANALYSIS_ID, self.video_id)
         else:
             self.headColor = (2, 247, 234)
 
@@ -129,7 +129,7 @@ class Detection:
                 self.postureTimeStamp.append(timestamp)
                 self.shoulderCount = 0
                 self.shoulderColor = (0, 0, 255)
-                self.database.insertLog("어깨 비대칭", timestamp, POSTURE_ANALYSIS_ID, self.video_id)
+                self.database.insertLog("어깨 비대칭", self.timestamp_form(timestamp), POSTURE_ANALYSIS_ID, self.video_id)
         else:
             self.shoulderColor = (2, 247, 234)
 
@@ -144,7 +144,7 @@ class Detection:
                 self.expressionTimeStamp.append(timestamp)
                 self.expressionCount = 0
                 self.faceColor = (0, 0, 255)
-                self.database.insertLog(reason, timestamp, FACE_ANALYSIS_ID, self.video_id)
+                self.database.insertLog(reason, self.timestamp_form(timestamp), FACE_ANALYSIS_ID, self.video_id)
         else:
             self.faceColor = (2, 247, 234)
 
@@ -204,8 +204,16 @@ class Detection:
     def save_interjection_log(self, contents):
         self.save_score(contents['analysis_id'], contents['score'])
         for log in contents['feedback']:
-            print(log)
             self.database.insertLog(log, None, INTERJECTION_ANALYSIS_ID, self.video_id)
 
+    def timestamp_form(self, time):
+            second = time
+            minute = 0
+            if second > 60:
+                minute += second // 60
+                second -= 60 * minute
+                stamp = time(minute=minute, second=second)
+            return f"{minute}:{second}"
+    
     def speed_score(self, speedResult):
         self.database.insertScore(speedResult['score'], self.video_id, speedResult['feedback'], speedResult['field'])
