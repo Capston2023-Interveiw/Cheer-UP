@@ -73,10 +73,13 @@ const TimestampButton = styled.button`
 `
 
 
-export default function Posture(){
+export default function Posture(props){
     const [postureInfo, setpostureInfo] = useState([]);
     const [timestamp, setTimestamp] = useState([]);
     const videoRef = useRef(null);
+
+    const num = props.video_num;
+    const api = 'api/v1/result/'+num+'/posture';
 
     const handleTimestampChange = (event) =>{
         setTimestamp(event.target.value);
@@ -93,7 +96,7 @@ export default function Posture(){
     }
     useEffect(() => {
         axios({
-        url: "api/v1/result/{video_id}/posture",
+        url: api,
         method: "get",
 
       }).then((response) => {
