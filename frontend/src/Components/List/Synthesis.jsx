@@ -106,13 +106,19 @@ height: 45vh;
 `;
 
 
-export default function Synthesis(){
+export default function Synthesis(props){
     const [totalData, setTotalData] = useState(null);
     const [otherData, setOtherData] = useState([]);
     const [grade, setGrade] = useState('');
 
+    const num = props.video_num;
+    console.log("--------");
+    console.log(num);
+    const api = 'api/v1/result/'+num+'/total';
+    console.log("+++++++");
+    console.log(api);
     useEffect(() => {
-        axios.get('api/v1/result/{video_id}/total')
+        axios.get(api)
         .then(response => {
             const data = response.data;
             const total = data.find(item => item.analysis_type === 'total');

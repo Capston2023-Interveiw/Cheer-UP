@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import Header_Aft from '../Components/Header_Aft';
 import { Link } from 'react-router-dom'
 import Loading from '../Components/Loading';
+import axios from 'axios';
 
 const Form = styled.div`
     width: 100%;
@@ -14,14 +15,14 @@ const Form = styled.div`
 `;
 
 const Lci = styled.div`
-    width: 1400px;
-    height: 800px;
+    width: 70vw;
+    height: 70vh;
     margin: 0 auto;
     background-color: #E8F9FD;
     position: absolute;
     left: 50%;
     top: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -45%);
 
 `;
 
@@ -53,25 +54,28 @@ const Buttonmi = styled.button `
 export default function Wait_Analysis() {
 
     const [loading, setLoading] = useState(true);
+    const [video_num, setVido_num] = useState('');
+
 
     const mainApi = async () => {
         setLoading(true); // api 호출 전에 true로 변경하여 로딩화면 띄우기
-        try {
-        const response = await fetch(`api url`, {
-            method: 'POST',
-            headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(),
-        });
 
-        const result = await response.json();
-        console.log('mainData', result);
-        setLoading(false); // api 호출 완료 됐을 때 false로 변경하려 로딩화면 숨김처리
-        } catch (error) {
-        window.alert(error);
-        }
+        axios.get('api/v1/interview/end')
+        .then(response => {
+            if(response.data.code === 200){
+                console.log("성공");
+                setVido_num(response.data);
+                setLoading(false);  // api 호출 완료 됐을 때 false로 변경하려 로딩화면 숨김처리
+            }
+            else{
+                console.log("실패");
+            }
+        })
+        .catch(error => {
+
+            console.error('Error:', error);
+            console.log("실패 2");
+        });
     };
 
     useEffect(() => {
@@ -84,13 +88,9 @@ export default function Wait_Analysis() {
                 <Loading_Box>
                     {loading ? <Loading /> : null}
                 </Loading_Box>
-                
-                 
-                <Link to ='/Analysis'>
+                <Link to ='/Analysis' state={{num : video_num}}>
                 <Buttonmi >분석결과 보기</Buttonmi>
                 </Link>
-                
-                
             </Lci>
         </Form>
         
