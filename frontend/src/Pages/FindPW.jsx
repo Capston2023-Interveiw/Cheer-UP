@@ -31,9 +31,13 @@ margin-top: 0px;
 color: #0084FE;
 `;
 
+<<<<<<< HEAD
 const Text = styled.input.attrs(()=>({
   type: "text"
 }))`
+=======
+const Text = styled.input`
+>>>>>>> #57
   width: 300px;
   height: 20px;
   padding: 10px;

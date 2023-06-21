@@ -16,7 +16,6 @@ function App() {
         <>
             <Router>
                 <Routes>
-                    
                     {/* ---- 분석 페이지 ---- */}
                     <Route path = '/Analysis' element={<Analysis/>}/>
                     {/* ---- 메인페이지_로그인 전 ---- */}

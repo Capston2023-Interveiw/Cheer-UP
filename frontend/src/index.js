@@ -3,15 +3,23 @@ import {createRoot} from 'react-dom/client';
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
+<<<<<<< HEAD
 // import { BrowserRouter } from 'react-router-dom' ;
+=======
+
+>>>>>>> #57
 
 const container = document.getElementById('root');
 const root = createRoot(container); // createRoot(container!) if you use TypeScript
 root.render(
   <React.StrictMode>
+<<<<<<< HEAD
 
       <App />
 
+=======
+      <App />
+>>>>>>> #57
   </React.StrictMode>
   );
 

@@ -41,7 +41,11 @@ INSERT INTO feedback (content, score, analysis_id) VALUES ('말 속도가 적당
 INSERT INTO feedback (content, score, analysis_id) VALUES ('말 속도가 조금 느리거나 빠릅니다. 말하는 의도를 면접관에게 잘 전달하기 위해서는 주어진 시간을 고려해 말의 속도를 조절해야 합니다.', '10', '5');
 INSERT INTO feedback (content, score, analysis_id) VALUES ('말 속도 가 너무 느리거나 빠릅니다. 말 속도를 조절하지 못 할 경우 전달력이 떨어져 면접 시 불이익을 얻을 수 있습니다. 모의면접이나 거울을 보고 반복적으로 연습하는 것이 도움이 됩니다.', '0', '5');
 
+<<<<<<< HEAD
 INSERT INTO video (url, member_id) VALUES ('http://backend:8080/video/test.mp4', 1);
+=======
+INSERT INTO video (url, member_id) VALUES ('/video/test.mp4', 1);
+>>>>>>> #57
 
 INSERT INTO analysis_log(reason, timestamp, analysis_id, video_id) VALUES  ('angry', '0:13', 1, 1);
 INSERT INTO analysis_log(reason, timestamp, analysis_id, video_id) VALUES  ('sad', '0:39', 1, 1);

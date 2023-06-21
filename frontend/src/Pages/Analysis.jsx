@@ -25,7 +25,7 @@ const Button  = styled.button`
     border-bottom: 1px solid;
     font-style: normal;
     font-weight: bolder;
-    font-size: 20px;
+    font-size: 1.5vw;
     background-color: ${props => (props.isActive ? '#A3D8F4' : '#FFFF')};
     border-bottom:  ${props => (props.isActive ? '0px solid' : '1px solid')};
 `;
@@ -43,7 +43,7 @@ const Lci = styled.div`
 const Container = styled.div`   
     border: 1px solid;
     border-bottom: 0px;
-    border-right: 0px;
+    
 `;
 
 export default function Analysis(){
@@ -64,7 +64,12 @@ export default function Analysis(){
         Speed: <Speed />,
         Interjection: <Interjection />,
     };
+<<<<<<< HEAD
 
+=======
+  
+    
+>>>>>>> #57
 
     return(
         <Form>
@@ -77,7 +82,13 @@ export default function Analysis(){
                         <Button
                         key={data.id}
                         isActive={activeButton === data.name}
+<<<<<<< HEAD
                         onClick={() => handleClickButton(data.name)}
+=======
+                        onClick={() =>{
+                            handleClickButton(data.name)
+                        }}
+>>>>>>> #57
                       >
                         {data.text}
                         </Button>

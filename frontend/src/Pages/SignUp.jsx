@@ -3,6 +3,10 @@ import {useState} from 'react';
 import styled from 'styled-components';
 import {darken} from 'polished';
 import {AiFillCaretDown} from 'react-icons/ai';
+<<<<<<< HEAD
+=======
+
+>>>>>>> #57
 
 const Form = styled.div`
   width: 65%;
@@ -37,9 +41,13 @@ const Sci_2 = styled.div`
   align-items: flex-start;
 `;
 
+<<<<<<< HEAD
 const Text = styled.input.attrs(()=>({
   type: "text"
 }))`
+=======
+const Text = styled.input`
+>>>>>>> #57
   width: 300px;
   height: 20px;
   padding: 10px;
@@ -49,9 +57,13 @@ const Text = styled.input.attrs(()=>({
   font-size: 14px;
 `;
 
+<<<<<<< HEAD
 const Text_age = styled.input.attrs(()=>({
   type: "text"
 }))`
+=======
+const Text_age = styled.input`
+>>>>>>> #57
   width: 200px;
   height: 20px;
   padding: 10px;
@@ -61,9 +73,13 @@ const Text_age = styled.input.attrs(()=>({
   font-size: 14px;
 `;
 
+<<<<<<< HEAD
 const Password = styled.input.attrs(()=>({
   type: "password"
 }))`
+=======
+const Password = styled.input`
+>>>>>>> #57
   width: 300px;
   height: 20px;
   padding: 10px;
@@ -199,12 +215,17 @@ export default function SignUp(){
       <H1>Cheer Up</H1>
 
       <Sci>
-        <Text placeholder="아이디를 입력해주세요" />
-        <Password placeholder="비밀번호를 입력해주세요" />
-        <Password placeholder="비밀번호를 재입력해주세요" />
-        <Text placeholder="이름을 입력해주세요" />
+        <Text placeholder="아이디를 입력해주세요" 
+        type="text"/>
+        <Password placeholder="비밀번호를 입력해주세요" 
+        type="password"/>
+        <Password placeholder="비밀번호를 재입력해주세요" 
+        type="password"/>
+        <Text placeholder="이름을 입력해주세요" 
+        type="text"/>
         <Sci_2>
-          <Text_age placeholder="나이를 입력해주세요" />
+          <Text_age placeholder="나이를 입력해주세요" 
+          type="text"/>
           
           <Dropdown list = {list}/>
 
