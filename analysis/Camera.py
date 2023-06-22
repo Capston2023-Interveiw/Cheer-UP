@@ -28,7 +28,7 @@ class Camera:
         self.fps = 20.0
         self.isRecord = False
         fourcc = cv2.VideoWriter_fourcc(*'MJPG')
-        self.videoWriter = cv2.VideoWriter('test.avi', fourcc, 8.5, (self.width, 480))
+        self.videoWriter = cv2.VideoWriter('test.avi', fourcc, 8, (self.width, 480))
 
     def run(self, src = 0):
 
@@ -37,7 +37,7 @@ class Camera:
         
         else :
             self.capture = cv2.VideoCapture(src)
-            
+
         self.capture.set(cv2.CAP_PROP_FRAME_WIDTH, self.width)
         self.capture.set(cv2.CAP_PROP_FRAME_HEIGHT, self.height)
         self.started = True
@@ -72,7 +72,6 @@ class Camera:
                 self.Q.put(frame)
                 self.videoWriter.write(frame)
                 self.detection.detection(frame)
-                
            
     def clear(self):
         with self.Q.mutex:
@@ -136,3 +135,4 @@ class Camera:
             self.capture.release()
             self.videoWriter.release()
             self.thread.join()
+            self.stopRecording()

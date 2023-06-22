@@ -23,6 +23,8 @@ const Video_Box  = styled.div`
 
 const Video = styled.div`
     margin: auto;
+    margin-top: 0px;
+    margin-left: 5rem;
     font-size: 20pt;
 `;
 
@@ -117,7 +119,7 @@ export default function Face(props){
         <Main>
             <Video_Box>
                 <Video>
-                     <video ref={videoRef} height="400" width="300" src={faceInfo.url} controls/>
+                     <video ref={videoRef} height="400" width="370" src={faceInfo.url} controls/>
                 </Video>
                 
             </Video_Box>

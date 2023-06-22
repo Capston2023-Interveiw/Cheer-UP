@@ -23,6 +23,8 @@ const Video_Box  = styled.div`
 
 const Video = styled.div`
     margin: auto;
+    margin-top: 0px;
+    margin-left: 5rem;
     font-size: 20pt;
 `;
 
@@ -116,7 +118,7 @@ export default function Posture(props){
     return(
         <Main>
             <Video_Box>
-                <Video><video ref={videoRef} height="400" width="300" src={postureInfo.url} controls/></Video>
+                <Video><video ref={videoRef} height="400" width="370" src={postureInfo.url} controls/></Video>
             </Video_Box>
             <Result_Box>
                 <Rank_score>{postureInfo.score}점 / 20점</Rank_score>

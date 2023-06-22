@@ -112,11 +112,8 @@ export default function Synthesis(props){
     const [grade, setGrade] = useState('');
 
     const num = props.video_num;
-    console.log("--------");
     console.log(num);
     const api = 'api/v1/result/'+num+'/total';
-    console.log("+++++++");
-    console.log(api);
     useEffect(() => {
         axios.get(api)
         .then(response => {

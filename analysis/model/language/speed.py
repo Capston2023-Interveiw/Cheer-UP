@@ -12,14 +12,14 @@ def scripts_length(scripts):
     return len(scripts.replace(" ",""))
 
 def speaking_speed(time, script_length):
-    speed = script_length / time * 60
-    if speed >= 346:
+    speed = script_length / (time-5) * 60
+    if speed >= 356:
         return 17, 10
-    elif 336 <= speed <= 345:
+    elif 336 <= speed <= 355:
         return 18, 15
     elif 276 <= speed <= 335:
         return 19, 20
-    elif 236 <= speed <= 275:
+    elif 226 <= speed <= 275:
         return 20, 15
     else:
         return 21, 10

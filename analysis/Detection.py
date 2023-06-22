@@ -94,7 +94,7 @@ class Detection:
         if (self.gaze == "left") or (self.gaze == "right"):
             self.gazeCount += 1
             self.gazeColor = (248, 72, 216)
-            if self.gazeCount >= 3 * self.fps:
+            if self.gazeCount >= 2 * self.fps:
                 self.gazeFeedback.append(self.gaze)
                 timestamp = int(time.time() - self.startTime)
                 self.gazeTimeStamp.append(timestamp)
@@ -110,7 +110,7 @@ class Detection:
         if posture[0] == 'Bad':
             self.postureCount += 1
             self.headColor = (248, 72, 216)
-            if self.postureCount >= 5 * self.fps:
+            if self.postureCount >= 2 * self.fps:
                 self.postureFeedback.append(posture[0])
                 timestamp = int(time.time() - self.startTime)
                 self.postureTimeStamp.append(timestamp)
@@ -123,7 +123,7 @@ class Detection:
         if posture[1]:
             self.shoulderCount += 1
             self.shoulderColor = (248, 72, 216)
-            if self.shoulderCount >= 5 * self.fps:
+            if self.shoulderCount >= 2 * self.fps:
                 self.postureFeedback.append("어깨 비대칭")
                 timestamp = int(time.time() - self.startTime)
                 self.postureTimeStamp.append(timestamp)
@@ -137,7 +137,7 @@ class Detection:
         if self.face != "happy" and self.face != "neutral":
             self.expressionCount += 1
             self.faceColor = (248, 72, 216)
-            if self.expressionCount >= 5 * self.fps:
+            if self.expressionCount >= 2 * self.fps:
                 reason = f"{self.face}한 표정"
                 self.expressionFeedback.append(reason)
                 timestamp = int(time.time() - self.startTime)

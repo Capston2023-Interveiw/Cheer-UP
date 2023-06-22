@@ -23,6 +23,8 @@ const Video_Box  = styled.div`
 
 const Video = styled.div`
     margin: auto;
+    margin-top: 0px;
+    margin-left: 5rem;
     font-size: 20pt;
 `;
 
@@ -98,9 +100,8 @@ export default function Gaze(props){
 
       }).then((response) => {
         setgazeInfo(response.data);
-  
-        console.log(response.data);
-
+        console.log(response.data.url);
+        console.log(gazeInfo)
       }).catch(function (error) {//실패 시 catch 실행
         console.log(error);
     })
@@ -113,7 +114,7 @@ export default function Gaze(props){
     return(
         <Main>
             <Video_Box>
-                <Video><video ref={videoRef} height="400" width="300" src="/video/test.mp4" controls/></Video>
+                <Video><video ref={videoRef} height="400" width="370" src={gazeInfo.url} controls/></Video>
             </Video_Box>
             <Result_Box>
                 <Rank_score>{gazeInfo.score}점 / 20점</Rank_score>
