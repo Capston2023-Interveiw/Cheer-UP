@@ -1,1 +1,9 @@
 __pycache__
+.env
+test.mp4
+test.avi
+.DS_Store
+record.wav
+model/language/record.wav
+combine.mp4
+video/

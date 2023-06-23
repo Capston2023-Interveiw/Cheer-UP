@@ -1,5 +1,4 @@
 spring:
-  
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/cheer
@@ -9,4 +8,21 @@ spring:
   jpa:
     show-sql: true
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
+    defer-datasource-initialization: true
+  
+  sql:
+    init:
+      mode: always
+      data-locations: classpath:db/mysql/data.sql
+
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+
+
+mybatis:
+  mapper-locations: classpath:mybatis/mapper/**/**.xml
+
+jwt:
+  secret: cheerupcheerupcheerupcheerupcheerupcheerupcheerupcheerupcheerupcheerupcheerupcheerupcheerupcheerupcheerupcheerupcheerupcheerupcheerupcheerupcheerup
