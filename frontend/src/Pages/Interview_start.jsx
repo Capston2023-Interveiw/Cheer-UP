@@ -48,7 +48,7 @@ const WrapStartButton = styled.div`
 function Interview_start() {
     const iframePart = () => {
         return {
-            __html: '<iframe src="http://localhost:8888" width="640" height="360px"></iframe>',
+            __html: '<iframe src="http://localhost:8888" width="640" height="400px"></iframe>',
         };
     };
     return (

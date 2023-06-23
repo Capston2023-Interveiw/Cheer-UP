@@ -94,13 +94,18 @@ class Detection:
         if (self.gaze == "left") or (self.gaze == "right"):
             self.gazeCount += 1
             self.gazeColor = (248, 72, 216)
+            if (self.gaze == "left"):
+                reason = "좌측"
+            elif (self.gaze == "right"):
+                reason = "우측"
+
             if self.gazeCount >= 2 * self.fps:
                 self.gazeFeedback.append(self.gaze)
                 timestamp = int(time.time() - self.startTime)
                 self.gazeTimeStamp.append(timestamp)
                 self.gazeCount = 0
                 self.gazeColor = (0, 0, 255)
-                self.database.insertLog(self.gaze, self.timestamp_form(timestamp), GAZE_ANALYSIS_ID, self.video_id)
+                self.database.insertLog(reason, self.timestamp_form(timestamp), GAZE_ANALYSIS_ID, self.video_id)
         else:
             self.gazeColor = (2, 247, 234)
 
@@ -110,13 +115,14 @@ class Detection:
         if posture[0] == 'Bad':
             self.postureCount += 1
             self.headColor = (248, 72, 216)
+            reason = "고개 비대칭"
             if self.postureCount >= 2 * self.fps:
                 self.postureFeedback.append(posture[0])
                 timestamp = int(time.time() - self.startTime)
                 self.postureTimeStamp.append(timestamp)
                 self.postureCount = 0
                 self.headColor = (0, 0, 255)
-                self.database.insertLog(posture[0], self.timestamp_form(timestamp), POSTURE_ANALYSIS_ID, self.video_id)
+                self.database.insertLog(reason, self.timestamp_form(timestamp), POSTURE_ANALYSIS_ID, self.video_id)
         else:
             self.headColor = (2, 247, 234)
 
@@ -124,27 +130,27 @@ class Detection:
             self.shoulderCount += 1
             self.shoulderColor = (248, 72, 216)
             if self.shoulderCount >= 2 * self.fps:
-                self.postureFeedback.append("어깨 비대칭")
+                self.postureFeedback.append("어깨 기울어짐")
                 timestamp = int(time.time() - self.startTime)
                 self.postureTimeStamp.append(timestamp)
                 self.shoulderCount = 0
                 self.shoulderColor = (0, 0, 255)
-                self.database.insertLog("어깨 비대칭", self.timestamp_form(timestamp), POSTURE_ANALYSIS_ID, self.video_id)
+                self.database.insertLog("어깨 기울어짐", self.timestamp_form(timestamp), POSTURE_ANALYSIS_ID, self.video_id)
         else:
             self.shoulderColor = (2, 247, 234)
 
     def checkFace(self):
+        emotion = {"angry": "화난 표정", "disgust": "혐오스러운 표정", "scared": "무서워하는 표정", "sad": "슬픈 표정", "surprised": "당황하는 표정"}
         if self.face != "happy" and self.face != "neutral":
             self.expressionCount += 1
             self.faceColor = (248, 72, 216)
             if self.expressionCount >= 2 * self.fps:
-                reason = f"{self.face}한 표정"
-                self.expressionFeedback.append(reason)
+                self.expressionFeedback.append(emotion[self.face])
                 timestamp = int(time.time() - self.startTime)
                 self.expressionTimeStamp.append(timestamp)
                 self.expressionCount = 0
                 self.faceColor = (0, 0, 255)
-                self.database.insertLog(reason, self.timestamp_form(timestamp), FACE_ANALYSIS_ID, self.video_id)
+                self.database.insertLog(emotion[self.face], self.timestamp_form(timestamp), FACE_ANALYSIS_ID, self.video_id)
         else:
             self.faceColor = (2, 247, 234)
 
