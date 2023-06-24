@@ -1,4 +1,4 @@
-package com.example.backend.interviewresult.dto;
+package com.example.backend.score;
 
 import lombok.Builder;
 import lombok.Getter;

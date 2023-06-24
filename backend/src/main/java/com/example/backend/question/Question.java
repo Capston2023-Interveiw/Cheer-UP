@@ -1,4 +1,4 @@
-package com.example.backend.interviewprocess;
+package com.example.backend.question;
 
 import com.example.backend.member.entity.Member;
 import com.sun.istack.NotNull;

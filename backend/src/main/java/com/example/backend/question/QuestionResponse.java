@@ -1,4 +1,4 @@
-package com.example.backend.interviewprocess;
+package com.example.backend.question;
 
 import lombok.Builder;
 import lombok.Getter;

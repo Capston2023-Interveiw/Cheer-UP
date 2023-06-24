@@ -1,7 +1,6 @@
-package com.example.backend.interviewresult.mapper;
+package com.example.backend.score;
 
-import com.example.backend.interviewresult.dto.ScoreResponse;
-import com.example.backend.interviewresult.entity.Score;
+import com.example.backend.score.entity.Score;
 import org.springframework.stereotype.Component;
 
 

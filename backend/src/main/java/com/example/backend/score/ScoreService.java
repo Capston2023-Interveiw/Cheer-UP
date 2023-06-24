@@ -1,8 +1,5 @@
-package com.example.backend.interviewresult.service;
+package com.example.backend.score;
 
-import com.example.backend.interviewresult.dto.ScoreResponse;
-import com.example.backend.interviewresult.mapper.ScoreMapper;
-import com.example.backend.interviewresult.repository.ScoreRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -10,7 +7,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class TotalScoreService {
+public class ScoreService {
 
     private final ScoreMapper scoreMapper;
     private final ScoreRepository scoreRepository;

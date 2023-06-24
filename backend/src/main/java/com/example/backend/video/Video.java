@@ -1,5 +1,6 @@
-package com.example.backend.interviewresult.entity;
+package com.example.backend.video;
 
+import com.example.backend.analysislog.entity.AnalysisLog;
 import com.example.backend.member.entity.Member;
 import com.sun.istack.NotNull;
 import lombok.*;
