@@ -1,5 +1,7 @@
-package com.example.backend.interviewresult.entity;
+package com.example.backend.score.entity;
 
+import com.example.backend.analysislog.entity.Analysis;
+import com.example.backend.video.Video;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

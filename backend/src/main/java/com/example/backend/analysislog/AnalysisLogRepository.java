@@ -1,13 +1,13 @@
-package com.example.backend.interviewresult.repository;
+package com.example.backend.analysislog;
 
-import com.example.backend.interviewresult.entity.Video;
+import com.example.backend.video.Video;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface VideoRepository extends JpaRepository<Video, Long> {
+public interface AnalysisLogRepository extends JpaRepository<Video, Long> {
 
     @Query(value = "SELECT url FROM video WHERE id = :id" +
             " UNION All " +

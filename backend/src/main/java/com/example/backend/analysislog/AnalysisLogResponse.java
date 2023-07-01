@@ -1,4 +1,4 @@
-package com.example.backend.interviewresult.dto;
+package com.example.backend.analysislog;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -7,7 +7,7 @@ import java.util.List;
 
 @Getter
 @Builder
-public class VideoResponse {
+public class AnalysisLogResponse {
 
     private final String url;
     private final String score;

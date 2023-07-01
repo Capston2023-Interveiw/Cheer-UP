@@ -1,4 +1,4 @@
-package com.example.backend.interviewresult.entity;
+package com.example.backend.analysislog.entity;
 
 import lombok.AccessLevel;
 import lombok.Getter;

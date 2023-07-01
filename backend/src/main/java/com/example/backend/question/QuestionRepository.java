@@ -1,6 +1,5 @@
-package com.example.backend.interviewprocess;
+package com.example.backend.question;
 
-import com.example.backend.interviewprocess.Question;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

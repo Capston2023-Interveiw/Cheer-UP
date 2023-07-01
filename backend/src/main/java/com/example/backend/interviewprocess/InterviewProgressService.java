@@ -8,17 +8,10 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class InterviewProgressService {
-
-    private final InterviewProgressMapper progressMapper;
-
-    public List<QuestionResponse> getQuestionList(Long id) {
-        return progressMapper.getRandomQuestion(id);
-    }
 
     public Object getDetectionTemplate(){
         URI uri = UriComponentsBuilder
