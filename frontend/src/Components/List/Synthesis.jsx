@@ -92,13 +92,7 @@ font-weight: bolder;
 font-size: 2vw;
 `;
 
-const P4 =styled.p`
-position: absolute;
-margin:0px;
-font-style: normal;
-font-weight: bolder;
-font-size: 4vw;
-`;
+
 
 const Graph =styled.div`
 width: 23vw; 
@@ -109,7 +103,7 @@ height: 45vh;
 export default function Synthesis(props){
     const [totalData, setTotalData] = useState(null);
     const [otherData, setOtherData] = useState([]);
-    const [grade, setGrade] = useState('');
+   
 
     const num = props.video_num;
     console.log(num);
@@ -129,25 +123,7 @@ export default function Synthesis(props){
         });
     }, []);
 
-    const calculateGrade = (score) => {
-        if (score >= 1 && score <= 30) {
-          return 'F';
-        } else if (score >= 31 && score <= 45) {
-          return 'C';
-        } else if (score >= 46 && score <= 60) {
-          return 'C+';
-        } else if (score >= 61 && score <= 70) {
-          return 'B';
-        } else if (score >= 71 && score <= 80) {
-          return 'B+';
-        } else if (score >= 81 && score <= 90) {
-          return 'A';
-        } else if (score >= 91 && score <= 100) {
-          return 'A+';
-        } else {
-          return '';
-        }
-      };
+
     
     const analysisTypeMap = {
         face: '표정',
@@ -166,9 +142,7 @@ export default function Synthesis(props){
         </Graph_Box>
         <Result_Box>
             <Rank_img>
-                {totalData && (
-                    <P4>{grade}</P4>
-                )}
+   
             </Rank_img>
                 {totalData &&(
                     <Rank_score><P3>총 {totalData.score}점 / 100점</P3></Rank_score>
