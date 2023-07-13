@@ -116,7 +116,6 @@ export default function Synthesis(props){
             const others = data.filter(item => item.analysis_type !== 'total');
             setTotalData(total);
             setOtherData(others);
-            setGrade(calculateGrade(total.score));
         })
         .catch(error => {
             console.error('Error:', error);
