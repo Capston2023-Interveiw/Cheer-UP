@@ -54,9 +54,11 @@ export default function Analysis(){
     const [activeButton, setActiveButton] = useState('Synthesis');
 
     const location = useLocation();
-	const videonum = location.state.num;
+    console.log(location);
+    const videonum = location.state;
+	// const videonum = location.state.num;
 
-    console.log(videonum);
+    // console.log(videonum);
     const handleClickButton = (name) => {
         setContent(name);
         setActiveButton(name);

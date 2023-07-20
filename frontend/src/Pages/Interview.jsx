@@ -1,4 +1,4 @@
-import React,{useRef, useState, useEffect} from "react";
+import React,{useState, useEffect} from "react";
 import styled from "styled-components";
 import Header from "../Components/Header";
 import NextButton from "../Components/Button";
@@ -51,29 +51,28 @@ const WrapNextButton = styled.div`
 `;
 
 function Interview() {
-    const [min, setMin] = useState(1);
-    const [sec, setSec] = useState(30);
-    const time = useRef(90);
-    const timerId = useRef(null);
+    const [count, setCount] = useState(90);
+  
+    useEffect(() => {
+      const id = setInterval(() => {
+        setCount(count => count - 1); 
+      }, 1000);
+      if(count === 0){
+        clearInterval(id);
+      }
+      return () => clearInterval(id);
+    }, [count]);
 
     const [question, setQuestion] = useState([]);
 
-    useEffect(()=>{
-      timerId.current = setInterval(()=>{
-        setMin(parseInt(time.current / 60));
-        setSec(time.current % 60);
-        time.current -= 1;
-      },1000);
-      return () => clearInterval(timerId.current);
-    },[]);
-
-    useEffect(()=>{
-      // 만약 타임 아웃이 발생했을 경우
-      if(time.current <= 0){
-        //다음 질문으로 넘어가거나 면접 종료
-        clearInterval(timerId.current);
-      }
-    },[sec]);
+  
+    // useEffect(()=>{
+    //   // 만약 타임 아웃이 발생했을 경우
+    //   if(time.current <= 0){
+    //     //다음 질문으로 넘어가거나 면접 종료
+    //     clearInterval(timerId.current);
+    //   }
+    // },[sec]);
 
     useEffect(() => {
       axios({
@@ -96,7 +95,7 @@ function Interview() {
 
     const iframePart = () => {
         return {
-            __html: '<iframe src="http://localhost:8888/interview/progress" width="640" height="400px"></iframe>',
+            __html: '<iframe src="http://localhost:8888/interview/progress" width="750" height="450px"></iframe>',
         };
     };
     function QuestionItem({ item }) {
@@ -128,7 +127,7 @@ function Interview() {
                 <WrapContent>
                  
                   <TimerText>
-                  {min} 분  {sec} 초
+                    {count} 초
                   </TimerText>
                     
                   
