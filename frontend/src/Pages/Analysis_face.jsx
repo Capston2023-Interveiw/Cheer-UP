@@ -1,6 +1,8 @@
 import React,{useState, useEffect, useRef} from 'react';
 import styled from 'styled-components';
 import Header_Aft from '../Components/Header_Aft';
+import Analysis_NavBar1 from '../Components/Analysis_NavBar1';
+import Analysis_NavBar2 from '../Components/Analysis_NavBar2';
 import axios from 'axios';
 
 const Form = styled.div`
@@ -25,35 +27,7 @@ const ViewFrame2 =styled.div`
     position: relative;
 `;
 
-const NavBar1 =styled.div` 
-
-    width: 100%;
-    height: 50px;
-    //border: 1px solid;
-    background-color: ${(props)=> props.backgroundColor};
-    position: relative;
-`;
-
-
-const Text = styled.button`
-    text-align: center;
-    position: absolute;
-    border 0px;
-    cursor: pointer;
-    background-color: ${(props)=> props.backgroundColor};
-    font-style: ${(props)=> props.fontStyle};
-    font-weight: ${(props)=> props.fontWeight};
-    font-size: ${(props)=> props.fontSize};
-    top: ${(props)=> props.top};
-    bottom: ${(props)=> props.bottom};
-    left: ${(props)=> props.left};
-    right: ${(props)=> props.right};
-    transform:${(props)=> props.transForm};
-`;
-
-
-
-const Totalscore = styled.div`
+const Scoregraph = styled.div`
     position: absolute;
     top: 10%;
     left: 28%;
@@ -65,74 +39,54 @@ const Totalscore = styled.div`
 `;
 export default function Analysis_face(){
 
+    const [faceInfo, setfaceInfo] = useState([]);
+    const [timestamp, setTimestamp] = useState([]);
+    const videoRef = useRef(null);
+
+    //const num = props.video_num;
+    //const api = 'api/v1/result/'+num+'/face';
+    const api = 'api/v1/result/1/face';
+    const handleTimestampChange = (event) =>{
+        setTimestamp(event.target.value);
+    };
+
+    const handleGoToTimestamp =(timestamp) =>{
+        if(videoRef.current){
+            const timeComponents = timestamp.split(':');
+            const minutes = parseInt(timeComponents[0]) || 0;
+            const seconds = parseInt(timeComponents[1]) || 0;
+            const totalSeconds = minutes * 60 + seconds;
+            videoRef.current.currentTime = totalSeconds;
+        }
+    }
+    useEffect(() => {
+        axios({
+        url: api,
+        method: "get",
+
+      }).then((response) => {
+        setfaceInfo(response.data);
+  
+        console.log(response.data);
+
+      }).catch(function (error) {//실패 시 catch 실행
+        console.log(error);
+    })
+    //성공이던 실패던 항상 실행
+    .then(function () {
+        // always executed
+    });
+    },[]);
+
     
     return(
         <Form>
             <Header_Aft/>
             <ViewFrame>
                 <ViewFrame2>
-                    <NavBar1 backgroundColor ="#FFFF">
-                        <Text
-                        fontStyle = "blod"
-                        fontWeight = "bolder"
-                        fontSize = "22px"
-                        top = "50%"
-                        left = "2%"
-                        transForm = "translate(0%, -50%)"
-                        backgroundColor = "#FFFF"
-                        >종합 리포트</Text>
-                        <Text
-                            fontStyle = "blod"
-                            fontWeight = "bolder"
-                            fontSize = "22px"
-                            top = "50%"
-                            left = "18%"
-                            transForm = "translate(0%, -50%)"
-                            backgroundColor = "#FFFF"
-                            >세부 분석</Text>
-                    </NavBar1>
-                    <NavBar1 backgroundColor ="#A3D8F4">
-                        <Text
-                            fontStyle = "blod"
-                            fontWeight = "bolder"
-                            fontSize = "22px"
-                            top = "50%"
-                            left = "2%"
-                            transForm = "translate(0%, -50%)"
-                            backgroundColor = "#A3D8F4">시선</Text>
-                        <Text
-                            fontStyle = "blod"
-                            fontWeight = "bolder"
-                            fontSize = "22px"
-                            top = "50%"
-                            left = "11%"
-                            transForm = "translate(0%, -50%)"
-                            backgroundColor = "#A3D8F4">표정</Text>
-                        <Text
-                            fontStyle = "blod"
-                            fontWeight = "bolder"
-                            fontSize = "22px"
-                            top = "50%"
-                            left = "21%"
-                            transForm = "translate(0%, -50%)"
-                            backgroundColor = "#A3D8F4">자세</Text>
-                        <Text
-                            fontStyle = "blod"
-                            fontWeight = "bolder"
-                            fontSize = "22px"
-                            top = "50%"
-                            left = "30%"
-                            transForm = "translate(0%, -50%)"
-                            backgroundColor = "#A3D8F4">평균 말속도</Text>
-                        <Text
-                            fontStyle = "blod"
-                            fontWeight = "bolder"
-                            fontSize = "22px"
-                            top = "50%"
-                            left = "45%"
-                            transForm = "translate(0%, -50%)"
-                            backgroundColor = "#A3D8F4">추임새</Text>
-                    </NavBar1>
+                    <Analysis_NavBar1/>
+                    <Analysis_NavBar2/>
+
 
                     
                 </ViewFrame2>

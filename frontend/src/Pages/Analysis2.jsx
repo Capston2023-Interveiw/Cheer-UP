@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import Header_Aft from '../Components/Header_Aft';
 import PentagonGraph from '../Components/PentagonGraph';
 import axios from 'axios';
+import Analysis_NavBar1 from '../Components/Analysis_NavBar1';
 
 const Form = styled.div`
     width: 100%;
@@ -73,7 +74,7 @@ const Profile  =styled.div`
     height:250px;
 `;
 
-const Totalscore = styled.div`
+const Scoregraph = styled.div`
     position: absolute;
     top: 10%;
     left: 28%;
@@ -199,29 +200,10 @@ export default function Analysis2(){
             <Header_Aft/>
             <ViewFrame>
                 <ViewFrame2>
-                    <NavBar1>
-                        <Text
-                        fontStyle = "blod"
-                        fontWeight = "bolder"
-                        fontSize = "22px"
-                        top = "50%"
-                        left = "2%"
-                        transForm = "translate(0%, -50%)"
-                        backgroundColor = "#FFFF"
-                        >종합 리포트</Text>
-                        <Text
-                            fontStyle = "blod"
-                            fontWeight = "bolder"
-                            fontSize = "22px"
-                            top = "50%"
-                            left = "18%"
-                            transForm = "translate(0%, -50%)"
-                            backgroundColor = "#FFFF"
-                            >세부 분석</Text>
-                    </NavBar1>
+                    <Analysis_NavBar1/>
                     <Username>OOO님의 면접 분석 결과</Username>
                     <Profile>프로필 사진</Profile>
-                    <Totalscore>총점 그래프</Totalscore>
+                    <Scoregraph>총점 그래프</Scoregraph>
                     <Graph_Box>
                         <Graph>
                             {totalData && <PentagonGraph data={otherData} />}
