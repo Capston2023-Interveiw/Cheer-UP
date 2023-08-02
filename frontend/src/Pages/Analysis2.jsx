@@ -1,7 +1,6 @@
 import React,{useState, useEffect, useRef} from 'react';
 import styled from 'styled-components';
 import Header_Aft from '../Components/Header_Aft';
-import {MAIN_DATA} from '../Components/List/MAIN_DATA';
 import PentagonGraph from '../Components/PentagonGraph';
 import axios from 'axios';
 
@@ -53,6 +52,17 @@ const Text = styled.button`
     transform:${(props)=> props.transForm};
 `;
 
+const Username = styled.div`
+    position: absolute;
+    top: 6%;
+    left: 3%;
+    width:300px;
+    height:20px;
+    font-style:blod;
+    font-weight:bolder;
+    font-size:22px;
+`;
+
 const Profile  =styled.div`
     border: 1px solid;
     border-radius: 20px;
@@ -63,16 +73,27 @@ const Profile  =styled.div`
     height:250px;
 `;
 
-const Username = styled.div`
+const Totalscore = styled.div`
     position: absolute;
-    top: 6%;
-    left: 3%;
-    width:300px;
-    height:20px;
-    font-style:blod;
-    font-weight:bolder;
-    font-size:1.5vw;
+    top: 10%;
+    left: 28%;
+    width: 250px;
+    height: 250px;
+    border: 1px solid;
+    border-radius: 20px;
+    background-color:#FFFF;
 `;
+
+const Video_Box  = styled.div`
+    position: absolute;
+    top: 7%;
+    right: 5%;
+    width: 500px;
+    height: 350px;
+    border: 1px solid;
+    border-radius: 20px;
+`;
+
 const Graph_Box  = styled.div`
     position: absolute;
     border: 1px solid;
@@ -116,7 +137,7 @@ const P1 =styled.p`
     text-align:left;
     font-style: blod;
     font-weight: bolder;
-    font-size: 1.5vw;
+    font-size: 22px;
 `;
 
 const P2 =styled.p`
@@ -126,17 +147,7 @@ const P2 =styled.p`
     text-align:right;
     font-style: blod;
     font-weight: bolder;
-    font-size: 1.5vw;
-`;
-
-const Video_Box  = styled.div`
-    position: absolute;
-    top: 7%;
-    right: 5%;
-    width: 500px;
-    height: 350px;
-    border: 1px solid;
-    border-radius: 20px;
+    font-size: 22px;
 `;
 
 const Wordcloud = styled.button`
@@ -150,6 +161,8 @@ const Wordcloud = styled.button`
     background-color:#FFFF;
     cursor: pointer;
 `;
+
+
 
 export default function Analysis2(){
     const [totalData, setTotalData] = useState(null);
@@ -190,7 +203,7 @@ export default function Analysis2(){
                         <Text
                         fontStyle = "blod"
                         fontWeight = "bolder"
-                        fontSize = "1.5vw"
+                        fontSize = "22px"
                         top = "50%"
                         left = "2%"
                         transForm = "translate(0%, -50%)"
@@ -199,7 +212,7 @@ export default function Analysis2(){
                         <Text
                             fontStyle = "blod"
                             fontWeight = "bolder"
-                            fontSize = "1.5vw"
+                            fontSize = "22px"
                             top = "50%"
                             left = "18%"
                             transForm = "translate(0%, -50%)"
@@ -207,7 +220,8 @@ export default function Analysis2(){
                             >세부 분석</Text>
                     </NavBar1>
                     <Username>OOO님의 면접 분석 결과</Username>
-                    <Profile/>
+                    <Profile>프로필 사진</Profile>
+                    <Totalscore>총점 그래프</Totalscore>
                     <Graph_Box>
                         <Graph>
                             {totalData && <PentagonGraph data={otherData} />}
