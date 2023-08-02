@@ -1,4 +1,4 @@
-import React,{useState, useEffect, useRef} from 'react';
+import React,{useState, useEffect} from 'react';
 import styled from 'styled-components';
 import Header_Aft from '../Components/Header_Aft';
 import PentagonGraph from '../Components/PentagonGraph';
@@ -26,31 +26,6 @@ const ViewFrame2 =styled.div`
     height: 100vh;
     border: 1px solid;
     position: relative;
-`;
-
-const NavBar1 =styled.div` 
-
-    width: 100%;
-    height: 50px;
-    //border: 1px solid;
-    background-color: #FFFF;
-    position: relative;
-`;
-
-const Text = styled.button`
-    text-align: center;
-    position: absolute;
-    border 0px;
-    cursor: pointer;
-    background-color: ${(props)=> props.backgroundColor};
-    font-style: ${(props)=> props.fontStyle};
-    font-weight: ${(props)=> props.fontWeight};
-    font-size: ${(props)=> props.fontSize};
-    top: ${(props)=> props.top};
-    bottom: ${(props)=> props.bottom};
-    left: ${(props)=> props.left};
-    right: ${(props)=> props.right};
-    transform:${(props)=> props.transForm};
 `;
 
 const Username = styled.div`

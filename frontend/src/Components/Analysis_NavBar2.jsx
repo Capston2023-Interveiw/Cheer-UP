@@ -88,4 +88,4 @@ export default function Analysis_NavBar2(){
             </Link>
         </NavBar1>
     );
-  };
+  }

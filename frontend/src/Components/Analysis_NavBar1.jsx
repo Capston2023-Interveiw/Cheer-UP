@@ -45,7 +45,7 @@ export default function Analysis_NavBar1(){
                     >종합 리포트</Text>
             </Link>
 
-            <Link to = '/Analysis_face'>
+            <Link to = '/Analysis_gaze'>
                 <Text
                     fontStyle = "blod"
                     fontWeight = "bolder"
@@ -58,4 +58,4 @@ export default function Analysis_NavBar1(){
             </Link>
         </NavBar1>
     );
-  };
+  }
