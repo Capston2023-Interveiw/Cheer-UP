@@ -5,23 +5,34 @@ import {darken} from 'polished';
 import {AiFillCaretDown} from 'react-icons/ai';
 
 const Form = styled.div`
+  position: relative;
+`;
+
+const MainBox = styled.div`
   width: 65%;
-  height: 100vh;
+  max-width: 1000px;
+  min-width: 680px;
+  height: 80vh;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   padding: 0px;
-  margin: 0 auto; 
-  background-color: #E8F9FD;
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+  background-color: rgba( 232, 249, 253, 0.5 );
+  border-radius: 7%;
+  border: 1px solid #ccc;
+  box-shadow: 1px 1px grey;
 `;
 
 const H1 = styled.h1`
-  height: 100px;
-  font-size: 50px;
-  font: bold;
-  text-align: center;
-  margin: 0 auto;
-  margin-bottom: 0px;
-  margin-top: 0px;
-  color: #0084FE;
+height: 100px;
+font-size: 70px;
+font: bold;
+text-align: center;
+margin: 0 auto;
+margin-bottom: 70px;
+margin-top: 100px;
+color: #0084FE;
 `;
 
 const Sci = styled.div`
@@ -40,53 +51,52 @@ const Sci_2 = styled.div`
 
 
 const Text = styled.input`
-  width: 300px;
-  height: 20px;
+
+  width: 400px;
+  height: 30px;
   padding: 10px;
   margin-bottom: 30px;
   border: 1px solid #ccc;
-  border-radius: 10px;
-  font-size: 14px;
+  border-radius: 15px;
+  font-size: 17px;
 `;
 
 const Text_age = styled.input`
 
-  width: 200px;
-  height: 20px;
+  width: 300px;
+  height: 30px;
   padding: 10px;
   margin-bottom: 30px;
   border: 1px solid #ccc;
-  border-radius: 10px;
-  font-size: 14px;
+  border-radius: 15px;
+  font-size: 17px;
 `;
 
 
 const Password = styled.input`
-
-  width: 300px;
-  height: 20px;
+  width: 400px;
+  height: 30px;
   padding: 10px;
   margin-bottom: 30px;
   border: 1px solid #ccc;
-  border-radius: 10px;
-  font-size: 14px;
+  border-radius: 15px;
+  font-size: 17px;
 `;
 
 const Buttonmi = styled.button `
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 100px;
-  padding: 10px;
+
+  width: 250px;
+  padding: 15px;
+  margin-top: 40px;
   background-color: #0084FE;
   color: #fff;
-  border: none;
-  border-radius: 10px;
-  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 15px;
   cursor: pointer;
-  text-align: center;
+  font-size: 17px;
   font: bold;
+  font-weight: bold;
+
 `;
 
 const StyledOptionItem = styled.li`
@@ -109,7 +119,8 @@ const activeExist = ({ active = true }) => {
 const StyledOptionList = styled.ul`
   box-sizing: border-box;
   position: absolute; 
-  top: 28px;
+  top: 38px;
+  left: 4px;
   list-style-type: none;
   width: 100%;
   background: #ffffff;
@@ -143,7 +154,7 @@ const StyledSelectedLabel = styled.button`
   border: none;
   justify-content: center;
   box-sizing: border-box; 
-  width: inherit;
+  width: 70px;
   height: inherit;
   font-size: 1rem;
   background-color: #FFFF;
@@ -153,10 +164,11 @@ const StyledSelectedLabel = styled.button`
 
 const StyledSelectbox = styled.div`
   position: relative;
-  margin-left: 18px;
-  width: 82px;
-  height: 42px;
-  border-radius: 8px;
+  margin-left: 11px;
+  width: 65px;
+  height: 30px;
+  padding: 10px;
+  border-radius: 15px;
   background: #ffffff;
   cursor: pointer;
   border: 1px solid #ccc;
@@ -190,33 +202,32 @@ const Dropdown = ({ list }) => {
 };
 
 export default function SignUp(){
-  const list =['남성', '여성'];
+  const list =['남자', '여자'];
 
   return(
-    <Form>
-      <H1></H1>
-      <H1>Cheer Up</H1>
-
-      <Sci>
-        <Text placeholder="아이디를 입력해주세요" 
-        type="text"/>
-        <Password placeholder="비밀번호를 입력해주세요" 
-        type="password"/>
-        <Password placeholder="비밀번호를 재입력해주세요" 
-        type="password"/>
-        <Text placeholder="이름을 입력해주세요" 
-        type="text"/>
-        <Sci_2>
-          <Text_age placeholder="나이를 입력해주세요" 
+    <MainBox>
+      <Form>
+        <H1>Cheer Up</H1>
+        <Sci>
+          <Text placeholder="아이디를 입력해주세요" 
           type="text"/>
-          
-          <Dropdown list = {list}/>
+          <Password placeholder="비밀번호를 입력해주세요" 
+          type="password"/>
+          <Password placeholder="비밀번호를 재입력해주세요" 
+          type="password"/>
+          <Text placeholder="이름을 입력해주세요" 
+          type="text"/>
+          <Sci_2>
+            <Text_age placeholder="나이를 입력해주세요" 
+            type="text"/>
+            
+            <Dropdown list = {list}/>
 
-        </Sci_2>
-        <Buttonmi>완료</Buttonmi>
-      </Sci>
-      
-    </Form>
+          </Sci_2>
+          <Buttonmi>완료</Buttonmi>
+        </Sci>
+      </Form>
+    </MainBox>
 
   );
  
