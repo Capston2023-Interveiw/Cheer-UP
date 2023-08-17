@@ -6,6 +6,8 @@ import {AiFillCaretDown} from 'react-icons/ai';
 
 const Form = styled.div`
   position: relative;
+  width:100vw;
+  height:100vh;
 `;
 
 const MainBox = styled.div`
@@ -205,8 +207,8 @@ export default function SignUp(){
   const list =['남자', '여자'];
 
   return(
-    <MainBox>
-      <Form>
+    <Form>
+      <MainBox>
         <H1>Cheer Up</H1>
         <Sci>
           <Text placeholder="아이디를 입력해주세요" 
@@ -226,8 +228,8 @@ export default function SignUp(){
           </Sci_2>
           <Buttonmi>완료</Buttonmi>
         </Sci>
-      </Form>
-    </MainBox>
+      </MainBox>
+    </Form>
 
   );
  

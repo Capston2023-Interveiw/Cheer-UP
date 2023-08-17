@@ -13,6 +13,8 @@ const Lci = styled.div`
 
 const Form = styled.div`
   position: relative;
+  width:100vw;
+  height:100vh;
 `;
 
 const MainBox = styled.div`
@@ -70,15 +72,15 @@ const Buttonmi = styled.button `
 
 export default function FindPW() {
     return (
-      <MainBox>
-        <Form>
+      <Form>
+        <MainBox>
           <H1></H1>
           <H1>Cheer Up</H1>
           <Lci>
             <Text placeholder="이메일을 입력해주세요" />
             <Buttonmi>보내기</Buttonmi>
           </Lci>
-        </Form>
-      </MainBox>
+        </MainBox>
+      </Form>
     );
   }

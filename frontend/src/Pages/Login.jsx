@@ -7,6 +7,8 @@ import { Link } from 'react-router-dom';
 
 const Form = styled.div`
   position: relative;
+  width:100vw;
+  height:100vh;
 `;
 
 const MainBox = styled.div`
@@ -145,8 +147,8 @@ export default function Login() {
   };
 
   return (
-    <MainBox>
-      <Form>
+    <Form>
+      <MainBox>
         <H1></H1>
         <H1>Cheer Up</H1>
         <Lci>
@@ -171,7 +173,7 @@ export default function Login() {
             </Link>
           </P>
         </Lci>    
-      </Form>
-    </MainBox>
+      </MainBox>
+    </Form>
   );
 }
