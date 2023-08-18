@@ -19,7 +19,7 @@ public class Member {
     private String password;
     private String email;
     private String username;
-    private int age;
+    private int birthDate;
     private int gender;
 
     @Enumerated(EnumType.STRING)
@@ -29,13 +29,13 @@ public class Member {
         this.id = Long.parseLong(claims.get("id").toString());
     }
     @Builder
-    public Member(Long id, String accountId, String password, String username, String email, int age, int gender, Role role) {
+    public Member(Long id, String accountId, String password, String username, String email, int birthDate, int gender, Role role) {
         this.id = id;
         this.accountId = accountId;
         this.password = password;
         this.username = username;
         this.email = email;
-        this.age = age;
+        this.birthDate = birthDate;
         this.gender = gender;
         this.role = role;
     }
