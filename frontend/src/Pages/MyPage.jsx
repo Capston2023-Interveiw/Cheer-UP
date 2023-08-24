@@ -4,6 +4,7 @@ import Header from "../Components/Header_MyPage";
 import {FiUser} from 'react-icons/fi'
 // import StartButton from "../Components/Button";
 // import {Link} from "react-router-dom";
+import Chart from '../Components/Chart';
 
 const MainWrap = styled.div`
     position: fixed;
@@ -13,6 +14,16 @@ const MainWrap = styled.div`
     text-align: center;
     align-items: center;
 `;
+
+const Wrap = styled.div`
+    display: grid;
+    gird-template-rows: 1fr 1fr;
+    justify-content: center;
+    align-items: center;
+    grid-template-columns: repeat(2, 1fr);
+    justify-items: center;
+    margin-top: 50px;
+`
 
 const ImageBox = styled.div`
     width: 12rem;
@@ -98,55 +109,58 @@ export default function MyPage() {
     return (
      <MainWrap>
             <Header/>
-            
-            <ImageBox>
-                <FiUser size='130'/>
-            </ImageBox>
-            <InfoBox>
-              <Info>
-                이름 : 
-              </Info>
-              <Info>
-                ID :  
-              </Info>
-              <Info>
-                생년월일 : 
-              </Info>
-              <Info>
-                이메일 : 
-              </Info>
-            </InfoBox>
-
-            <Table>
-                <thead>
-                    <Tr>
-                        {
-                            headers.map((header) =>
-                            <th key={header.text}>
-                                {header.text}
-                            </th>
-                            )
-                        }
-                    </Tr>
-                </thead>
-
-                <tbody>
-                    {items.map((item, index) => (
-                        <tr key={index}>
+            <Wrap>
+                <ImageBox>
+                    <FiUser size='130'/>
+                </ImageBox>
+                <Chart/>
+                <InfoBox>
+                <Info>
+                    이름 : 
+                </Info>
+                <Info>
+                    ID :  
+                </Info>
+                <Info>
+                    생년월일 : 
+                </Info>
+                <Info>
+                    이메일 : 
+                </Info>
+                </InfoBox>
+                
+                <Table>
+                    <thead>
+                        <Tr>
                             {
-                                headerKey.map((key) => 
-                                <Td key={key + index}>
-                                    {item[key]}
-
-                                </Td>
+                                headers.map((header) =>
+                                <th key={header.text}>
+                                    {header.text}
+                                </th>
                                 )
                             }
-                        </tr>
-                    ))
-                }
-                </tbody>
+                        </Tr>
+                    </thead>
 
-            </Table>
+                    <tbody>
+                        {items.map((item, index) => (
+                            <tr key={index}>
+                                {
+                                    headerKey.map((key) => 
+                                    <Td key={key + index}>
+                                        {item[key]}
+
+                                    </Td>
+                                    )
+                                }
+                            </tr>
+                        ))
+                    }
+                    </tbody>
+
+                </Table>
+            
+            </Wrap>
             
     </MainWrap>
   
