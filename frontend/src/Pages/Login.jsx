@@ -150,7 +150,7 @@ export default function Login() {
     <Form>
       <MainBox>
         <H1></H1>
-        <H1>Cheer Up</H1>
+        <H1>Log In</H1>
         <Lci>
           <Text placeholder="아이디를 입력해주세요" 
           type="text" 
