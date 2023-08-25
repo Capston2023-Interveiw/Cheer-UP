@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import Header_Bef from '../Components/Header_Bef';
+import Header_Aft from '../Components/Header_Aft';
 import Img from '../image/MainPageImage.svg';
 import { Link } from 'react-router-dom'
 
@@ -103,7 +103,7 @@ const Buttonmi = styled.button `
 export default function Main_Before() {
     return(
         <Form>
-            <Header_Bef/>
+            <Header_Aft/>
             <DetailBox>
                 <MainBox>
                     <LeftBox>

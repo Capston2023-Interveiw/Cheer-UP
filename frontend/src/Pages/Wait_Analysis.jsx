@@ -91,8 +91,8 @@ export default function Wait_Analysis() {
     // };
 
     useEffect(() => {
-        setLoading(true); // api 호출 전에 true로 변경하여 로딩화면 띄우기
-        //setLoading(false);
+        //setLoading(true); // api 호출 전에 true로 변경하여 로딩화면 띄우기
+        setLoading(false);
         axios.get('api/v1/interview/end')
         .then(response => {
             if(response.status === 200){
