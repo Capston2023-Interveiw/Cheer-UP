@@ -209,9 +209,11 @@ export default function SignUp(){
   return(
     <Form>
       <MainBox>
-        <H1>Cheer Up</H1>
+        <H1>Sign Up</H1>
         <Sci>
           <Text placeholder="아이디를 입력해주세요" 
+          type="text"/>
+          <Text placeholder="이메일을 입력해주세요" 
           type="text"/>
           <Password placeholder="비밀번호를 입력해주세요" 
           type="password"/>
@@ -220,7 +222,7 @@ export default function SignUp(){
           <Text placeholder="이름을 입력해주세요" 
           type="text"/>
           <Sci_2>
-            <Text_age placeholder="나이를 입력해주세요" 
+            <Text_age placeholder="나이를 입력해주세요 예)2000/00/00" 
             type="text"/>
             
             <Dropdown list = {list}/>
