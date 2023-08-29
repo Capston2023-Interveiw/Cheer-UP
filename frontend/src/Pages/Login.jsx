@@ -121,11 +121,15 @@ export default function Login() {
     }
     console.log(id);
     console.log(pw);
-    axios.post('/api/v1/members/login', { // 입력한 accountId와 비밀번호로 서버에 POST 요청 전송
-      id,
-      pw
-    })
-      .then((response) => { // 요청이 성공하면 액세스 토큰을 로컬 저장소에 저장합니다
+    let body ={
+      "accountId": id,
+      "password": pw
+    };
+    
+    axios.post('api/v1/members/login', body) // 입력한 accountId와 비밀번호로 서버에 POST 요청 전송
+        .then((response) => { // 요청이 성공하면 액세스 토큰을 로컬 저장소에 저장합니다
+          console.log(body);
+          console.log(response.data);
         const { accessToken } = response.data;
         localStorage.setItem('accessToken', accessToken);
         setErrorMessage('로그인 성공~!')
@@ -139,7 +143,8 @@ export default function Login() {
       })
       .catch((error) => { // 요청이 실패할 경우 응답의 상태 코드에 따라 오류 메시지를 설정합니다
        if (error.response.status === 401) {
-         setErrorMessage('아이디 또는 비밀번호를 잘못 입력했습니다. 입력하신 내용을 다시 확인해주세요.');
+        console.log(body)
+        setErrorMessage('아이디 또는 비밀번호를 잘못 입력했습니다. 입력하신 내용을 다시 확인해주세요.');
        } else {
          setErrorMessage('서버 오류가 발생했습니다. 나중에 다시 시도해주세요.');
        }
