@@ -10,6 +10,7 @@ public class ScoreMapper {
                 .score(entity.getScore())
                 .analysis_type(entity.getAnalysis().getType())
                 .summary(entity.getSummary())
+                .videoUrl(entity.getVideo().getUrl())
                 .build();
     }
 }
