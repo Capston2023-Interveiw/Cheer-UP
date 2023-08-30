@@ -51,7 +51,7 @@ const WrapNextButton = styled.div`
 `;
 
 function Interview() {
-    const [count, setCount] = useState(90);
+    const [count, setCount] = useState(20);
   
     useEffect(() => {
       const id = setInterval(() => {
@@ -59,6 +59,7 @@ function Interview() {
       }, 1000);
       if(count === 0){
         clearInterval(id);
+        console.log("Hello");
       }
       return () => clearInterval(id);
     }, [count]);
