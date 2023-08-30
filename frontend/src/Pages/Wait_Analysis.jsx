@@ -1,39 +1,50 @@
 import React, {useState, useEffect} from 'react';
 import styled from 'styled-components';
 import Header_Aft from '../Components/Header_Aft';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
+import Img from '../image/Wait_Background.svg';
 import Loading from '../Components/Loading';
 import axios from 'axios';
 
 const Form = styled.div`
-    width: 100%;
-    height: 100vh;
-    padding: 0px;
-    background-color: #FFFF;
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
-    position: relative;
+  position: relative;
+  width:100vw;
+  height:100vh;
 `;
 
-const Lci = styled.div`
-    width: 70vw;
-    height: 70vh;
-    margin: 0 auto;
-    background-color: #E8F9FD;
+const DetailBox = styled.div`
+
+  width: 100%;
+  height: 95%;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, 0%);
+  //border: 1px solid;
+  
+`;
+
+const Image = styled.img`
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 50%; 
+    left:50%;
+    transform: translate(-50%, -50%);
+`;
+
+
+
+const Loading_Box = styled.div`
     position: absolute;
     left: 50%;
     top: 50%;
-    transform: translate(-50%, -45%);
-
-`;
-
-const Loading_Box = styled.div`
-position: absolute;
-    
+    transform: translate(-50%, -50%);
+        
 `;
 
 const Buttonmi = styled.button `
-    height: 50px;
-    width: 150px;
+    height: 70px;
+    width: 180px;
     padding: 10px;
     background-color: #E8F9FD;
     color: #0084FE;
@@ -42,25 +53,12 @@ const Buttonmi = styled.button `
     border-color: Black;
     font-style: normal;
     font-weight: bolder;
-    font-size: 20px;
+    font-size: 25px;
     text-align: center;
-    position: absolute;
-    left: 73.2%;
-    top: 66%;
+    cursor: pointer;   
 `;
 
-const Loading_end = styled.div`
-    width: 70vw;
-    height: 70vh;
-    z-index: 999;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-style: normal;
-    font-weight: bolder;
-    font-size: 30px;
-`;
+
 
 export default function Wait_Analysis() {
 
@@ -91,8 +89,8 @@ export default function Wait_Analysis() {
     // };
 
     useEffect(() => {
-        setLoading(true); // api 호출 전에 true로 변경하여 로딩화면 띄우기
-        //setLoading(false);
+        //setLoading(true); // api 호출 전에 true로 변경하여 로딩화면 띄우기
+        setLoading(false);
         axios.get('api/v1/interview/end')
         .then(response => {
             if(response.status === 200){
@@ -114,16 +112,18 @@ export default function Wait_Analysis() {
     return(
         <Form>
             <Header_Aft/>
-            <Lci>
+            <DetailBox>
+                <Image  src ={Img} />
                 <Loading_Box>
-                    {loading ? <Loading /> : <Loading_end>분석 완료</Loading_end>}
+                        {loading ? <Loading /> :                 
+                            <Link to ='/Analysis2' state={{num : video_num}}>
+                                <Buttonmi >분석결과 보기</Buttonmi>
+                            </Link>}
                 </Loading_Box>
-                <Link to ='/Analysis' state={{num : video_num}}>
-                    <Buttonmi >분석결과 보기</Buttonmi>
-                </Link>
-            </Lci>
+            </DetailBox>
         </Form>
         
 
     );
 }
+
