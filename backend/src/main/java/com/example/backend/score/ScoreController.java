@@ -22,5 +22,4 @@ public class ScoreController {
     public ResponseEntity<List<ScoreResponse>> getResponseList(@AuthenticationPrincipal Member member, @PathVariable Long video_id){
         return ResponseEntity.ok(scoreService.findAllByVideoId(video_id));
     }
-
 }

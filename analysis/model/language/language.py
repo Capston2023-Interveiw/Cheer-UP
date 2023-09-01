@@ -53,18 +53,18 @@ class SttService:
       "feedback": interjections,
       "time_stamp": timestamp
     }
-    print(content)
     return content
 
   def getSpeedResult(self):
     time = get_duration(self.audio_path)
     length = scripts_length(self.scripts)
-    speed, score = speaking_speed(time, length)
+    speed, score, summary = speaking_speed(time, length)
     content = {
       "field": 5,
       "score": score,
       "feedback": speed,
-      "time_stamp": []
+      "time_stamp": [],
+      "summary": summary
     }
     self.isEnd = True
     return content
