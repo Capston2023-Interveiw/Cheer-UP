@@ -36,13 +36,13 @@ const H1 = styled.h1`
   text-align: center;
   margin: 0 auto;
   margin-bottom: 0px;
-  margin-top: 2vh;
+  margin-top: 4vh;
   color: #0084FE;
 `;
 
 const Sci = styled.div`
   position: absolute;
-  top: 60%;
+  top: 59%;
   left: 50%;
   transform: translate(-50%, -50%);
   display: flex;
@@ -97,7 +97,7 @@ const Buttonmi = styled.button `
 
   width: 250px;
   padding: 15px;
-  margin-top: 2vh;
+  margin-top: 1vh;
   background-color: #0084FE;
   color: #fff;
   border: 1px solid #ccc;

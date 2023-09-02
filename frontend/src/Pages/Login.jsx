@@ -37,7 +37,7 @@ const H1 = styled.h1`
   text-align: center;
   margin: 0 auto;
   margin-bottom: 0px;
-  margin-top: 10vh;
+  margin-top: 12vh;
   color: #0084FE;
 `;
 
@@ -79,7 +79,7 @@ const Submit = styled.button`
 
 const Lci = styled.div`
   position: absolute;
-  top: 60%;
+  top: 59%;
   left: 50%;
   transform: translate(-50%, -50%);
   display: flex;
