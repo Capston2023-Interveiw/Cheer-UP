@@ -12,9 +12,11 @@ const Form = styled.div`
 
 const MainBox = styled.div`
   width: 65%;
-  max-width: 1000px;
-  min-width: 680px;
-  height: 80vh;
+  max-width: 800px;
+  min-width: 480px;
+  height: 100vh;
+  max-height: 900px;
+  min-height: 400px;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -27,21 +29,30 @@ const MainBox = styled.div`
 `;
 
 const H1 = styled.h1`
-height: 100px;
-font-size: 70px;
-font: bold;
-text-align: center;
-margin: 0 auto;
-margin-bottom: 70px;
-margin-top: 100px;
-color: #0084FE;
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 100px;
+  font-size: 70px;
+  font: bold;
+  text-align: center;
+  margin: 0 auto;
+  margin-bottom: 0px;
+  margin-top: 0px;
+  color: #0084FE;
 `;
 
 const Sci = styled.div`
+  position: absolute;
+  top: 60%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  height: 40vh;
 `;
 
 const Sci_2 = styled.div`
