@@ -52,7 +52,7 @@ const Sci = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 40vh;
+  
 `;
 
 const Sci_2 = styled.div`
