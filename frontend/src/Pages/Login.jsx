@@ -1,8 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useState } from 'react'; 
+import { useState, useEffect } from 'react'; 
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+
 
 
 const Form = styled.div`
@@ -114,8 +115,8 @@ export default function Login() {
     setPw(e.target.value);
   };
 
-  const handleLogin = () => { // 로그인 버튼 클릭 이벤트 처리 기능
-    if (!id || !pw) { // accountId 또는 암호가 비어 있으면 오류 메시지를 설정합니다
+  const handleLogin = () => { 
+    if (!id || !pw) { 
       setErrorMessage('아이디와 비밀번호를 모두 입력해주세요.');
       return;
     }
@@ -126,23 +127,18 @@ export default function Login() {
       "password": pw
     };
     
-    axios.post('api/v1/members/login', body) // 입력한 accountId와 비밀번호로 서버에 POST 요청 전송
-        .then((response) => { // 요청이 성공하면 액세스 토큰을 로컬 저장소에 저장합니다
-          console.log(body);
-          console.log(response.data);
-        const { accessToken } = response.data;
-        localStorage.setItem('accessToken', accessToken);
-        setErrorMessage('로그인 성공~!')
-        //기본 페이지로 리디렉션하거나 다른 필요한 작업 수행
-        console.log(response.data);
-        if(response.data.code === 200){
-          console.log("로그인");
-          //dispatch(loginUser(res.data.userInfo));
-          setErrorMessage("");
-        }
+    axios.post('api/v1/members/login', body) 
+        .then((response) => { 
+
+        const accessToken = response.data.accessToken;
+        localStorage.setItem("accessToken", accessToken);
+        console.log("res.data.accessToken : " + accessToken);
+        axios.defaults.headers.common['Authorization'] = 'Bearer ' + accessToken;
+        window.location.replace("/Main_After");
+
       })
-      .catch((error) => { // 요청이 실패할 경우 응답의 상태 코드에 따라 오류 메시지를 설정합니다
-       if (error.response.status === 401) {
+      .catch((error) => {
+       if (error.status === 401) {
         console.log(body)
         setErrorMessage('아이디 또는 비밀번호를 잘못 입력했습니다. 입력하신 내용을 다시 확인해주세요.');
        } else {
@@ -150,6 +146,14 @@ export default function Login() {
        }
       });
   };
+
+  useEffect(() => {
+    if(localStorage.getItem('accessToken')){
+      window.location.replace("/Main_After");
+    }
+    
+  }, [])
+
 
   return (
     <Form>

@@ -100,7 +100,7 @@ const Buttonmi = styled.button `
 
 
 
-export default function Main_Before() {
+export default function Main_After() {
     return(
         <Form>
             <Header_Aft/>
@@ -114,7 +114,7 @@ export default function Main_Before() {
                         <Cm>
                             면접 태도를 분석하고 교정해주는 서비스입니다.
                         </Cm>
-                        <Link to ='/Login'>
+                        <Link to ='/Interview_start'>
                             <Buttonmi >면접시작</Buttonmi>
                         </Link>
                     </LeftBox>
