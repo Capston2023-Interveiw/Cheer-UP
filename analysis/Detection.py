@@ -107,8 +107,10 @@ class Detection:
             self.gazeColor = (248, 72, 216)
             if self.gazeCount >= 2 * self.fps:
                 if (self.gaze == "left"):
+                    reason = "왼쪽"
                     self.gaze_left_summary += 1
                 elif (self.gaze == "right"):
+                    reason = "오른쪽"
                     self.gaze_right_summary += 1
                 self.gazeFeedback.append(self.gaze)
                 timestamp = int(time.time() - self.startTime)
@@ -201,8 +203,6 @@ class Detection:
         while stt.isEnd == False:
             interjectionResult = stt.getInterjectionResult()
             speedResult = stt.getSpeedResult()
-        print(interjectionResult)
-        print(speedResult)
         time.sleep(2)
         self.speed_score(speedResult)
         self.save_interjection_log(interjectionResult)
@@ -234,8 +234,13 @@ class Detection:
     
     def save_interjection_log(self, contents):
         self.save_score(contents['analysis_id'], contents['score'])
-        for log in contents['feedback']:
-            self.database.insertLog(log, None, INTERJECTION_ANALYSIS_ID, self.video_id)
+        time = ""
+        for i in range(len(contents['feedback'])):
+            log = contents['feedback'][i]
+            if (contents['time_stamp'] != None and contents['time_stamp'][i] != None):
+                time = contents['time_stamp'][i]
+            self.database.insertLog(log, time, GAZE_ANALYSIS_ID, self.video_id)
+
 
     def timestamp_form(self, time):
             second = time

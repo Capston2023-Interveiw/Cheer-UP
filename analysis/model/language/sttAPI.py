@@ -28,14 +28,15 @@ def getScripts(token, audio_path):
     "paragraph_splitter": {
         "min": 1,
         "max": 10
-      }
+    }
   }
   response = requests.post(
       'https://openapi.vito.ai/v1/transcribe',
       headers={'Authorization': 'bearer '+ token},
       data={'config': json.dumps(config)},
-      files={'file': open(audio_path, 'rb')},
-      
+      files={
+        'file': open(audio_path, 'rb')
+      }
   )
   response.raise_for_status()
   response_json = response.json()
@@ -53,4 +54,5 @@ def getScripts(token, audio_path):
       result = resp_json['results']['utterances']
       break
     time.sleep(1)
+  print(result)
   return result
