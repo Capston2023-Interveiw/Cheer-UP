@@ -3,7 +3,6 @@ import styled from "styled-components";
 import Header from "../Components/Header";
 import NextButton from "../Components/Button";
 import axios from "axios";
-import {Link} from "react-router-dom";
 
 const MainWrap = styled.div`
     position: fixed;
@@ -51,35 +50,47 @@ const WrapNextButton = styled.div`
 `;
 
 function Interview() {
-    const [count, setCount] = useState(90);
-  
+    const [count, setCount] = useState(10);
+    const [question, setQuestion] = useState(0);
+    const [num, setNum] = useState(0);
+    const [data, setData] = useState('1분 자기소개 부탁드립니다.');
+
+
+    // const next = () => {
+    //   if(!isNext){
+    //       {question.length > 0 && (
+    //         <div>
+    //           {question.map((item, index) => (
+    //               <div key={index} >
+                      
+    //                   <div>Q{index+1}. {item.content}</div>
+    //               </div>
+    //           ))}
+    //         </div>
+    //       )}
+
+    //   }
+    // }
+
     useEffect(() => {
       const id = setInterval(() => {
         setCount(count => count - 1); 
       }, 1000);
       if(count === 0){
         clearInterval(id);
+        console.log("Hello");
       }
       return () => clearInterval(id);
     }, [count]);
 
-    const [question, setQuestion] = useState([]);
-
-  
-    // useEffect(()=>{
-    //   // 만약 타임 아웃이 발생했을 경우
-    //   if(time.current <= 0){
-    //     //다음 질문으로 넘어가거나 면접 종료
-    //     clearInterval(timerId.current);
-    //   }
-    // },[sec]);
-
+    
     useEffect(() => {
       axios({
       url: "api/v1/interview/question",
       method: "get",
 
     }).then((response) => {
+
       setQuestion(response.data);
 
       console.log(response.data);
@@ -93,23 +104,33 @@ function Interview() {
   });
   },[]);
 
+  const next = () =>{
+    setNum(num => num + 1);
+    setData(question[num+1].content);
+    if(num > 5){
+      <a href="/Wait_Analysis"></a>
+    }
+  }
+
+
     const iframePart = () => {
         return {
             __html: '<iframe src="http://localhost:8888/interview/progress" width="750" height="450px"></iframe>',
         };
     };
-    function QuestionItem({ item }) {
-      return <>{item}</>;
-    }
+    // function QuestionItem({ item }) {
+    //   return <>{item}</>;
+    // }
 
-    const selectedData = question.length > 0 ? question[0].content : null;
+    // const selectedData = question.length > 0 ? question[0].content : null;
 
     return (
         <MainWrap>
             <Header />
             <Wrap>
             <Question>
-            Q1. {selectedData && <QuestionItem item={selectedData} />}
+              Q{num+1}. {data}
+            
                {/* {question !== undefined
                               ? question.map((data, index) => {
                                   return(
@@ -138,7 +159,7 @@ function Interview() {
             
                 </WrapContent>
                 <WrapNextButton>
-                  <Link to="/Wait_Analysis">
+                  
                       <NextButton
                           color={"white"}
                           background={"#0084FE"}
@@ -146,8 +167,8 @@ function Interview() {
                           height="2.5rem"
                           name="NEXT"
                           borderRadius="0.3rem"
+                          onClick={()=>next()}
                       />
-                    </Link> 
                 </WrapNextButton>
             </Wrap>
         </MainWrap>
