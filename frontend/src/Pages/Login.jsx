@@ -8,8 +8,8 @@ import { Link } from 'react-router-dom';
 
 const Form = styled.div`
   position: relative;
-  width:100vw;
-  height:100vh;
+  width:90vw;
+  height:99vh;
 `;
 
 const MainBox = styled.div`
@@ -18,7 +18,7 @@ const MainBox = styled.div`
   min-width: 480px;
   height: 100vh;
   max-height: 900px;
-  min-height: 400px;
+  min-height: 380px;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -31,17 +31,13 @@ const MainBox = styled.div`
 `;
 
 const H1 = styled.h1`
-  position: absolute;
-  top: 20%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   height: 100px;
   font-size: 70px;
   font: bold;
   text-align: center;
   margin: 0 auto;
   margin-bottom: 0px;
-  margin-top: 0px;
+  margin-top: 2vh;
   color: #0084FE;
 `;
 
