@@ -37,7 +37,7 @@ const H1 = styled.h1`
   text-align: center;
   margin: 0 auto;
   margin-bottom: 0px;
-  margin-top: 2vh;
+  margin-top: 10vh;
   color: #0084FE;
 `;
 
