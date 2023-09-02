@@ -15,7 +15,7 @@ const Form = styled.div`
 const MainBox = styled.div`
   width: 65%;
   max-width: 800px;
-  min-width: 680px;
+  min-width: 480px;
   height: 90vh;
   max-height: 900px;
   min-height: 400px;
@@ -83,7 +83,7 @@ const Submit = styled.button`
 
 const Lci = styled.div`
   position: absolute;
-  top: 50%;
+  top: 60%;
   left: 50%;
   transform: translate(-50%, -50%);
   display: flex;
