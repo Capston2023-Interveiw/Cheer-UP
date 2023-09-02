@@ -14,9 +14,11 @@ const Form = styled.div`
 
 const MainBox = styled.div`
   width: 65%;
-  max-width: 1000px;
+  max-width: 800px;
   min-width: 680px;
-  height: 80vh;
+  height: 90vh;
+  max-height: 900px;
+  min-height: 800px;
   position: absolute;
   top: 50%;
   left: 50%;
