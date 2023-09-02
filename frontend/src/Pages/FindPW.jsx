@@ -3,25 +3,29 @@ import styled from 'styled-components';
 
 
 const Lci = styled.div`
+  position: absolute;
+  top: 59%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 20vh;
-  margin-top: 100px;
 `;
 
 const Form = styled.div`
   position: relative;
-  width:100vw;
-  height:100vh;
+  width:90vw;
+  height:99vh;
 `;
 
 const MainBox = styled.div`
   width: 65%;
-  max-width: 1000px;
-  min-width: 680px;
-  height: 80vh;
+  max-width: 800px;
+  min-width: 480px;
+  height: 100vh;
+  max-height: 900px;
+  min-height: 380px;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -34,14 +38,14 @@ const MainBox = styled.div`
 `;
 
 const H1 = styled.h1`
-height: 100px;
-font-size: 70px;
-font: bold;
-text-align: center;
-margin: 0 auto;
-margin-bottom: 0px;
-margin-top: 0px;
-color: #0084FE;
+  height: 100px;
+  font-size: 70px;
+  font: bold;
+  text-align: center;
+  margin: 0 auto;
+  margin-bottom: 0px;
+  margin-top: 12vh;
+  color: #0084FE;
 `;
 
 
@@ -74,7 +78,6 @@ export default function FindPW() {
     return (
       <Form>
         <MainBox>
-          <H1></H1>
           <H1>Cheer Up</H1>
           <Lci>
             <Text placeholder="이메일을 입력해주세요" />
