@@ -18,7 +18,7 @@ const MainBox = styled.div`
   min-width: 680px;
   height: 90vh;
   max-height: 900px;
-  min-height: 800px;
+  min-height: 400px;
   position: absolute;
   top: 50%;
   left: 50%;
