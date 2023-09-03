@@ -28,6 +28,7 @@ function App() {
   return (
     <Router>
       <Routes>
+        {/* ---- 로그인 인증 없이 접근 가능페이지 ---- */}
         {/* ---- 로그인 페이지 ---- */}
         <Route path="/login"  element={<Login/>}/>
         {/* ---- 메인페이지 ---- */}
@@ -40,6 +41,7 @@ function App() {
         <Route path = '/FindPW' element={<FindPW/>} />
 
 
+        {/* ---- 로그인 인증 후 접근 가능페이지 ---- */}
         {/* ---- 메인페이지_로그인 후 ---- */}
         <Route path="/Main_After" element={<PrivateRoute authenticated={access} component={<Main_After/>}/>}/>
         {/* ---- 면접 시작 전페이지---- */}
