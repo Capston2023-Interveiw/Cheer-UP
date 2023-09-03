@@ -6,7 +6,7 @@ import PentagonGraph from '../Components/PentagonGraph';
 import axios from 'axios';
 import Analysis_NavBar1 from '../Components/Analysis_NavBar1';
 import Visualization_Speed from '../Components/Visualization_Speed';
-//import Visualization_Face from '../Components/Visualization_Face';
+import Visualization_Face from '../Components/Visualization_Face';
 import Visualization_Gaze from '../Components/Visualization_Gaze';
 //import Visualization_Interjection from '../Components/Visualization_Interjection';
 import Visualization_Posture from '../Components/Visualization_Posture';
@@ -28,11 +28,12 @@ const  ViewFrame = styled.div`
 
 const ViewFrame2 =styled.div`
     margin-top: 20px;
+    margin-bottom: 20px;
     width: 65%;
     max-width: 1200px;
     min-width: 1130px;
     
-    height: 1400px;
+    height: 1600px;
     border: 1px solid;
     position: relative;
 `;
@@ -81,7 +82,7 @@ const Video_Box  = styled.div`
 const Graph_Box  = styled.div`
     position: absolute;
     border: 1px solid;
-    top: 35%;
+    top: 30%;
     left: 5%;
     width:550px;
     height:300px;
@@ -136,7 +137,7 @@ const P2 =styled.p`
 
 const Face_Box = styled.button`
     position: absolute;
-    top: 40%;
+    top: 32%;
     right: 5%;
     width: 400px;
     height: 250px;
@@ -148,7 +149,7 @@ const Face_Box = styled.button`
 
 const Gaze_Box = styled.button`
     position: absolute;
-    top: 63%;
+    top: 55%;
     right: 5%;
     width: 400px;
     height: 250px;
@@ -160,7 +161,7 @@ const Gaze_Box = styled.button`
 
 const Interjection_Box = styled.button`
     position: absolute;
-    top: 63%;
+    top: 55%;
     left: 5%;
     width: 400px;
     height: 250px;
@@ -172,7 +173,7 @@ const Interjection_Box = styled.button`
 
 const Posture_Box = styled.button`
     position: absolute;
-    top: 86%;
+    top: 78%;
     left: 5%;
     width: 400px;
     height: 250px;
@@ -184,7 +185,7 @@ const Posture_Box = styled.button`
 
 const Speed_Box = styled.button`
     position: absolute;
-    top: 86%;
+    top: 78%;
     right: 5%;
     width: 400px;
     height: 250px;
@@ -200,7 +201,7 @@ export default function Analysis2(){
     const [totalInfo, setTotalInfo] = useState([]);
     const [totalData, setTotalData] = useState(null);
     const [otherData, setOtherData] = useState([]);
-    //const [faceSummary, setFaceSummary] = useState('');
+    const [faceSummary, setFaceSummary] = useState('');
     const [postureSummary, setPostureSummary] = useState('');
     const [gazeSummary, setGazeSummary] = useState('');
     //const [interjectionSummary, setInterjectionSummary] = useState('');
@@ -226,7 +227,7 @@ export default function Analysis2(){
             console.log(gaze_summary);
             console.log(interjection_summary);
             console.log(speed_summary);
-            //setFaceSummary(face_summary);
+            setFaceSummary(face_summary);
             setPostureSummary(posture_summary);
             setGazeSummary(gaze_summary);
             //setInterjectionSummary(interjection_summary);
@@ -281,7 +282,7 @@ export default function Analysis2(){
                     </Video_Box>
                     <Link to = '/Analysis_face'>
                         <Face_Box>
-                            표정
+                            <Visualization_Face inputData={faceSummary}/>
                         </Face_Box>
                     </Link>
                     <Link to = '/Analysis_gaze'>
