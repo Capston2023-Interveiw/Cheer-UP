@@ -16,8 +16,7 @@ import Analysis_gaze from "./Pages/Analysis_gaze";
 import Analysis_interjection from "./Pages/Analysis_interjection";
 import Analysis_posture from "./Pages/Analysis_posture";
 import Analysis_speed from "./Pages/Analysis_speed";
-import MyPage from './Pages/MyPage';
-
+import Test from "./Pages/test";
 
 function App() {
   const access = localStorage.getItem("accessToken");
@@ -26,11 +25,12 @@ function App() {
   return (
     <Router>
       <Routes>
+        <Route path="/"  element={<Test/>}/> 
         {/* ---- 로그인 인증 없이 접근 가능페이지 ---- */}
         {/* ---- 로그인 페이지 ---- */}
         <Route path="/login"  element={<Login/>}/> 
         {/* ---- 메인페이지_로그인 전 ---- */}
-        <Route path = '/' element={<Main_Before/>} />
+        <Route path = '/Main_Before' element={<Main_Before/>} />
         {/* ---- 회원가입 페이지 ---- */}
         <Route path = '/SignUp' element={<SignUp/>} />
         {/* ---- 비밀번호 찾기 페이지 ---- */}
