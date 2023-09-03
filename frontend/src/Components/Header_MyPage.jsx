@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import {HiOutlineUserCircle} from 'react-icons/hi'
-import {MdLogout} from 'react-icons/md'
+import {MdLogout} from 'react-icons/md';
 import {Link} from "react-router-dom";
 
 const HeaderWrapper = styled.div`
@@ -13,6 +12,7 @@ const HeaderWrapper = styled.div`
   border-bottom: solid 1px #828282;
   // position: fixed;
 `;
+
 
 const Title = styled.h1`
   font-style: normal;
@@ -31,13 +31,13 @@ const Nav = styled.ul`
 `;
 
 const NavItem = styled.li`
-  width: 5rem;
+  width: 6rem;
   height: 4rem;
   align-items: center;
   justify-content: center;
   display: flex;
   font-style: normal;
-  font-weight: normal;
+  font-weight: bold;
   font-size: 15pt;
   list-style: none;
   /*&:hover {
@@ -49,16 +49,16 @@ const NavItem = styled.li`
   }*/
 `;
 
-export default function Header() {
+export default function Header_MyPage() {
   return (
     <HeaderWrapper>
-      <Title>Cheer Up</Title>
+        <Link to="/" style={{ textDecoration: "none" }}>
+            <Title>Cheer Up</Title>
+        </Link>
+      
       <Nav>
-        <NavItem>
-          <Link to='/MyPage'>
-            <HiOutlineUserCircle size='35'/>
-          </Link>
-          </NavItem>
+        <NavItem>내 프로필</NavItem>
+        <NavItem>질문 추가</NavItem>
         <NavItem><MdLogout size='30'/></NavItem>
       </Nav>
     </HeaderWrapper>

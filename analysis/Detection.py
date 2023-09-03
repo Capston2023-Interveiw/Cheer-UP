@@ -14,6 +14,12 @@ POSTURE_ANALYSIS_ID=2
 GAZE_ANALYSIS_ID=3
 INTERJECTION_ANALYSIS_ID=4
 SPEED_ANALYSIS_ID=5
+FACE_SUMMARY="부정적인 표정: %d회"
+GAZE_SUMMARY="왼쪽: %d회, 오른쪽: %d회"
+POSTURE_SUMMARY="고개 치우쳐짐: %d회, 어깨 비대칭: %d회"
+SPEED_SUMMARY="%s"
+INTERJECTION_SUMMARY="필요없는 감탄사 %d회 반복"
+
 
 class Detection:
 
@@ -56,6 +62,11 @@ class Detection:
         self.fps = 10
         self.database = DataDao()
         self.video_id = video_id
+        self.face_summary = 0
+        self.gaze_left_summary = 0
+        self.gaze_right_summary = 0
+        self.posture_summary = 0
+        self.head_summary = 0
 
     def update(self, image):
 		# if the background model is None, initialize it
@@ -94,12 +105,13 @@ class Detection:
         if (self.gaze == "left") or (self.gaze == "right"):
             self.gazeCount += 1
             self.gazeColor = (248, 72, 216)
-            if (self.gaze == "left"):
-                reason = "좌측"
-            elif (self.gaze == "right"):
-                reason = "우측"
-
             if self.gazeCount >= 2 * self.fps:
+                if (self.gaze == "left"):
+                    reason = "왼쪽"
+                    self.gaze_left_summary += 1
+                elif (self.gaze == "right"):
+                    reason = "오른쪽"
+                    self.gaze_right_summary += 1
                 self.gazeFeedback.append(self.gaze)
                 timestamp = int(time.time() - self.startTime)
                 self.gazeTimeStamp.append(timestamp)
@@ -117,6 +129,7 @@ class Detection:
             self.headColor = (248, 72, 216)
             reason = "고개 비대칭"
             if self.postureCount >= 2 * self.fps:
+                self.head_summary += 1
                 self.postureFeedback.append(posture[0])
                 timestamp = int(time.time() - self.startTime)
                 self.postureTimeStamp.append(timestamp)
@@ -130,6 +143,7 @@ class Detection:
             self.shoulderCount += 1
             self.shoulderColor = (248, 72, 216)
             if self.shoulderCount >= 2 * self.fps:
+                self.posture_summary += 1
                 self.postureFeedback.append("어깨 기울어짐")
                 timestamp = int(time.time() - self.startTime)
                 self.postureTimeStamp.append(timestamp)
@@ -145,6 +159,7 @@ class Detection:
             self.expressionCount += 1
             self.faceColor = (248, 72, 216)
             if self.expressionCount >= 2 * self.fps:
+                self.face_summary += 1
                 self.expressionFeedback.append(emotion[self.face])
                 timestamp = int(time.time() - self.startTime)
                 self.expressionTimeStamp.append(timestamp)
@@ -161,7 +176,6 @@ class Detection:
         self.fps += 1
         
     def result(self):
-        
         gazeScore = 20
         postureScore = 20
         expressionScore = 20
@@ -193,7 +207,7 @@ class Detection:
         self.speed_score(speedResult)
         self.save_interjection_log(interjectionResult)
         totalScore = gazeScore + expressionScore + postureScore + speedResult['score'] + interjectionResult['score']
-        self.database.insertScore(totalScore, self.video_id, None, 6)
+        self.database.insertScore(totalScore, self.video_id, None, 6, "")
     
     def save_score(self, analysis_id, score):
         if score == 20:
@@ -204,13 +218,29 @@ class Detection:
             feedback_id = 4 * (analysis_id - 1) + 3
         else:
             feedback_id = 4 * (analysis_id - 1) + 4
+        summary = self.getSummary(analysis_id, score)
+        self.database.insertScore(score, self.video_id, feedback_id, analysis_id, summary)
+
+    def getSummary(self, analysis_id, score):
+        if analysis_id==FACE_ANALYSIS_ID:
+            return f"부정적인 표정: {self.face_summary}회"
+        elif analysis_id==POSTURE_ANALYSIS_ID:
+            return f"고개 치우쳐짐: {self.head_summary}회, 어깨 비대칭: {self.posture_summary}회"
+        elif analysis_id==GAZE_ANALYSIS_ID:
+            return f"왼쪽: {self.gaze_left_summary}회, 오른쪽: {self.gaze_right_summary}회"
+        else:
+            return f"필요없는 감탄사 {20-score}회 반복"
         
-        self.database.insertScore(score, self.video_id, feedback_id, analysis_id)
     
     def save_interjection_log(self, contents):
         self.save_score(contents['analysis_id'], contents['score'])
-        for log in contents['feedback']:
-            self.database.insertLog(log, None, INTERJECTION_ANALYSIS_ID, self.video_id)
+        time = ""
+        for i in range(len(contents['feedback'])):
+            log = contents['feedback'][i]
+            if (contents['time_stamp'] != None and contents['time_stamp'][i] != None):
+                time = contents['time_stamp'][i]
+            self.database.insertLog(log, time, GAZE_ANALYSIS_ID, self.video_id)
+
 
     def timestamp_form(self, time):
             second = time
@@ -221,4 +251,5 @@ class Detection:
             return f"{minute}:{second}"
     
     def speed_score(self, speedResult):
-        self.database.insertScore(speedResult['score'], self.video_id, speedResult['feedback'], speedResult['field'])
+        summary = SPEED_SUMMARY % speedResult['summary']
+        self.database.insertScore(speedResult['score'], self.video_id, speedResult['feedback'], speedResult['field'], summary)

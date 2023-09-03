@@ -19,8 +19,6 @@ import Analysis_posture from "./Pages/Analysis_posture";
 import Analysis_speed from "./Pages/Analysis_speed";
 
 
-
-
 function App() {
   const access = localStorage.getItem("accessToken");
 
@@ -58,7 +56,8 @@ function App() {
         <Route path="/Analysis_interjection" element={<PrivateRoute authenticated={access} component={<Analysis_interjection/>}/>}/>
         <Route path="/Analysis_posture" element={<PrivateRoute authenticated={access} component={<Analysis_posture/>}/>}/>
         <Route path="/Analysis_speed" element={<PrivateRoute authenticated={access} component={<Analysis_speed/>}/>}/>
-
+        {/* ---- 마이 페이지---- */}
+                    
 
 
 

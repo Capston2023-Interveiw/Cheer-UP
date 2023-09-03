@@ -18,6 +18,8 @@ public class Score {
     private Long id;
     private Integer score;
 
+    private String summary;
+
     @ManyToOne
     private Video video;
 
@@ -29,9 +31,10 @@ public class Score {
     private Analysis analysis;
 
 
-    public Score(Long id, Integer score, Video video, Feedback feedback, Analysis analysis) {
+    public Score(Long id, Integer score, String summary, Video video, Feedback feedback, Analysis analysis) {
         this.id = id;
         this.score = score;
+        this.summary = summary;
         this.feedback = feedback;
         this.video = video;
         this.analysis = analysis;
