@@ -156,7 +156,8 @@ export default function Analysis2(){
             const data = response.data;
             const total = data.find(item => item.analysis_type === 'total');
             const others = data.filter(item => item.analysis_type !== 'total');
-            setTotalData(total);
+            setTotalData(total.score);
+            console.log(total);
             setOtherData(others);
         })
         .catch(error => {
@@ -171,7 +172,6 @@ export default function Analysis2(){
         interjection: '추임새',
         speed: '말속도'
     };
-    const value = 60;
 
     return(
         <Form>
@@ -182,15 +182,19 @@ export default function Analysis2(){
                     <Username>OOO님의 면접 분석 결과</Username>
                     <Profile>프로필 사진</Profile>
                     <Scoregraph>
-                        <CircularProgressbarWithChildren value={value}>
+                            <CircularProgressbarWithChildren value={totalData}>
                             <div style={{ fontSize: 30, marginTop: 20 }}>
-                                <strong>{value}</strong> 점
+                                <strong>{totalData}</strong> 점
                             </div>
                             <div style={{ fontSize: 20}}>
                                 <p>총 점</p>
                             </div>
                             
-                        </CircularProgressbarWithChildren>;
+                        </CircularProgressbarWithChildren>
+                        
+                  
+                        
+
                     </Scoregraph>
                     <Graph_Box>
                         <Graph>
