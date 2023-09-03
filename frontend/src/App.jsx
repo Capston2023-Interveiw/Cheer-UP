@@ -1,7 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route} from'react-router-dom';
 import PrivateRoute from './Components/PrivateRoute';
-import Welcome from './Pages/Welcome';
 import Interview_start from './Pages/Interview_start';
 import Interview from './Pages/Interview';
 import Login from "./Pages/Login";
@@ -28,11 +27,9 @@ function App() {
       <Routes>
         {/* ---- 로그인 인증 없이 접근 가능페이지 ---- */}
         {/* ---- 로그인 페이지 ---- */}
-        <Route path="/login"  element={<Login/>}/>
-        {/* ---- 메인페이지 ---- */}
-        <Route path='/' element={<Welcome />} /> 
+        <Route path="/login"  element={<Login/>}/> 
         {/* ---- 메인페이지_로그인 전 ---- */}
-        <Route path = '/Main_Before' element={<Main_Before/>} />
+        <Route path = '/' element={<Main_Before/>} />
         {/* ---- 회원가입 페이지 ---- */}
         <Route path = '/SignUp' element={<SignUp/>} />
         {/* ---- 비밀번호 찾기 페이지 ---- */}

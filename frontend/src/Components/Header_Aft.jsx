@@ -67,7 +67,7 @@ export default function Header_Aft() {
                 <HiOutlineUserCircle size='35'/>
             </NavItem>
         </Link>
-        <Link to ='/Main_Before'>
+        <Link to ='/'>
             <NavItem onClick={logout}>
                 <MdLogout size='30'/>
             </NavItem>
