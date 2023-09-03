@@ -114,7 +114,7 @@ export default function Main_Before() {
                         <Cm>
                             면접 태도를 분석하고 교정해주는 서비스입니다.
                         </Cm>
-                        <Link to ='/Main_After'>
+                        <Link to ='/Login'>
                             <Buttonmi >면접시작</Buttonmi>
                         </Link>
                     </LeftBox>

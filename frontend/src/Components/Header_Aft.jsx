@@ -53,6 +53,11 @@ const NavItem = styled.button`
 `;
 
 export default function Header_Aft() {
+
+  const logout = () => {
+  localStorage.clear('accessToken');
+  }
+
   return (
     <HeaderWrapper>
       <Title>Cheer Up</Title>
@@ -62,8 +67,8 @@ export default function Header_Aft() {
                 <HiOutlineUserCircle size='35'/>
             </NavItem>
         </Link>
-        <Link to ='/'>
-            <NavItem>
+        <Link to ='/Main_Before'>
+            <NavItem onClick={logout}>
                 <MdLogout size='30'/>
             </NavItem>
         </Link>

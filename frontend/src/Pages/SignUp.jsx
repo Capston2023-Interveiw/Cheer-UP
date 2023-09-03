@@ -6,15 +6,17 @@ import {AiFillCaretDown} from 'react-icons/ai';
 
 const Form = styled.div`
   position: relative;
-  width:100vw;
-  height:100vh;
+  width:90vw;
+  height:99vh;
 `;
 
 const MainBox = styled.div`
   width: 65%;
-  max-width: 1000px;
-  min-width: 680px;
-  height: 80vh;
+  max-width: 800px;
+  min-width: 480px;
+  height: 100vh;
+  max-height: 900px;
+  min-height: 380px;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -27,21 +29,27 @@ const MainBox = styled.div`
 `;
 
 const H1 = styled.h1`
-height: 100px;
-font-size: 70px;
-font: bold;
-text-align: center;
-margin: 0 auto;
-margin-bottom: 70px;
-margin-top: 100px;
-color: #0084FE;
+
+  height: 100px;
+  font-size: 70px;
+  font: bold;
+  text-align: center;
+  margin: 0 auto;
+  margin-bottom: 0px;
+  margin-top: 4vh;
+  color: #0084FE;
 `;
 
 const Sci = styled.div`
+  position: absolute;
+  top: 59%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  
 `;
 
 const Sci_2 = styled.div`
@@ -57,7 +65,7 @@ const Text = styled.input`
   width: 400px;
   height: 30px;
   padding: 10px;
-  margin-bottom: 30px;
+  margin-bottom: 2vh;
   border: 1px solid #ccc;
   border-radius: 15px;
   font-size: 17px;
@@ -68,7 +76,7 @@ const Text_age = styled.input`
   width: 300px;
   height: 30px;
   padding: 10px;
-  margin-bottom: 30px;
+  margin-bottom: 2vh;
   border: 1px solid #ccc;
   border-radius: 15px;
   font-size: 17px;
@@ -79,7 +87,7 @@ const Password = styled.input`
   width: 400px;
   height: 30px;
   padding: 10px;
-  margin-bottom: 30px;
+  margin-bottom: 2vh;
   border: 1px solid #ccc;
   border-radius: 15px;
   font-size: 17px;
@@ -89,7 +97,7 @@ const Buttonmi = styled.button `
 
   width: 250px;
   padding: 15px;
-  margin-top: 40px;
+  margin-top: 1vh;
   background-color: #0084FE;
   color: #fff;
   border: 1px solid #ccc;
