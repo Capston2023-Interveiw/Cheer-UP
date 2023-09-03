@@ -64,9 +64,7 @@ def end():
     global isStream
     global camera
     isStream = False
-    print(camera)
     camera.started = False
-    print(camera)
     camera.detection.result()
     
     combineVideo(fname)
