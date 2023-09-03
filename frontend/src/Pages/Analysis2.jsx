@@ -1,4 +1,5 @@
 import React,{useState, useEffect} from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import Header_Aft from '../Components/Header_Aft';
 import PentagonGraph from '../Components/PentagonGraph';
@@ -6,7 +7,7 @@ import axios from 'axios';
 import Analysis_NavBar1 from '../Components/Analysis_NavBar1';
 import Visualization_Speed from '../Components/Visualization_Speed';
 //import Visualization_Face from '../Components/Visualization_Face';
-//import Visualization_Gaze from '../Components/Visualization_Gaze';
+import Visualization_Gaze from '../Components/Visualization_Gaze';
 //import Visualization_Interjection from '../Components/Visualization_Interjection';
 import Visualization_Posture from '../Components/Visualization_Posture';
 
@@ -201,7 +202,7 @@ export default function Analysis2(){
     const [otherData, setOtherData] = useState([]);
     //const [faceSummary, setFaceSummary] = useState('');
     const [postureSummary, setPostureSummary] = useState('');
-    //const [gazeSummary, setGazeSummary] = useState('');
+    const [gazeSummary, setGazeSummary] = useState('');
     //const [interjectionSummary, setInterjectionSummary] = useState('');
     const [speedSummary, setSpeedSummary] = useState('');
 
@@ -227,7 +228,7 @@ export default function Analysis2(){
             console.log(speed_summary);
             //setFaceSummary(face_summary);
             setPostureSummary(posture_summary);
-            //setGazeSummary(gaze_summary);
+            setGazeSummary(gaze_summary);
             //setInterjectionSummary(interjection_summary);
             setSpeedSummary(speed_summary);
 
@@ -278,21 +279,32 @@ export default function Analysis2(){
                     <Video_Box>
                         <video height="350px" width="500px" src={totalInfo.url} controls/>
                     </Video_Box>
-                    <Face_Box>
-                        표정
-                    </Face_Box>
-                    <Gaze_Box>
-                        시선
-                    </Gaze_Box>
-                    <Interjection_Box>
-                        워드 클라우드
-                    </Interjection_Box>
-                    <Posture_Box>
-                        <Visualization_Posture inputData={postureSummary}/>
-                    </Posture_Box>
-                    <Speed_Box>
-                        <Visualization_Speed inputData={speedSummary}/>
-                    </Speed_Box>
+                    <Link to = '/Analysis_face'>
+                        <Face_Box>
+                            표정
+                        </Face_Box>
+                    </Link>
+                    <Link to = '/Analysis_gaze'>
+                        <Gaze_Box>
+                            <Visualization_Gaze inputData={gazeSummary}/>
+                        </Gaze_Box>
+                    </Link>
+                    <Link to = '/Analysis_interjection'>
+                        <Interjection_Box>
+                            워드 클라우드
+                        </Interjection_Box>
+                    </Link>
+                    <Link to = '/Analysis_posture'>
+                        <Posture_Box>
+                            <Visualization_Posture inputData={postureSummary}/>
+                        </Posture_Box>
+                    </Link>
+                    <Link to = '/Analysis_speed'>
+                        <Speed_Box>
+                            <Visualization_Speed inputData={speedSummary}/>
+                        </Speed_Box>
+                    </Link>
+
                     
                 </ViewFrame2>
             </ViewFrame>
