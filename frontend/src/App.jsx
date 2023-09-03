@@ -16,6 +16,7 @@ import Analysis_gaze from "./Pages/Analysis_gaze";
 import Analysis_interjection from "./Pages/Analysis_interjection";
 import Analysis_posture from "./Pages/Analysis_posture";
 import Analysis_speed from "./Pages/Analysis_speed";
+import MyPage from './Pages/MyPage';
 
 
 function App() {
