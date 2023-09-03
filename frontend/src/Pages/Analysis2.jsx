@@ -183,7 +183,7 @@ export default function Analysis2(){
                     <Profile>프로필 사진</Profile>
                     <Scoregraph>
                             <CircularProgressbarWithChildren value={totalData}>
-                            <div style={{ fontSize: 30, marginTop: 20 }}>
+                            <div style={{ fontSize: 30, marginTop: 40 }}>
                                 <strong>{totalData}</strong> 점
                             </div>
                             <div style={{ fontSize: 20}}>
