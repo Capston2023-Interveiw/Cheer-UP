@@ -29,7 +29,7 @@ const ViewFrame2 =styled.div`
     margin-top: 20px;
     width: 65%;
     max-width: 1200px;
-    min-width: 1150px;
+    min-width: 1130px;
     
     height: 1400px;
     border: 1px solid;

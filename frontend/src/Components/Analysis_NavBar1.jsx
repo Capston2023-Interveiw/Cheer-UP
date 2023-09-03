@@ -6,8 +6,6 @@ const NavBar1 =styled.div`
 
     width: 100%;
     height: 50px;
-    max-width: 1200px;
-    min-width: 1150px;
     //border: 1px solid;
     background-color: ${(props)=> props.backgroundColor};
     position: relative;
