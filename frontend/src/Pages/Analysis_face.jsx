@@ -14,6 +14,7 @@ const Form = styled.div`
     background-color: #FFFF;
     box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
 `;
+
 const  ViewFrame = styled.div`
     display: flex;
     flex-direction: column;
@@ -23,8 +24,9 @@ const  ViewFrame = styled.div`
 
 const ViewFrame2 =styled.div`
     margin-top: 20px;
-    width: 1200px;
-    height: 100vh;
+    margin-bottom: 20px;
+    width: 1000px;
+    height: 800px;
     border: 1px solid;
     position: relative;
 `;
