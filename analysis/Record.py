@@ -8,7 +8,7 @@ class Record:
     def __init__(self, audiofile='./model/language/record.wav'):
         self.thread = None
         self.audio = pyaudio.PyAudio()
-        self.bRecord = True
+        self.bRecord = False
         self.audiofile = audiofile
         self.chunk = 1024
         self.format = pyaudio.paInt16
@@ -16,6 +16,16 @@ class Record:
         self.rate = 16000
         self.wavstream = None
         self.wavfile = None
+
+    def startRecording(self):
+        self.run()
+
+    def stopRecording(self):
+        self.bRecord = False
+        self.thread.join()
+        self.stopWavstream()
+        self.saveWavfile()
+        time.sleep(1)
 
     def run(self):
         self.wavstream = self.audio.open(format=self.format,
@@ -41,14 +51,6 @@ class Record:
             if self.bRecord:
                 self.wavfile.writeframes(self.wavstream.read(self.chunk))
 
-    def stopRecording(self):
-        self.bRecord = False
-        time.sleep(1)
-        self.stopWavstream()
-        self.saveWavfile()
-        self.thread.join()
-
-    
     def stopWavstream(self):
         self.wavstream.stop_stream()
         self.wavstream.close()

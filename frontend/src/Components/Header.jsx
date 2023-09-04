@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import {HiOutlineUserCircle} from 'react-icons/hi'
 import {MdLogout} from 'react-icons/md'
+import {Link} from "react-router-dom";
 
 const HeaderWrapper = styled.div`
   height: 3.5rem;
@@ -53,7 +54,11 @@ export default function Header() {
     <HeaderWrapper>
       <Title>Cheer Up</Title>
       <Nav>
-        <NavItem><HiOutlineUserCircle size='35'/></NavItem>
+        <NavItem>
+          <Link to='/MyPage'>
+            <HiOutlineUserCircle size='35'/>
+          </Link>
+          </NavItem>
         <NavItem><MdLogout size='30'/></NavItem>
       </Nav>
     </HeaderWrapper>

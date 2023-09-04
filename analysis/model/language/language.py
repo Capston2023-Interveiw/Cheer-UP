@@ -8,7 +8,6 @@ from model.language.sttAPI import getScripts, getSttToken
 class SttService:
 
   def __init__(self, audio_path):
-    
     self.token = getSttToken()
     self.audio_path = audio_path
     self.scripts = ""
@@ -46,25 +45,25 @@ class SttService:
           count = content
           break
     count = 0
-
+    print(count)
     content = {
       "analysis_id": 4,
       "score": self.interjectionScore(interjections),
       "feedback": interjections,
       "time_stamp": timestamp
     }
-    print(content)
     return content
 
   def getSpeedResult(self):
     time = get_duration(self.audio_path)
     length = scripts_length(self.scripts)
-    speed, score = speaking_speed(time, length)
+    speed, score, summary = speaking_speed(time, length)
     content = {
       "field": 5,
       "score": score,
       "feedback": speed,
-      "time_stamp": []
+      "time_stamp": [],
+      "summary": summary
     }
     self.isEnd = True
     return content
