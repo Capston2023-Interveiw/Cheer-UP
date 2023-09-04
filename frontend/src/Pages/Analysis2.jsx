@@ -5,7 +5,8 @@ import Header_Aft from '../Components/Header_Aft';
 import PentagonGraph from '../Components/PentagonGraph';
 import axios from 'axios';
 import Analysis_NavBar1 from '../Components/Analysis_NavBar1';
-
+import { CircularProgressbarWithChildren } from 'react-circular-progressbar';
+import 'react-circular-progressbar/dist/styles.css';
 
 const Form = styled.div`
     width: 100%;
@@ -53,14 +54,14 @@ const Profile  =styled.div`
 `;
 
 const Scoregraph = styled.div`
-    position: absolute;
-    top: 10%;
-    left: 28%;
-    width: 250px;
-    height: 250px;
-    border: 1px solid;
-    border-radius: 20px;
-    background-color:#FFFF;
+position: absolute;
+top: 10%;
+left: 28%;
+width: 150px;
+height: 150px;
+border: 1px solid;
+border-radius: 20px;
+background-color: #ffff;
 `;
 
 const Video_Box  = styled.div`
@@ -204,7 +205,8 @@ export default function Analysis2(){
 
             const total = data.find(item => item.analysis_type === 'total');
             const others = data.filter(item => item.analysis_type !== 'total');
-            setTotalData(total);
+            setTotalData(total.score);
+            console.log(total);
             setOtherData(others);
         })
         .catch(error => {
@@ -228,7 +230,17 @@ export default function Analysis2(){
                     <Analysis_NavBar1/>
                     <Username>OOO님의 면접 분석 결과</Username>
                     <Profile>프로필 사진</Profile>
-                    <Scoregraph>총점 그래프</Scoregraph>
+                    <Scoregraph>
+                        <CircularProgressbarWithChildren value={totalData}>
+                            <div style={{ fontSize: 30, marginTop: 40 }}>
+                                <strong>{totalData}</strong> 점
+                            </div>
+                            <div style={{ fontSize: 20}}>
+                                <p>총 점</p>
+                            </div>
+                            
+                        </CircularProgressbarWithChildren>
+                    </Scoregraph>
                     <Graph_Box>
                         <Graph>
                             {totalData && <PentagonGraph data={otherData} />}
