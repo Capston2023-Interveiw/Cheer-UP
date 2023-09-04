@@ -21,6 +21,7 @@ class SttService:
     for content in self.result:
       self.scripts += (content['msg'] + " ")
     self.scripts = self.scripts.replace('.', ' ')
+    return self.scripts
 
   def interjectionScore(self, interjections):
     score = 20

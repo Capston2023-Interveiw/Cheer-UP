@@ -1,4 +1,4 @@
-INSERT INTO member (account_id, age, email, gender, password, role, username) VALUES ('cheer', 20, 'cheer@a.com', 1, '{bcrypt}$2a$10$JIAjjZly9rUGvjnVItpU4uFneOLFgHH/mRyxnr93KVQC2CoaKFopa', 'ROLE_USER', 'cheer');
+INSERT INTO member (account_id, email, gender, password, role, username) VALUES ('cheer', 'cheer@a.com', 1, '{bcrypt}$2a$10$JIAjjZly9rUGvjnVItpU4uFneOLFgHH/mRyxnr93KVQC2CoaKFopa', 'ROLE_USER', 'cheer');
 
 INSERT INTO question (content, created_at, status, member_id) VALUES ('1분 자기소개 부탁드립니다.', '2023-01-04', '1', '1');
 INSERT INTO question (content, created_at, status, member_id) VALUES ('가장 학점이 높은 과목과 낮은 과목에 대해서 말해보세요.', '2023-01-04', '1', '1');

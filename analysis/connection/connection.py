@@ -25,3 +25,10 @@ def putVideoToS3(fname, uploadFile, user):
     s3r.Bucket(os.environ.get('AWS_S3_BUCKET_NAME')).put_object(Key=key, Body=uploadFile.read(), ContentType='video/mp4')
     imageKey = key
     return imageKey
+
+def putImageToS3(fname, uploadFile, user): 
+    key = f"{user}/video/{fname}"
+    s3r = s3_connection()
+    s3r.Bucket(os.environ.get('AWS_S3_BUCKET_NAME')).put_object(Key=key, Body=uploadFile.read(), ContentType='image/png')
+    imageKey = key
+    return imageKey
