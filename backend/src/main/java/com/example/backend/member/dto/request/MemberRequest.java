@@ -22,5 +22,5 @@ public class MemberRequest {
     @Email(message = "이메일 형식에 맞지 않습니다.")
     private String email;
     private int gender;
-    private int age;
+    private int birthDate;
 }
