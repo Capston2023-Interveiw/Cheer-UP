@@ -5,6 +5,9 @@ import Header_Aft from '../Components/Header_Aft';
 import PentagonGraph from '../Components/PentagonGraph';
 import axios from 'axios';
 import Analysis_NavBar1 from '../Components/Analysis_NavBar1';
+import { CircularProgressbarWithChildren } from 'react-circular-progressbar';
+import 'react-circular-progressbar/dist/styles.css';
+import Img from '../image/Profile.svg';
 
 
 const Form = styled.div`
@@ -26,14 +29,14 @@ const ViewFrame2 =styled.div`
     margin-top: 20px;
     margin-bottom: 20px;
     width: 1000px;
-    height: 1600px;
+    height: 1070px;
     border: 1px solid;
     position: relative;
 `;
 
 const Username = styled.div`
     position: absolute;
-    top: 6%;
+    top: 8%;
     left: 3%;
     width:300px;
     height:20px;
@@ -42,30 +45,34 @@ const Username = styled.div`
     font-size:22px;
 `;
 
-const Profile  =styled.div`
+const Profile  =styled.img`
     border: 1px solid;
     border-radius: 20px;
+    background-image: url({${(props) => props.src}});
+    background-repeat: no-repeat;
+    background-position: top center;
+    background-size: cover;
+    background-attachment: fixed;
+    background-attachment: fixed;
     position: absolute;
-    top: 10%;
+    top: 13%;
     left: 5%;
     width:200px;
-    height:250px;
+    height:230px;
 `;
 
 const Scoregraph = styled.div`
     position: absolute;
-    top: 10%;
-    left: 28%;
-    width: 250px;
-    height: 250px;
-    border: 1px solid;
-    border-radius: 20px;
-    background-color:#FFFF;
+    top: 16%;
+    left: 31%;
+    width: 150px;
+    height: 150px;
+    background-color: #ffff;
 `;
 
 const Video_Box  = styled.div`
     position: absolute;
-    top: 7%;
+    top: 10%;
     right: 5%;
     width: 428px;
     height: 300px;
@@ -75,10 +82,10 @@ const Video_Box  = styled.div`
 const Graph_Box  = styled.div`
     position: absolute;
     border: 1px solid;
-    top: 30%;
+    top: 46%;
     left: 5%;
-    width:550px;
-    height:300px;
+    width:460px;
+    height:250px;
     border-radius: 20px;
 `;
 
@@ -86,23 +93,24 @@ const Graph =styled.div`
     position: absolute;
     top: 0%;
     left: 0%;
-    width: 300px; 
-    height: 300px;
+    width: 250px; 
+    height: 250px;
+    //border: 1px solid;
 `;
 const Score_Box = styled.div`
     position: absolute;
     top: 0%;
     right: 0%;
-    width:250px;
-    height:300px;
+    width:210px;
+    height:250px;
     //border: 1px solid;
 `;
 
 const Score = styled.div`
-    width:180px;
+    width:150px;
     height:40px;
     position: relative;
-    margin-top: 17px;   
+    margin-top: 10px;   
     margin-left:35px;
     text-align: center;
     //border: 1px solid;
@@ -115,7 +123,7 @@ const P1 =styled.p`
     text-align:left;
     font-style: blod;
     font-weight: bolder;
-    font-size: 22px;
+    font-size: 20px;
 `;
 
 const P2 =styled.p`
@@ -125,34 +133,113 @@ const P2 =styled.p`
     text-align:right;
     font-style: blod;
     font-weight: bolder;
-    font-size: 22px;
+    font-size: 20px;
+`;
+const P3 = styled.p`
+    margin-left:20px;
+    min-width: 67px;
+    text-align:left;
+    font-style: blod;
+    font-weight: bolder;
+    font-size: 20px;
 `;
 
-const Summary_Box = styled.button`
+
+const Interjection_Box = styled.div`
     position: absolute;
-    top: 55%;
+    top: 46%;
+    right: 9%;
+    width: 300px;
+    height: 300px;
+    border: 1px solid;
+    border-radius: 20px;
+    background-color:#FFFF;
+`;
+
+const Summary_Box = styled.div`
+    position: absolute;
+    top: 75%;
     left: 5%;
-    width: 400px;
+    width: 410px;
     height: 250px;
     border: 1px solid;
     border-radius: 20px;
     background-color:#FFFF;
-    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 `;
 
-
-
-const Interjection_Box = styled.button`
-    position: absolute;
-    top: 32%;
-    right: 5%;
-    width: 400px;
-    height: 250px;
-    border: 1px solid;
-    border-radius: 20px;
+const FaceSummary = styled.button`
+    display: flex;
+    align-items: center;
+    width: 410px;
+    height: 45px;
     background-color:#FFFF;
+    border: 0px solid;
+    border-radius: 20px;
     cursor: pointer;
+    padding: 0px;
+    margin: 0px;
 `;
+
+const PostureSummary = styled.button`
+    display: flex;
+    align-items: center;
+    width: 410px;
+    height: 45px;
+    background-color:#FFFF;
+    border: 0px solid;
+    border-radius: 20px;
+    cursor: pointer;
+    padding: 0px;
+    margin: 0px;
+    
+`;
+
+const GazeSummary = styled.button`
+    display: flex;
+    align-items: center;
+    width: 410px;
+    height: 45px;
+    background-color:#FFFF;
+    border: 0px solid;
+    border-radius: 20px;
+    cursor: pointer;
+    padding: 0px;
+    margin: 0px;
+`;
+
+const InterjectionSummary = styled.button`
+    display: flex;
+    align-items: center;
+    width: 410px;
+    height: 45px;
+    background-color:#FFFF;
+    border: 0px solid;
+    border-radius: 20px;
+    cursor: pointer;
+    padding: 0px;
+    margin: 0px;
+`;
+
+const SpeedSummary = styled.button`
+    display: flex;
+    align-items: center;
+    width: 410px;
+    height: 45px;
+    background-color:#FFFF;
+    border: 0px solid;
+    border-radius: 20px;
+    cursor: pointer;
+    padding: 0px;
+    margin: 0px;
+`;
+
+
+
+
 
 
 
@@ -183,11 +270,6 @@ export default function Analysis2(){
             const gaze_summary =data[2].summary;
             const interjection_summary =data[3].summary;
             const speed_summary =data[4].summary;
-            console.log(face_summary);
-            console.log(posture_summary);
-            console.log(gaze_summary);
-            console.log(interjection_summary);
-            console.log(speed_summary);
 
 
             setFaceSummary(face_summary);
@@ -196,15 +278,12 @@ export default function Analysis2(){
             setInterjectionSummary(interjection_summary);
             setSpeedSummary(speed_summary);
 
-            console.log(faceSummary);
-            console.log(postureSummary);
-            console.log(gazeSummary);
-            console.log(interjectionSummary);
-            console.log(speedSummary);
+
 
             const total = data.find(item => item.analysis_type === 'total');
             const others = data.filter(item => item.analysis_type !== 'total');
-            setTotalData(total);
+            setTotalData(total.score);
+    
             setOtherData(others);
         })
         .catch(error => {
@@ -227,8 +306,18 @@ export default function Analysis2(){
                 <ViewFrame2>
                     <Analysis_NavBar1/>
                     <Username>OOO님의 면접 분석 결과</Username>
-                    <Profile>프로필 사진</Profile>
-                    <Scoregraph>총점 그래프</Scoregraph>
+                    <Profile src = {Img}/>
+                    <Scoregraph>
+                        <CircularProgressbarWithChildren value={totalData}>
+                            <div style={{ fontSize: 30, marginTop: 40 }}>
+                                <strong>{totalData}</strong> 점
+                            </div>
+                            <div style={{ fontSize: 20}}>
+                                <p> /100점</p>
+                            </div>
+                            
+                        </CircularProgressbarWithChildren>
+                    </Scoregraph>
                     <Graph_Box>
                         <Graph>
                             {totalData && <PentagonGraph data={otherData} />}
@@ -249,22 +338,31 @@ export default function Analysis2(){
                     <Video_Box>
                         <video height="300px" width="428px" src={totalInfo.url} controls/>
                     </Video_Box>
-
                     <Summary_Box>
-                        <Link to = '/Analysis_face'>
-         
+                        <Link to = '/Analysis_face' style={{ textDecoration: "none" }}>
+                            <FaceSummary>
+                                <P3>표정:</P3><P3>{faceSummary}</P3>
+                            </FaceSummary>
                         </Link>
-                        <Link to = '/Analysis_gaze'>
-
+                        <Link to = '/Analysis_posture' style={{ textDecoration: "none" }}>
+                            <PostureSummary>
+                                <P3>자세:</P3><P3>{postureSummary}</P3>
+                            </PostureSummary>
                         </Link>
-                        <Link to = '/Analysis_posture'>
-
+                        <Link to = '/Analysis_gaze' style={{ textDecoration: "none" }}>
+                            <GazeSummary>
+                                <P3>시선:</P3><P3>{gazeSummary}</P3>
+                            </GazeSummary>
                         </Link>
-                        <Link to = '/Analysis_speed'>
-
+                        <Link to = '/Analysis_interjection' style={{ textDecoration: "none" }}>
+                            <InterjectionSummary>
+                                <P3>추임새:</P3><P3>{interjectionSummary}</P3>
+                            </InterjectionSummary>
                         </Link>
-                        <Link to = '/Analysis_interjection'>
-
+                        <Link to = '/Analysis_speed' style={{ textDecoration: "none" }}>
+                            <SpeedSummary>
+                                <P3>말속도:</P3><P3>{speedSummary}</P3>
+                            </SpeedSummary>
                         </Link>
                     </Summary_Box>
 

@@ -5,7 +5,9 @@ import Analysis_NavBar1 from '../Components/Analysis_NavBar1';
 import Analysis_NavBar2 from '../Components/Analysis_NavBar2';
 import axios from 'axios';
 import {FaRegLightbulb} from 'react-icons/fa';
-
+import { CircularProgressbarWithChildren } from 'react-circular-progressbar';
+import 'react-circular-progressbar/dist/styles.css';
+import { Link } from 'react-router-dom';
 
 const Form = styled.div`
     width: 100%;
@@ -14,6 +16,7 @@ const Form = styled.div`
     background-color: #FFFF;
     box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
 `;
+
 const  ViewFrame = styled.div`
     display: flex;
     flex-direction: column;
@@ -23,8 +26,9 @@ const  ViewFrame = styled.div`
 
 const ViewFrame2 =styled.div`
     margin-top: 20px;
-    width: 1200px;
-    height: 100vh;
+    margin-bottom: 20px;
+    width: 1000px;
+    height: 800px;
     border: 1px solid;
     position: relative;
 `;
@@ -32,28 +36,29 @@ const ViewFrame2 =styled.div`
 
 const Video = styled.div`
     position: absolute;
-    top: 15%;
+    top: 22%;
     left: 5%;
 `;
 
 const Scoregraph = styled.div`
     position: absolute;
-    top: 15%;
-    left: 65%;
-    width: 250px;
-    height: 250px;
-    border: 1px solid;
+    top: 22%;
+    left: 68%;
+    width: 150px;
+    height: 150px;
+    //border: 1px solid;
     border-radius: 20px;
     background-color:#FFFF;
 `;
 
 const Timestamp = styled.div`
     overflow-y: scroll;
-    width: 400px;
+    width: 300px;
     height: 150px;
     position: absolute;
-    top: 40%;
+    top: 46%;
     left: 60%;
+    //border: 1px solid;
 `;
 
 const Feedback = styled.div`
@@ -62,7 +67,7 @@ const Feedback = styled.div`
     border: 1px solid;
     border-radius: 20px;
     position: absolute;
-    top: 55%;
+    top: 70%;
     right: 5%; 
 `;
 
@@ -95,16 +100,6 @@ const TimestampButton = styled.button`
     color: blue;
 `;
 
-const Facegraph = styled.div`
-    position: absolute;
-    top: 50%;
-    left: 8%;
-    width: 400px;
-    height: 220px;
-    border: 1px solid;
-    border-radius: 20px;
-`;
-
 const MypageBtn = styled.button`
   width: 230px;
   height: 41px;
@@ -117,7 +112,7 @@ const MypageBtn = styled.button`
   cursor: pointer;
   font: bold;
   position: absolute;
-  top: 80%;
+  top: 92%;
   right: 5%;
 
 `;
@@ -126,6 +121,7 @@ export default function Analysis_face(){
 
     const [faceInfo, setfaceInfo] = useState([]);
     const [timestamp, setTimestamp] = useState([]);
+    const [score, setScore] = useState(null);
     const videoRef = useRef(null);
 
     //const num = props.video_num;
@@ -151,7 +147,7 @@ export default function Analysis_face(){
 
       }).then((response) => {
         setfaceInfo(response.data);
-  
+        setScore(response.data.score);
         console.log(response.data);
 
       }).catch(function (error) {//실패 시 catch 실행
@@ -175,7 +171,17 @@ export default function Analysis_face(){
                     <Video>
                         <video ref={videoRef} height="350px" width="500px" src={faceInfo.url} controls/>
                     </Video>
-                    <Scoregraph>표정 점수 그래프</Scoregraph>
+                    <Scoregraph>                        
+                        <CircularProgressbarWithChildren value={score*5}>
+                            <div style={{ fontSize: 30, marginTop: 40 }}>
+                                <strong>{score}</strong> 점
+                            </div>
+                            <div style={{ fontSize: 20}}>
+                                <p> /20점</p>
+                            </div>
+                            
+                        </CircularProgressbarWithChildren>
+                    </Scoregraph>
                     <Timestamp>
                         <DummyTable>
                             <ul>
@@ -201,8 +207,9 @@ export default function Analysis_face(){
                             {faceInfo.feedback}
                         </Text>
                     </Feedback>
-                    <Facegraph>표정 시각화</Facegraph>
-                    <MypageBtn>지난 영상 결과 보기</MypageBtn>
+                    <Link to = '/MyPage' style={{ textDecoration: "none" }}>
+                        <MypageBtn>지난 영상 결과 보기</MypageBtn>
+                    </Link>
                 </ViewFrame2>
             </ViewFrame>
             
