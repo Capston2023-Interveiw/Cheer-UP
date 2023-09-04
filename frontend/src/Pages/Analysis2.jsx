@@ -262,7 +262,6 @@ export default function Analysis2(){
     useEffect(() => {
         axios.get(api)
         .then(response => {
-            console.log(response);
             setTotalInfo(response.data);
             const data = response.data;
             const face_summary =data[0].summary;
@@ -270,12 +269,6 @@ export default function Analysis2(){
             const gaze_summary =data[2].summary;
             const interjection_summary =data[3].summary;
             const speed_summary =data[4].summary;
-            console.log(face_summary);
-            console.log(posture_summary);
-            console.log(gaze_summary);
-            console.log(interjection_summary);
-            console.log(speed_summary);
-
 
             setFaceSummary(face_summary);
             setPostureSummary(posture_summary);
@@ -283,12 +276,9 @@ export default function Analysis2(){
             setInterjectionSummary(interjection_summary);
             setSpeedSummary(speed_summary);
 
-
-
             const total = data.find(item => item.analysis_type === 'total');
             const others = data.filter(item => item.analysis_type !== 'total');
             setTotalData(total.score);
-            console.log(total);
             setOtherData(others);
         })
         .catch(error => {
@@ -318,7 +308,7 @@ export default function Analysis2(){
                                 <strong>{totalData}</strong> 점
                             </div>
                             <div style={{ fontSize: 20}}>
-                                <p>총 점</p>
+                                <p>총 100점</p>
                             </div>
                             
                         </CircularProgressbarWithChildren>
@@ -343,12 +333,6 @@ export default function Analysis2(){
                     <Video_Box>
                         <video height="300px" width="428px" src={totalInfo.url} controls/>
                     </Video_Box>
-
-                    {/*console.log(faceSummary);
-                    console.log(postureSummary);
-                    console.log(gazeSummary);
-                    console.log(interjectionSummary);
-                    console.log(speedSummary);*/}
                     <Summary_Box>
                         <Link to = '/Analysis_face' style={{ textDecoration: "none" }}>
                             <FaceSummary>
