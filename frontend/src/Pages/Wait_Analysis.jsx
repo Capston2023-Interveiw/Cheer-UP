@@ -116,7 +116,7 @@ export default function Wait_Analysis() {
                 <Image  src ={Img} />
                 <Loading_Box>
                         {loading ? <Loading /> :                 
-                            <Link to ='/Analysis2' state={{num : video_num}}>
+                            <Link to ='/Analysis' state={{num : video_num}}>
                                 <Buttonmi >분석결과 보기</Buttonmi>
                             </Link>}
                 </Loading_Box>
