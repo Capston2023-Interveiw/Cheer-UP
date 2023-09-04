@@ -7,6 +7,7 @@ from model.gaze.gaze import run_gaze
 from model.posture.PoseProject import Posture
 from model.face.real_time_video import run_face
 from model.language.language import SttService
+from createwordcloud import createWordCloud
 from DataDao import DataDao
 
 FACE_ANALYSIS_ID=1
@@ -199,7 +200,9 @@ class Detection:
         self.save_score(FACE_ANALYSIS_ID, expressionScore)
 
         stt = SttService("./model/language/record.wav")
-        stt.getScripts()
+        script = stt.getScripts()
+        print(script)
+        totalSummary = createWordCloud(script)
         while stt.isEnd == False:
             interjectionResult = stt.getInterjectionResult()
             speedResult = stt.getSpeedResult()
@@ -207,7 +210,7 @@ class Detection:
         self.speed_score(speedResult)
         self.save_interjection_log(interjectionResult)
         totalScore = gazeScore + expressionScore + postureScore + speedResult['score'] + interjectionResult['score']
-        self.database.insertScore(totalScore, self.video_id, None, 6, "")
+        self.database.insertScore(totalScore, self.video_id, None, 6, totalSummary)
     
     def save_score(self, analysis_id, score):
         if score == 20:
@@ -236,8 +239,9 @@ class Detection:
         self.save_score(contents['analysis_id'], contents['score'])
         time = ""
         for i in range(len(contents['feedback'])):
+            time = 0
             log = contents['feedback'][i]
-            if (contents['time_stamp'] != None and contents['time_stamp'][i] != None):
+            if (i < len(contents['time_stamp'])):
                 time = contents['time_stamp'][i]
             self.database.insertLog(log, time, GAZE_ANALYSIS_ID, self.video_id)
 

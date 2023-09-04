@@ -8,7 +8,7 @@ class Record:
     def __init__(self, audiofile='./model/language/record.wav'):
         self.thread = None
         self.audio = pyaudio.PyAudio()
-        self.bRecord = False
+        self.bRecord = True
         self.audiofile = audiofile
         self.chunk = 1024
         self.format = pyaudio.paInt16

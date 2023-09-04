@@ -69,6 +69,7 @@ def end():
     
     combineVideo(fname)
 
+    print(database.selectVideo(1))
     return json.dumps({"video_id": database.selectVideo(1)})
 
 cam = cv2.VideoCapture(0)

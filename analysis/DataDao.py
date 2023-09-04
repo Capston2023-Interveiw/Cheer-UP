@@ -31,7 +31,7 @@ class DataDao:
         db.close()
         return curs.fetchone()[0]
     
-    def insertScore(self, score, video_id, feedback_id, analysis_id):
+    def insertScore(self, score, video_id, feedback_id, analysis_id, summary):
         db = pymysql.connect(host='localhost', port=3306, user='root', db='cheer', password='1234', charset='utf8')
         curs = db.cursor()
         sql = '''INSERT INTO score (score, video_id, feedback_id, analysis_id, summary) values(%s, %s, %s, %s, %s)'''

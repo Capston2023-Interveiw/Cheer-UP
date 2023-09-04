@@ -1,5 +1,5 @@
 import React,{useState, useEffect} from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import Header_Aft from '../Components/Header_Aft';
 import PentagonGraph from '../Components/PentagonGraph';
@@ -52,7 +52,6 @@ const Profile  =styled.img`
     background-repeat: no-repeat;
     background-position: top center;
     background-size: cover;
-    background-attachment: fixed;
     background-attachment: fixed;
     position: absolute;
     top: 13%;
@@ -145,7 +144,7 @@ const P3 = styled.p`
 `;
 
 
-const Interjection_Box = styled.div`
+const Interjection_Box = styled.img`
     position: absolute;
     top: 46%;
     right: 9%;
@@ -153,7 +152,10 @@ const Interjection_Box = styled.div`
     height: 300px;
     border: 1px solid;
     border-radius: 20px;
-    background-color:#FFFF;
+    background-repeat: no-repeat;
+    background-position: top center;
+    background-size: cover;
+    background-image: url({${(props) => props.src}});
 `;
 
 const Summary_Box = styled.div`
@@ -246,7 +248,6 @@ const SpeedSummary = styled.button`
 
 
 export default function Analysis2(){
-    const [totalInfo, setTotalInfo] = useState([]);
     const [totalData, setTotalData] = useState(null);
     const [otherData, setOtherData] = useState([]);
     const [faceSummary, setFaceSummary] = useState('');
@@ -254,16 +255,18 @@ export default function Analysis2(){
     const [gazeSummary, setGazeSummary] = useState('');
     const [interjectionSummary, setInterjectionSummary] = useState('');
     const [speedSummary, setSpeedSummary] = useState('');
+    const [videoUrl, setVideoUrl] = useState('');
+    const [wordCloud, setWordCloud] = useState('');
 
-    //const num = props.video_num;
-    //console.log(num);
-    //const api = 'api/v1/result/'+num+'/total';
-    const api = 'api/v1/result/1/total';
+    const location = useLocation();
+    const num = location.state.num;
+    console.log(location.state)
+    const api = 'api/v1/result/'+num+'/total';
     useEffect(() => {
         axios.get(api)
         .then(response => {
             console.log(response);
-            setTotalInfo(response.data);
+
             const data = response.data;
             const face_summary =data[0].summary;
             const posture_summary =data[1].summary;
@@ -271,19 +274,22 @@ export default function Analysis2(){
             const interjection_summary =data[3].summary;
             const speed_summary =data[4].summary;
 
-
+            
             setFaceSummary(face_summary);
             setPostureSummary(posture_summary);
             setGazeSummary(gaze_summary);
             setInterjectionSummary(interjection_summary);
             setSpeedSummary(speed_summary);
 
-
+            const video = data[0].videoUrl;
+            const wordCloud = data[5].summary;
+            console.log(wordCloud);
+            setVideoUrl(video);
+            setWordCloud(wordCloud);
 
             const total = data.find(item => item.analysis_type === 'total');
             const others = data.filter(item => item.analysis_type !== 'total');
             setTotalData(total.score);
-    
             setOtherData(others);
         })
         .catch(error => {
@@ -336,7 +342,7 @@ export default function Analysis2(){
                         </Score_Box>
                     </Graph_Box>
                     <Video_Box>
-                        <video height="300px" width="428px" src={totalInfo.url} controls/>
+                        <video height="300px" width="428px" src={videoUrl} controls/>
                     </Video_Box>
                     <Summary_Box>
                         <Link to = '/Analysis_face' style={{ textDecoration: "none" }}>
@@ -366,14 +372,11 @@ export default function Analysis2(){
                         </Link>
                     </Summary_Box>
 
-                    <Interjection_Box>
-                            워드 클라우드
+                    <Interjection_Box src={wordCloud}>
                     </Interjection_Box>
 
                 </ViewFrame2>
             </ViewFrame>
-
-
         </Form>
     );
 }
