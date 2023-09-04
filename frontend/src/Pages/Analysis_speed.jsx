@@ -8,6 +8,8 @@ import {FaRegLightbulb} from 'react-icons/fa';
 import { CircularProgressbarWithChildren } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import { Link } from 'react-router-dom';
+import { useLocation } from "react-router-dom";
+
 
 const Form = styled.div`
     width: 100%;
@@ -123,9 +125,11 @@ export default function Analysis_speed(){
     const [score, setScore] = useState(null);
     const videoRef = useRef(null);
 
-    //const num = props.video_num;
-    //const api = 'api/v1/result/'+num+'/speed';
-    const api = 'api/v1/result/1/speed';
+    const location = useLocation();
+    const num = location.state.num;
+
+    const api = 'api/v1/result/'+num+'/speed';
+
 
     const handleTimestampChange = (event) =>{
         setTimestamp(event.target.value);

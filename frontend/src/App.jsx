@@ -9,7 +9,6 @@ import FindPW from "./Pages/FindPW";
 import Main_Before from "./Pages/Main_Before";
 import Main_After from "./Pages/Main_After";
 import Analysis from "./Pages/Analysis";
-import Analysis2 from "./Pages/Analysis2";
 import Wait_Analysis from "./Pages/Wait_Analysis";
 import Analysis_face from "./Pages/Analysis_face";
 import Analysis_gaze from "./Pages/Analysis_gaze";
@@ -48,7 +47,6 @@ function App() {
         <Route path="/Wait_Analysis" element={<PrivateRoute authenticated={access} component={<Wait_Analysis/>}/>}/>
         {/* ---- 분석 페이지 ---- */}
         <Route path="/Analysis" element={<PrivateRoute authenticated={access} component={<Analysis/>}/>}/>
-        <Route path="/Analysis2" element={<PrivateRoute authenticated={access} component={<Analysis2/>}/>}/>
         <Route path="/Analysis_face" element={<PrivateRoute authenticated={access} component={<Analysis_face/>}/>}/>
         <Route path="/Analysis_gaze" element={<PrivateRoute authenticated={access} component={<Analysis_gaze/>}/>}/>
         <Route path="/Analysis_interjection" element={<PrivateRoute authenticated={access} component={<Analysis_interjection/>}/>}/>

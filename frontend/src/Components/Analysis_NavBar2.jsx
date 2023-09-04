@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import { useLocation } from "react-router-dom";
 
 const NavBar1 =styled.div` 
 
@@ -31,29 +32,12 @@ const Text = styled.button`
 
 
 export default function Analysis_NavBar2(){
+    const location = useLocation();
+    const num = location.state.num;
+
     return (
         <NavBar1 backgroundColor ="#A3D8F4">
-            <Link to = '/Analysis_face'>
-                <Text
-                    fontStyle = "blod"
-                    fontWeight = "bolder"
-                    fontSize = "22px"
-                    top = "50%"
-                    left = "11%"
-                    transForm = "translate(0%, -50%)"
-                    backgroundColor = "#A3D8F4">표정</Text>
-            </Link>
-            <Link to = '/Analysis_posture'>
-                <Text
-                    fontStyle = "blod"
-                    fontWeight = "bolder"
-                    fontSize = "22px"
-                    top = "50%"
-                    left = "21%"
-                    transForm = "translate(0%, -50%)"
-                    backgroundColor = "#A3D8F4">자세</Text>
-            </Link>
-            <Link to = '/Analysis_gaze'>
+            <Link to = '/Analysis_face' state={{num : num}}>
                 <Text
                     fontStyle = "blod"
                     fontWeight = "bolder"
@@ -61,25 +45,45 @@ export default function Analysis_NavBar2(){
                     top = "50%"
                     left = "2%"
                     transForm = "translate(0%, -50%)"
-                    backgroundColor = "#A3D8F4">시선</Text>
+                    backgroundColor = "#A3D8F4">표정</Text>
             </Link>
-            <Link to = '/Analysis_interjection'>
+            <Link to = '/Analysis_posture' state={{num : num}}>
                 <Text
                     fontStyle = "blod"
                     fontWeight = "bolder"
                     fontSize = "22px"
                     top = "50%"
-                    left = "45%"
+                    left = "11%"
                     transForm = "translate(0%, -50%)"
-                    backgroundColor = "#A3D8F4">추임새</Text>
+                    backgroundColor = "#A3D8F4">자세</Text>
             </Link>
-            <Link to = '/Analysis_speed'>
+            <Link to = '/Analysis_gaze' state={{num : num}}>
+                <Text
+                    fontStyle = "blod"
+                    fontWeight = "bolder"
+                    fontSize = "22px"
+                    top = "50%"
+                    left = "21%"
+                    transForm = "translate(0%, -50%)"
+                    backgroundColor = "#A3D8F4">시선</Text>
+            </Link>
+            <Link to = '/Analysis_interjection' state={{num : num}}>
                 <Text
                     fontStyle = "blod"
                     fontWeight = "bolder"
                     fontSize = "22px"
                     top = "50%"
                     left = "30%"
+                    transForm = "translate(0%, -50%)"
+                    backgroundColor = "#A3D8F4">추임새</Text>
+            </Link>
+            <Link to = '/Analysis_speed' state={{num : num}}>
+                <Text
+                    fontStyle = "blod"
+                    fontWeight = "bolder"
+                    fontSize = "22px"
+                    top = "50%"
+                    left = "41%"
                     transForm = "translate(0%, -50%)"
                     backgroundColor = "#A3D8F4">평균 말속도</Text>
             </Link>

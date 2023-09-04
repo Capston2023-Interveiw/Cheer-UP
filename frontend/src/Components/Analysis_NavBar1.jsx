@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import { useLocation } from "react-router-dom";
 
 const NavBar1 =styled.div` 
 
@@ -30,10 +31,13 @@ const Text = styled.button`
 
 
 export default function Analysis_NavBar1(){
+    const location = useLocation();
+    const num = location.state.num;
+
     return (
         <NavBar1 backgroundColor ="#FFFF">
 
-            <Link to = '/Analysis2'>
+            <Link to = '/Analysis' state={{num : num}}>
                 <Text
                     fontStyle = "blod"
                     fontWeight = "bolder"
@@ -45,7 +49,7 @@ export default function Analysis_NavBar1(){
                     >종합 리포트</Text>
             </Link>
 
-            <Link to = '/Analysis_face'>
+            <Link to = '/Analysis_face' state={{num : num}}>
                 <Text
                     fontStyle = "blod"
                     fontWeight = "bolder"
