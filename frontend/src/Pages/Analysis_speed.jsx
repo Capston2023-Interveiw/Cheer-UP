@@ -175,7 +175,7 @@ export default function Analysis_speed(){
                                 <strong>{score}</strong> 점
                             </div>
                             <div style={{ fontSize: 20}}>
-                                <p>총 20점</p>
+                                <p> /20점</p>
                             </div>
                             
                         </CircularProgressbarWithChildren>

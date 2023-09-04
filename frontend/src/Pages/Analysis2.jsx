@@ -262,6 +262,7 @@ export default function Analysis2(){
     useEffect(() => {
         axios.get(api)
         .then(response => {
+            console.log(response);
             setTotalInfo(response.data);
             const data = response.data;
             const face_summary =data[0].summary;
@@ -270,15 +271,19 @@ export default function Analysis2(){
             const interjection_summary =data[3].summary;
             const speed_summary =data[4].summary;
 
+
             setFaceSummary(face_summary);
             setPostureSummary(posture_summary);
             setGazeSummary(gaze_summary);
             setInterjectionSummary(interjection_summary);
             setSpeedSummary(speed_summary);
 
+
+
             const total = data.find(item => item.analysis_type === 'total');
             const others = data.filter(item => item.analysis_type !== 'total');
             setTotalData(total.score);
+    
             setOtherData(others);
         })
         .catch(error => {
@@ -308,7 +313,7 @@ export default function Analysis2(){
                                 <strong>{totalData}</strong> 점
                             </div>
                             <div style={{ fontSize: 20}}>
-                                <p>총 100점</p>
+                                <p> /100점</p>
                             </div>
                             
                         </CircularProgressbarWithChildren>
