@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import Header_Aft from '../Components/Header_Aft';
 import Img1 from '../image/img1.jpg';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 
 const Form = styled.div`
     width: 100%;
