@@ -52,29 +52,20 @@ const WrapButton = styled.div`
 `;
 
 function Interview() {
-<<<<<<< HEAD
-    const [count, setCount] = useState(20);
-  
-=======
+
     const [count, setCount] = useState(90);
     const [question, setQuestion] = useState([]);
     const [num, setNum] = useState(0);
     const [data, setData] = useState('1분 자기소개 부탁드립니다.');
 
->>>>>>> #67
     useEffect(() => {
       const id = setInterval(() => {
         setCount(count => count - 1); 
       }, 1000);
       if(count === 0){
-<<<<<<< HEAD
-        clearInterval(id);
-        console.log("Hello");
-=======
           setNum(num => num + 1);
           setData(question[num+1]?.content);
           setCount(90);
->>>>>>> #67
       }
       return () => clearInterval(id);
     }, [count]);

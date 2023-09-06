@@ -1,13 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import Header_Aft from '../Components/Header_Aft';
-<<<<<<< HEAD
 import Img from '../image/MainPageImage.svg';
 import { Link } from 'react-router-dom'
-=======
-import Img1 from '../image/img1.jpg';
-import { Link } from 'react-router-dom';
->>>>>>> #67
 
 
 const Form = styled.div`
