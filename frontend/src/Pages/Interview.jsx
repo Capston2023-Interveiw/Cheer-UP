@@ -1,9 +1,10 @@
-import React,{useRef, useState, useEffect} from "react";
+import React,{useState, useEffect} from "react";
 import styled from "styled-components";
 import Header from "../Components/Header";
 import NextButton from "../Components/Button";
+import Button from "../Components/Button";
 import axios from "axios";
-import {Link} from "react-router-dom";
+import { Link } from 'react-router-dom';
 
 const MainWrap = styled.div`
     position: fixed;
@@ -45,42 +46,38 @@ const TimerText = styled.div`
   margin-left: 70px; //중앙 정렬
 `
 
-const WrapNextButton = styled.div`
+const WrapButton = styled.div`
     float: right;
     margin-right: 60px;
 `;
 
 function Interview() {
-    const [min, setMin] = useState(1);
-    const [sec, setSec] = useState(30);
-    const time = useRef(90);
-    const timerId = useRef(null);
 
+    const [count, setCount] = useState(90);
     const [question, setQuestion] = useState([]);
+    const [num, setNum] = useState(0);
+    const [data, setData] = useState('1분 자기소개 부탁드립니다.');
 
-    useEffect(()=>{
-      timerId.current = setInterval(()=>{
-        setMin(parseInt(time.current / 60));
-        setSec(time.current % 60);
-        time.current -= 1;
-      },1000);
-      return () => clearInterval(timerId.current);
-    },[]);
-
-    useEffect(()=>{
-      // 만약 타임 아웃이 발생했을 경우
-      if(time.current <= 0){
-        //다음 질문으로 넘어가거나 면접 종료
-        clearInterval(timerId.current);
+    useEffect(() => {
+      const id = setInterval(() => {
+        setCount(count => count - 1); 
+      }, 1000);
+      if(count === 0){
+          setNum(num => num + 1);
+          setData(question[num+1]?.content);
+          setCount(90);
       }
-    },[sec]);
+      return () => clearInterval(id);
+    }, [count]);
 
+    
     useEffect(() => {
       axios({
       url: "api/v1/interview/question",
       method: "get",
 
     }).then((response) => {
+
       setQuestion(response.data);
 
       console.log(response.data);
@@ -94,41 +91,31 @@ function Interview() {
   });
   },[]);
 
+  const next = () =>{
+      setNum(num => num + 1);
+      setData(question[num+1]?.content);
+      setCount(90);
+  }
+  
+
+
     const iframePart = () => {
         return {
-            __html: '<iframe src="http://localhost:8888/interview/progress" width="640" height="400px"></iframe>',
+            __html: '<iframe src="http://localhost:8888/interview/progress" width="750" height="450px"></iframe>',
         };
     };
-    function QuestionItem({ item }) {
-      return <>{item}</>;
-    }
-
-    const selectedData = question.length > 0 ? question[0].content : null;
 
     return (
         <MainWrap>
             <Header />
             <Wrap>
             <Question>
-            Q1. {selectedData && <QuestionItem item={selectedData} />}
-               {/* {question !== undefined
-                              ? question.map((data, index) => {
-                                  return(
-                                      <div key={index}>
-                                        Q{index+1}.
-                                        {data.content}
-                                         
-                                      </div>
-                                  )
-                              })
-                              : null}  */}
-              
-              
+              Q{num+1}. {data}
             </Question>
                 <WrapContent>
                  
                   <TimerText>
-                  {min} 분  {sec} 초
+                    {count} 초
                   </TimerText>
                     
                   
@@ -138,8 +125,7 @@ function Interview() {
 
             
                 </WrapContent>
-                <WrapNextButton>
-                  <Link to="/Wait_Analysis">
+                <WrapButton>
                       <NextButton
                           color={"white"}
                           background={"#0084FE"}
@@ -147,9 +133,22 @@ function Interview() {
                           height="2.5rem"
                           name="NEXT"
                           borderRadius="0.3rem"
+                          marginRight="2rem;"
+                          onClick={()=>next()}
                       />
-                    </Link> 
-                </WrapNextButton>
+                    <Link to="/Wait_Analysis">
+                      <Button
+                        color={"white"}
+                        background={"#0084FE"}
+                        width="7rem"
+                        height="2.5rem"
+                        name="분석 결과 보기"
+                        borderRadius="0.3rem">
+
+                      </Button>
+                      </Link>
+
+                </WrapButton>
             </Wrap>
         </MainWrap>
     );

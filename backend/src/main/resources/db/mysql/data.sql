@@ -1,4 +1,4 @@
-INSERT INTO member (account_id, age, email, gender, password, role, username) VALUES ('cheer', 20, 'cheer@a.com', 1, '{bcrypt}$2a$10$JIAjjZly9rUGvjnVItpU4uFneOLFgHH/mRyxnr93KVQC2CoaKFopa', 'ROLE_USER', 'cheer');
+INSERT INTO member (account_id, email, gender, password, role, username) VALUES ('cheer', 'cheer@a.com', 1, '{bcrypt}$2a$10$JIAjjZly9rUGvjnVItpU4uFneOLFgHH/mRyxnr93KVQC2CoaKFopa', 'ROLE_USER', 'cheer');
 
 INSERT INTO question (content, created_at, status, member_id) VALUES ('1분 자기소개 부탁드립니다.', '2023-01-04', '1', '1');
 INSERT INTO question (content, created_at, status, member_id) VALUES ('가장 학점이 높은 과목과 낮은 과목에 대해서 말해보세요.', '2023-01-04', '1', '1');
@@ -53,9 +53,9 @@ INSERT INTO analysis_log(reason, timestamp, analysis_id, video_id) VALUES  ('아
 INSERT INTO analysis_log(reason, timestamp, analysis_id, video_id) VALUES  ('아', '0:13', 4, 1);
 INSERT INTO analysis_log(reason, timestamp, analysis_id, video_id) VALUES  ('매우 느림', '0:00', 5, 1);
 
-INSERT INTO score (score, video_id, feedback_id, analysis_id) VALUES(15, 1, 2, 1);
-INSERT INTO score (score, video_id, feedback_id, analysis_id) VALUES(20, 1, 5, 2);
-INSERT INTO score (score, video_id, feedback_id, analysis_id) VALUES(0, 1, 12, 3);
-INSERT INTO score (score, video_id, feedback_id, analysis_id) VALUES(3, 1, 16, 4);
-INSERT INTO score (score, video_id, feedback_id, analysis_id) VALUES(15, 1, 18, 5);
-INSERT INTO score (score, video_id, feedback_id, analysis_id) VALUES(53, 1, 1, 6);
+INSERT INTO score (score, video_id, feedback_id, analysis_id, summary) VALUES(15, 1, 2, 1, "긍정적인 표정: 3회");
+INSERT INTO score (score, video_id, feedback_id, analysis_id, summary) VALUES(20, 1, 5, 2, "고개 5회, 어깨 3회 감점");
+INSERT INTO score (score, video_id, feedback_id, analysis_id, summary) VALUES(0, 1, 12, 3, "왼쪽: 3회, 오른쪽: 3회");
+INSERT INTO score (score, video_id, feedback_id, analysis_id, summary) VALUES(3, 1, 16, 4, "불필요한 감탄사 3회 반복");
+INSERT INTO score (score, video_id, feedback_id, analysis_id, summary) VALUES(15, 1, 18, 5, "평균보다 약간 빠릅니다.");
+INSERT INTO score (score, video_id, feedback_id, analysis_id, summary) VALUES(53, 1, 1, 6, "");

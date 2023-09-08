@@ -16,7 +16,6 @@ public class MemberMapper {
                 .username(dto.getUsername())
                 .email(dto.getEmail())
                 .gender(dto.getGender())
-                .age(dto.getAge())
                 .role(Role.ROLE_USER)
                 .build();
     }

@@ -64,13 +64,12 @@ def end():
     global isStream
     global camera
     isStream = False
-    print(camera)
     camera.started = False
-    print(camera)
     camera.detection.result()
     
     combineVideo(fname)
 
+    print(database.selectVideo(1))
     return json.dumps({"video_id": database.selectVideo(1)})
 
 cam = cv2.VideoCapture(0)

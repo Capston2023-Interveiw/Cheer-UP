@@ -44,14 +44,20 @@ services:
     volumes:
       - "mysqldata:/var/lib/mysql"
 
-#  analysis:
-#    build:
-#      context: ./analysis
-#    command: python3 app.py
-#    environment:
-#      FLASK_DEBUG: 1
-#    ports:
-#      - 8888:8888
+  # analysis:
+  #   build:
+  #     context: ./analysis
+  #   environment:
+  #     FLASK_ENV: developments
+  #     PULSE_COOKIE: /tmp/pulseaudio.cookie
+  #     PULSE_SERVER: unix:/tmp/pulseaudio.socket
+  #   ports:
+  #     - 8888:8888
+  #   depends_on:
+  #     - mysql
+  #   volumes:
+  #     - ./backend:/app
+  #     - /run/user/${USER_UID}/pulse:/run/user/1000/pulse
 
 volumes:
   mysqldata:
